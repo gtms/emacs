@@ -27,6 +27,17 @@
 (display-time-mode 1)
 
 ;; toggles electric-pair-mode on
-(electric-pair-mode 1)
+;; (electric-pair-mode 1)
+
+;; enable skeleton-pair insert globally
+(setq skeleton-pair t)
+;;(setq skeleton-pair-on-word t)
+(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "\`") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
 
 ;;; personal.el ends here
