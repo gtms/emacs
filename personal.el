@@ -43,4 +43,14 @@
 ;; sets alternate regexp heading in outline mode to '## *+'
 (setq outline-regexp " *## \\(*\\)+")
 
+;; from outline-magic.el
+(add-hook 'outline-mode-hook
+          (lambda ()
+            (require 'outline-cycle)))
+
+(add-hook 'outline-minor-mode-hook
+          (lambda ()
+            (require 'outline-magic)
+            (define-key outline-minor-mode-map [(f6)] 'outline-cycle)))
+
 ;;; personal.el ends here
