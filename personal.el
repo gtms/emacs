@@ -40,4 +40,7 @@
 ;; (global-set-key (kbd "\`") 'skeleton-pair-insert-maybe)
 ;; (global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
 
+;; sets alternate regexp heading in outline mode to '## *+'
+(setq outline-regexp " *## \\(*\\)+")
+
 ;;; personal.el ends here
