@@ -53,4 +53,8 @@
 ;; (require 'outline-magic)
 ;; (define-key outline-minor-mode-map [(f6)] 'outline-cycle)))
 
+;; initializes ess
+;; 07Jan2014
+(require 'ess-site)
+
 ;;; personal.el ends here
