@@ -53,8 +53,9 @@
 ;; (require 'outline-magic)
 ;; (define-key outline-minor-mode-map [(f6)] 'outline-cycle)))
 
-;; initializes ess
+;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
 (require 'ess-site)
+(add-hook 'ess-mode-hook 'turn-on-orgstruct++)
 
 ;;; personal.el ends here
