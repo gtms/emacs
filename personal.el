@@ -24,7 +24,8 @@
 (delete-selection-mode 1)
 
 ;; toggles display-time mode on
-(display-time-mode 1)
+(setq display-time-day-and-date t)
+(display-time)
 
 ;; toggles electric-pair-mode on
 ;; (electric-pair-mode 1)
@@ -43,19 +44,29 @@
 ;; sets alternate regexp heading in outline mode to '## *+'
 (setq outline-regexp " *## \\(*\\)+")
 
-;; from outline-magic.el
-;; (add-hook 'outline-mode-hook
-;; (lambda ()
-;; (require 'outline-cycle)))
-
-;; (add-hook 'outline-minor-mode-hook
-;; (lambda ()
-;; (require 'outline-magic)
-;; (define-key outline-minor-mode-map [(f6)] 'outline-cycle)))
-
 ;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
 (require 'ess-site)
 (add-hook 'ess-mode-hook 'turn-on-orgstruct++)
+
+;; miscellaneous configurations
+;; 13Jan2013
+;;
+;; removes all scroll bars
+(scroll-bar-mode -1)
+;; activates blink-cursor-mode
+(blink-cursor-mode 1)
+;; toggles visualization of matching parenthesis
+(show-paren-mode 1)
+;; configures emacs so that word moving commands will move cursor into
+;; between CamelCaseWords
+(global-subword-mode 1)
+;; sets set-mark-command-repeat-pop to TRUE
+;; non-nil means repeating C-SPC after popping mark pops it again
+(setq set-mark-command-repeat-pop t)
+;; defines variable dired-listing-switches
+(setq dired-listing-switches "-alh")
+;; defines variable orgstruct-heading-prefix-regexp
+(setq orgstruct-heading-prefix-regexp "## ")
 
 ;;; personal.el ends here
