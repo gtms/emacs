@@ -50,7 +50,7 @@
 (add-hook 'ess-mode-hook 'turn-on-orgstruct++)
 
 ;; miscellaneous configurations
-;; 13Jan2013
+;; 13Jan2014
 ;;
 ;; removes all scroll bars
 (scroll-bar-mode -1)
@@ -68,5 +68,9 @@
 (setq dired-listing-switches "-alh")
 ;; defines variable orgstruct-heading-prefix-regexp
 (setq orgstruct-heading-prefix-regexp "## ")
+
+;; disables proced ("C-x p" is too often accidentally typed)
+;; 13Jan2014
+(put 'proced 'disabled t)
 
 ;;; personal.el ends here
