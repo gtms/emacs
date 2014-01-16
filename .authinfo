@@ -1,0 +1,2 @@
+machine imap.gmail.com login gil.tms@gmail.com password rwxlflqzqsojmhkn port 993
+machine smtp.gmail.com login gil.tms@gmail.com password rwxlflqzqsojmhkn port 587
