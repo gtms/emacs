@@ -73,4 +73,12 @@
 ;; 13Jan2014
 (put 'proced 'disabled t)
 
+;; sets default theme to solarized-dark
+;; according to instructions from solarized-dark-theme.el
+;; 16Jan2014
+(require 'solarized)
+(deftheme solarized-dark "The dark variant of the Solarized colour theme")
+(create-solarized-theme 'dark 'solarized-dark)
+(provide-theme 'solarized-dark)
+
 ;;; personal.el ends here
