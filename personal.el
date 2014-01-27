@@ -46,7 +46,7 @@
 
 ;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
-(require 'ess-site)
+;; (require 'ess-site)
 (add-hook 'ess-mode-hook 'turn-on-orgstruct++)
 
 ;; miscellaneous configurations
@@ -80,5 +80,14 @@
 (deftheme solarized-dark "The dark variant of the Solarized colour theme")
 (create-solarized-theme 'dark 'solarized-dark)
 (provide-theme 'solarized-dark)
+
+;; cancels key-chords defined by prelude-key-chord.el
+;; 27Jan2014
+;; undo-tree-visualize
+(key-chord-define-global "uu" nil)
+;; execute-extended-command
+(key-chord-define-global "xx" nil)
+;; browse-kill-ring
+(key-chord-define-global "yy" nil)
 
 ;;; personal.el ends here
