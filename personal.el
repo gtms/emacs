@@ -1,3 +1,8 @@
+;; requires ido-vertical-mode
+;; 19Feb2014
+(prelude-require-package 'ido-vertical-mode)
+(ido-vertical-mode 1)
+
 ;; dired sorts directories first
 ;; from http://www.emacswiki.org/emacs/DiredSortDirectoriesFirst
 ;; 03Oct2012
