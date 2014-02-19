@@ -27,27 +27,13 @@
 (setq display-time-day-and-date t)
 (display-time)
 
-;; toggles electric-pair-mode on
-;; (electric-pair-mode 1)
-
-;; enable skeleton-pair insert globally
-(setq skeleton-pair t)
-;;(setq skeleton-pair-on-word t)
-(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
-;; (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
-;; (global-set-key (kbd "\`") 'skeleton-pair-insert-maybe)
-;; (global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
-
 ;; sets alternate regexp heading in outline mode to '## *+'
-(setq outline-regexp " *## \\(*\\)+")
+;; (setq outline-regexp " *## \\(*\\)+")
 
 ;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
-;; (require 'ess-site)
-(add-hook 'ess-mode-hook 'turn-on-orgstruct++)
+(require 'ess-site)
+(add-hook 'ess-mode-hook 'turn-on-orgstruct)
 
 ;; miscellaneous configurations
 ;; 13Jan2014
@@ -76,10 +62,13 @@
 ;; sets default theme to solarized-dark
 ;; according to instructions from solarized-dark-theme.el
 ;; 16Jan2014
-(require 'solarized)
-(deftheme solarized-dark "The dark variant of the Solarized colour theme")
-(create-solarized-theme 'dark 'solarized-dark)
-(provide-theme 'solarized-dark)
+;; (require 'solarized)
+;; (deftheme solarized-dark "The dark variant of the Solarized colour theme")
+;; (create-solarized-theme 'dark 'solarized-dark)
+;; (provide-theme 'solarized-dark)
+;; 30Jan2014
+;; (disable-theme 'zenburn)
+;; (load-theme 'solarized-dark t)
 
 ;; cancels key-chords defined by prelude-key-chord.el
 ;; 27Jan2014
@@ -89,5 +78,15 @@
 (key-chord-define-global "xx" nil)
 ;; browse-kill-ring
 (key-chord-define-global "yy" nil)
+
+;; replace-colorthemes
+;; https://github.com/emacs-jp/replace-colorthemes
+;; 31Jan2014
+;; Please set your themes directory to 'custom-theme-load-path
+(add-to-list 'custom-theme-load-path
+             (file-name-as-directory "~/.emacs.d/themes/replace-colorthemes"))
+;; load your favorite theme
+;; (load-theme 'dark-laptop t t)
+;; (enable-theme dark-laptop)
 
 ;;; personal.el ends here
