@@ -35,6 +35,9 @@
 ;; sets alternate regexp heading in outline mode to '## *+'
 ;; (setq outline-regexp " *## \\(*\\)+")
 
+;; ESS stuff
+;; requires ess, ess-R-data-view, ess-R-object-popup
+(prelude-require-packages '(ess ess-R-data-view ess-R-object-popup))
 ;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
 (require 'ess-site)
@@ -43,6 +46,10 @@
 ;; 19Feb2014
 (add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
 (add-hook 'ess-post-run-hook 'smartparens-mode)
+;; sets up ess-R-object-popup
+;; 19Feb2014
+(require 'ess-R-object-popup)
+(define-key ess-mode-map "\C-c\C-g" 'ess-R-object-popup)
 
 ;; miscellaneous configurations
 ;; 13Jan2014
