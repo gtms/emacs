@@ -105,4 +105,10 @@
 ;; (load-theme 'dark-laptop t t)
 ;; (enable-theme dark-laptop)
 
+;; Installs csv-mode as per instructions found on csv-mode.el
+;; 20Feb2014
+(add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
+(autoload 'csv-mode "csv-mode"
+  "Major mode for editing comma-separated value files." t)
+
 ;;; personal.el ends here
