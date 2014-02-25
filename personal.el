@@ -119,4 +119,15 @@
 (autoload 'csv-mode "csv-mode"
   "Major mode for editing comma-separated value files." t)
 
+;; my org-mode stuff
+;; 25Feb2014
+(add-hook 'org-mode-hook 'org-indent-mode)
+
+;; some emacs-lisp-mode stuff
+;; 25Feb2014
+;; from https://github.com/ankurdave/dotfiles/blob/master/.emacs.d/hooks.el
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+(when (fboundp 'smartparens-mode)
+  (add-hook 'emacs-lisp-mode-hook 'smartparens-mode))
+
 ;;; personal.el ends here
