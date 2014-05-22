@@ -130,4 +130,9 @@
 (when (fboundp 'smartparens-mode)
   (add-hook 'emacs-lisp-mode-hook 'smartparens-mode))
 
+;; Configuring EMACS: making TRAMP use ssh-agent
+;; 22May2014
+;; http://dietbuddha.blogspot.be/2012/04/configuring-emacs-making-tramp-use-ssh.html
+(setenv "SSH_AUTH_SOCK" (concat (getenv "HOME") "/.ssh-auth-sock"))
+
 ;;; personal.el ends here
