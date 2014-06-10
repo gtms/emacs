@@ -135,4 +135,7 @@
 ;; http://dietbuddha.blogspot.be/2012/04/configuring-emacs-making-tramp-use-ssh.html
 (setenv "SSH_AUTH_SOCK" (concat (getenv "HOME") "/.ssh-auth-sock"))
 
+;; personally added packages
+(prelude-require-packages '(visual-regexp))
+
 ;;; personal.el ends here
