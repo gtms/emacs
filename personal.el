@@ -136,6 +136,6 @@
 (setenv "SSH_AUTH_SOCK" (concat (getenv "HOME") "/.ssh-auth-sock"))
 
 ;; personally added packages
-(prelude-require-packages '(visual-regexp relative-line-numbers))
+(prelude-require-packages '(visual-regexp relative-line-numbers 2048-game))
 
 ;;; personal.el ends here
