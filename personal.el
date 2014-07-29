@@ -81,7 +81,9 @@
 
 ;; disables proced ("C-x p" is too often accidentally typed)
 ;; 13Jan2014
-(put 'proced 'disabled t)
+;; proced was replaced by vkill on prelude: disable vkill instead
+;; 29Jul2014
+(put 'vkill 'disabled t)
 
 ;; sets default theme to solarized-dark
 ;; according to instructions from solarized-dark-theme.el
