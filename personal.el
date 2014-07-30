@@ -20,10 +20,14 @@
   (mydired-sort))
 (put 'dired-find-alternate-file 'disabled nil)
 
+
 ;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller
 ;; the argument is a width in pixels (the default is 8)
 (if (fboundp 'fringe-mode)
     (fringe-mode 8))
+
+
+;; assorted changes
 
 ;; toggles delete-selection-mode on
 (delete-selection-mode 1)
@@ -34,6 +38,7 @@
 
 ;; sets alternate regexp heading in outline mode to '## *+'
 ;; (setq outline-regexp " *## \\(*\\)+")
+
 
 ;; ESS stuff
 ;; requires ess, ess-R-data-view, ess-R-object-popup
@@ -59,6 +64,7 @@
 (require 'ess-R-object-popup)
 (define-key ess-mode-map "\C-c\C-g" 'ess-R-object-popup)
 
+
 ;; miscellaneous configurations
 ;; 13Jan2014
 ;;
@@ -79,11 +85,13 @@
 ;; defines variable orgstruct-heading-prefix-regexp
 (setq orgstruct-heading-prefix-regexp "## ")
 
+
 ;; disables proced ("C-x p" is too often accidentally typed)
 ;; 13Jan2014
 ;; proced was replaced by vkill on prelude: disable vkill instead
 ;; 29Jul2014
 (put 'vkill 'disabled t)
+
 
 ;; sets default theme to solarized-dark
 ;; according to instructions from solarized-dark-theme.el
@@ -96,6 +104,7 @@
 ;; (disable-theme 'zenburn)
 ;; (load-theme 'solarized-dark t)
 
+
 ;; cancels key-chords defined by prelude-key-chord.el
 ;; 27Jan2014
 ;; undo-tree-visualize
@@ -104,6 +113,7 @@
 (key-chord-define-global "xx" nil)
 ;; browse-kill-ring
 (key-chord-define-global "yy" nil)
+
 
 ;; replace-colorthemes
 ;; https://github.com/emacs-jp/replace-colorthemes
@@ -115,15 +125,18 @@
 ;; (load-theme 'dark-laptop t t)
 ;; (enable-theme dark-laptop)
 
+
 ;; Installs csv-mode as per instructions found on csv-mode.el
 ;; 20Feb2014
 (add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
 (autoload 'csv-mode "csv-mode"
   "Major mode for editing comma-separated value files." t)
 
+
 ;; my org-mode stuff
 ;; 25Feb2014
 (add-hook 'org-mode-hook 'org-indent-mode)
+
 
 ;; some emacs-lisp-mode stuff
 ;; 25Feb2014
