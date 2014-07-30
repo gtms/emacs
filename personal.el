@@ -189,6 +189,10 @@
             (ibuffer-tramp-set-filter-groups-by-tramp-connection)
             (ibuffer-do-sort-by-alphabetic)))
 
+;; turn off ibuffer-show-empty-filter-groups
+;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+(setq ibuffer-show-empty-filter-groups nil)
+
 
 ;; personally added packages
 (prelude-require-packages '(visual-regexp relative-line-numbers
