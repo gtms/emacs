@@ -132,13 +132,53 @@
 (when (fboundp 'smartparens-mode)
   (add-hook 'emacs-lisp-mode-hook 'smartparens-mode))
 
+
 ;; Configuring EMACS: making TRAMP use ssh-agent
 ;; 22May2014
 ;; http://dietbuddha.blogspot.be/2012/04/configuring-emacs-making-tramp-use-ssh.html
 (setenv "SSH_AUTH_SOCK" (concat (getenv "HOME") "/.ssh-auth-sock"))
 
+
+;; ibuffer related content
+;; see http://www.emacswiki.org/emacs/IbufferMode
+;; 30Jul2014
+
+;; Use human readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size" :inline t)
+  (cond
+   ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+   ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
+   ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+   (t (format "%8d" (buffer-size)))))
+
+;; Modify the default ibuffer-formats
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 18 18 :left :elide)
+              " "
+              (size-h 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              filename-and-process)))
+
+;; From ibuffer-vc.el
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-vc-set-filter-groups-by-vc-root)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              (ibuffer-do-sort-by-alphabetic))))
+
+;; From ibuffer-tramp.el
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-tramp-set-filter-groups-by-tramp-connection)
+            (ibuffer-do-sort-by-alphabetic)))
+
+
 ;; personally added packages
 (prelude-require-packages '(visual-regexp relative-line-numbers
-ibuffer-vc 2048-game))
+ibuffer-vc ibuffer-tramp 2048-game))
 
 ;;; personal.el ends here
