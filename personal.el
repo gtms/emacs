@@ -194,8 +194,13 @@
 (setq ibuffer-show-empty-filter-groups nil)
 
 
+;; configures global hungry-delete-mode
+;; 01Aug2014
+(global-hungry-delete-mode)
+
+
 ;; personally added packages
 (prelude-require-packages '(visual-regexp relative-line-numbers
-ibuffer-vc ibuffer-tramp 2048-game))
+ibuffer-vc ibuffer-tramp hungry-delete 2048-game))
 
 ;;; personal.el ends here
