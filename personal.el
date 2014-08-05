@@ -201,6 +201,6 @@
 
 ;; personally added packages
 (prelude-require-packages '(visual-regexp relative-line-numbers
-ibuffer-vc ibuffer-tramp hungry-delete 2048-game))
+ibuffer-vc ibuffer-tramp hungry-delete polymode 2048-game))
 
 ;;; personal.el ends here
