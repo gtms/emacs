@@ -199,8 +199,17 @@
 (global-hungry-delete-mode)
 
 
+;; configures exec-path-from-shell
+;; 08Sep2014
+(exec-path-from-shell-initialize)
+
+
 ;; personally added packages
 (prelude-require-packages '(visual-regexp relative-line-numbers
-ibuffer-vc ibuffer-tramp hungry-delete 2048-game))
+                                          ibuffer-vc
+                                          ibuffer-tramp
+                                          hungry-delete
+                                          exec-path-from-shell
+                                          2048-game))
 
 ;;; personal.el ends here
