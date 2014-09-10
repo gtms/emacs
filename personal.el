@@ -36,13 +36,11 @@
                             visual-regexp
                             relative-line-numbers
                             ibuffer-vc
-                            ibuffer-tramp
                             hungry-delete
                             exec-path-from-shell
                             smart-mode-line
                             ess
                             ess-R-data-view
-                            ess-R-object-popup
                             2048-game))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -67,11 +65,6 @@
 ;; my org-mode stuff
 ;; 25Feb2014
 (add-hook 'org-mode-hook 'org-indent-mode)
-
-;; sets up ess-R-object-popup
-;; 19Feb2014
-(require 'ess-R-object-popup)
-(define-key ess-mode-map "\C-c\C-g" 'ess-R-object-popup)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: personal hacks
@@ -204,12 +197,6 @@
             (ibuffer-vc-set-filter-groups-by-vc-root)
             (unless (eq ibuffer-sorting-mode 'alphabetic)
               (ibuffer-do-sort-by-alphabetic))))
-
-;; From ibuffer-tramp.el
-;; (add-hook 'ibuffer-hook
-;;           (lambda ()
-;;             (ibuffer-tramp-set-filter-groups-by-tramp-connection)
-;;             (ibuffer-do-sort-by-alphabetic)))
 
 ;; turn off ibuffer-show-empty-filter-groups
 ;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
