@@ -9,25 +9,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: prelude stuff
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller
-;; the argument is a width in pixels (the default is 8)
-(if (fboundp 'fringe-mode)
-    (fringe-mode 8))
-
-;; disables proced ("C-x p" is too often accidentally typed)
-;; 13Jan2014
-;; proced was replaced by vkill on prelude: disable vkill instead
-;; 29Jul2014
-(put 'vkill 'disabled t)
-
-;; cancels key-chords defined by prelude-key-chord.el
-;; 27Jan2014
-;; undo-tree-visualize
-;; (key-chord-define-global "uu" nil)
-;; execute-extended-command
-(key-chord-define-global "xx" nil)
-;; browse-kill-ring
-;; (key-chord-define-global "yy" nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection:prelude-require
@@ -70,6 +51,29 @@
 ;; my org-mode stuff
 ;; 25Feb2014
 (add-hook 'org-mode-hook 'org-indent-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; subsection: reconfigure prelude
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller
+;; the argument is a width in pixels (the default is 8)
+(if (fboundp 'fringe-mode)
+    (fringe-mode 8))
+
+;; disables proced ("C-x p" is too often accidentally typed)
+;; 13Jan2014
+;; proced was replaced by vkill on prelude: disable vkill instead
+;; 29Jul2014
+(put 'vkill 'disabled t)
+
+;; cancels key-chords defined by prelude-key-chord.el
+;; 27Jan2014
+;; undo-tree-visualize
+;; (key-chord-define-global "uu" nil)
+;; execute-extended-command
+(key-chord-define-global "xx" nil)
+;; browse-kill-ring
+;; (key-chord-define-global "yy" nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: personal hacks
