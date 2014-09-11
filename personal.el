@@ -20,6 +20,7 @@
                             hungry-delete
                             exec-path-from-shell
                             smart-mode-line
+                            powerline
                             ess
                             ess-R-data-view
                             2048-game))
