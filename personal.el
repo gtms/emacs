@@ -28,6 +28,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: package configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Adds ESS-specific smartparens hooks
+;;
+;; adds hook for smartparens
+;; 19Feb2014
+(add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
+(add-hook 'ess-post-run-hook 'smartparens-mode)
+;; Solves M-r keybinding conflict:
+;; calls for comint-history-isearch-backward-regexp in ess
+;; and for sp-splice-sexp-killing-around in smartparens
+;; Here we choose to keep the ess functionality
+;; 21Feb2014
+(add-hook 'smartparens-mode-hook
+          (lambda ()
+            (define-key smartparens-mode-map [?\M-r] nil)))
+
 ;; Configures ido-vertical-mode
 (require 'ido-vertical-mode)
 (ido-mode 1)
