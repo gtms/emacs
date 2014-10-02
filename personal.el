@@ -20,10 +20,18 @@
                             hungry-delete
                             exec-path-from-shell
                             smart-mode-line
+                            ;; smart-mode-line-powerline-theme
                             powerline
                             ess
                             ess-R-data-view
                             2048-game))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; section: my keybindings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bind C-o to ace-window
+;; 02Oct2014
+(global-set-key (kbd "C-x o") 'ace-window)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: package configuration
@@ -53,6 +61,7 @@
 (require 'smart-mode-line)
 (sml/setup)
 (sml/apply-theme 'respectful)
+;; (sml/apply-theme 'powerline)
 
 ;; configures exec-path-from-shell
 ;; 08Sep2014
