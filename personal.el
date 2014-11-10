@@ -163,7 +163,7 @@
     (set-buffer-modified-p nil)))
 
 (defadvice dired-readin
-  (after dired-after-updating-hook first () activate)
+    (after dired-after-updating-hook first () activate)
   "Sort dired listings with directories first before adding mark."
   (mydired-sort))
 (put 'dired-find-alternate-file 'disabled nil)
