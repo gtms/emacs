@@ -78,6 +78,7 @@
 (add-hook 'org-mode-hook 'org-indent-mode)
 
 ;; Configures RefteX
+;; 05Feb2015
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
 
