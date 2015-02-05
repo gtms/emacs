@@ -249,33 +249,4 @@
 ;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
 (setq ibuffer-show-empty-filter-groups nil)
 
-
-;; configures global hungry-delete-mode
-;; 01Aug2014
-(global-hungry-delete-mode)
-
-;; configures polymode
-;; 06Aug2014
-;;; MARKDOWN
-(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
-
-;;; ORG
-(add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode))
-
-;;; R related modes
-(add-to-list 'auto-mode-alist '("\\.Snw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
-(add-to-list 'auto-mode-alist '("\\.rapport" . poly-rapport-mode))
-(add-to-list 'auto-mode-alist '("\\.Rhtml" . poly-html+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rbrew" . poly-brew+r-mode))
-(add-to-list 'auto-mode-alist '("\\.Rcpp" . poly-r+c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cppR" . poly-c++r-mode))
-
-(provide 'polymode-configuration)
-
-;; personally added packages
-(prelude-require-packages '(visual-regexp relative-line-numbers
-ibuffer-vc ibuffer-tramp hungry-delete polymode 2048-game))
-
 ;;; personal.el ends here
