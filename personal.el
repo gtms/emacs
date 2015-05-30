@@ -101,7 +101,7 @@
 ;; undo-tree-visualize
 ;; (key-chord-define-global "uu" nil)
 ;; execute-extended-command
-(key-chord-define-global "xx" nil)
+;; (key-chord-define-global "xx" nil)
 ;; browse-kill-ring
 ;; (key-chord-define-global "yy" nil)
 
