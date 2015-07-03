@@ -19,6 +19,7 @@
                             ibuffer-vc
                             hungry-delete
                             exec-path-from-shell
+                            zotelo
                             smart-mode-line
                             ;; smart-mode-line-powerline-theme
                             powerline
@@ -55,6 +56,7 @@
 (require 'ido-vertical-mode)
 (ido-mode 1)
 (ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
 
 ;; Configures smart-mode-line
 ;; 10Sep2014
@@ -82,6 +84,12 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
 
+;; Configures zotelo
+;; 21Feb2015
+;; from zotelo.el
+(require 'zotelo)
+(add-hook 'TeX-mode-hook 'zotelo-minor-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: reconfigure prelude
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -104,6 +112,8 @@
 ;; (key-chord-define-global "xx" nil)
 ;; browse-kill-ring
 ;; (key-chord-define-global "yy" nil)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: personal hacks
@@ -137,6 +147,43 @@
 ;; configures global hungry-delete-mode
 ;; 01Aug2014
 (global-hungry-delete-mode)
+;; uncomment this to use default theme
+;; (disable-theme 'zenburn)
+;; toggle letter case
+;; (defun toggle-letter-case ()
+;;   "Toggle the letter case of current word or text selection.
+;; Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
+;;   (interactive)
+;;   (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
+;;     (if (region-active-p)
+;;         (setq p1 (region-beginning) p2 (region-end))
+;;       (let ((bds (bounds-of-thing-at-point 'word) ) )
+;;         (setq p1 (car bds) p2 (cdr bds)) ) )
+
+;;     (when (not (eq last-command this-command))
+;;       (save-excursion
+;;         (goto-char p1)
+;;         (cond
+;;          ((looking-at "[[:lower:]][[:lower:]]") (put this-command 'state "all lower"))
+;;          ((looking-at "[[:upper:]][[:upper:]]") (put this-command 'state "all caps") )
+;;          ((looking-at "[[:upper:]][[:lower:]]") (put this-command 'state "init caps") )
+;;          ((looking-at "[[:lower:]]") (put this-command 'state "all lower"))
+;;          ((looking-at "[[:upper:]]") (put this-command 'state "all caps") )
+;;          (t (put this-command 'state "all lower") ) ) )
+;;       )
+
+;;     (cond
+;;      ((string= "all lower" (get this-command 'state))
+;;       (upcase-initials-region p1 p2) (put this-command 'state "init caps"))
+;;      ((string= "init caps" (get this-command 'state))
+;;       (upcase-region p1 p2) (put this-command 'state "all caps"))
+;;      ((string= "all caps" (get this-command 'state))
+;;       (downcase-region p1 p2) (put this-command 'state "all lower")) )
+;;     )
+;;   )
+;;set this to M-c
+;; (global-set-key "\M-c" 'toggle-letter-case)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: former modifications
