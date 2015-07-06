@@ -62,7 +62,7 @@
 ;; 10Sep2014
 (require 'smart-mode-line)
 (sml/setup)
-(sml/apply-theme 'respectful)
+;; (sml/apply-theme 'respectful)
 ;; (sml/apply-theme 'powerline)
 
 ;; configures exec-path-from-shell
