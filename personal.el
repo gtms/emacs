@@ -90,6 +90,10 @@
 (require 'zotelo)
 (add-hook 'TeX-mode-hook 'zotelo-minor-mode)
 
+;; Activates rich-minority-mode
+;; 06Jul2015
+(rich-minority-mode 1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: reconfigure prelude
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
