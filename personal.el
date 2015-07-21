@@ -19,16 +19,19 @@
                             ibuffer-vc
                             hungry-delete
                             exec-path-from-shell
+                            hydra
+                            define-word
                             zotelo
-                            smart-mode-line
-                            ;; smart-mode-line-powerline-theme
+                            smart-mode-line-powerline-theme
+                            solarized-theme
+                            gotham-theme
                             powerline
                             ess
                             ess-R-data-view
                             2048-game))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; section: my keybindings
+;; section: my key-bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bind C-o to ace-window
 ;; 02Oct2014
@@ -53,16 +56,16 @@
             (define-key smartparens-mode-map [?\M-r] nil)))
 
 ;; Configures ido-vertical-mode
-(require 'ido-vertical-mode)
+;; (require 'ido-vertical-mode)
 (ido-mode 1)
 (ido-vertical-mode 1)
-(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+;; (setq ido-vertical-define-keys 'C-n-and-C-p-only)
 
 ;; Configures smart-mode-line
 ;; 10Sep2014
-(require 'smart-mode-line)
+;; (require 'smart-mode-line)
 (sml/setup)
-;; (sml/apply-theme 'respectful)
+(sml/apply-theme 'automatic)
 ;; (sml/apply-theme 'powerline)
 
 ;; configures exec-path-from-shell
