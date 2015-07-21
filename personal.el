@@ -90,7 +90,7 @@
 ;; Configures zotelo
 ;; 21Feb2015
 ;; from zotelo.el
-(require 'zotelo)
+;; (require 'zotelo)
 (add-hook 'TeX-mode-hook 'zotelo-minor-mode)
 
 ;; Activates rich-minority-mode
@@ -119,7 +119,6 @@
 ;; (key-chord-define-global "xx" nil)
 ;; browse-kill-ring
 ;; (key-chord-define-global "yy" nil)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -166,7 +165,6 @@
 ;;         (setq p1 (region-beginning) p2 (region-end))
 ;;       (let ((bds (bounds-of-thing-at-point 'word) ) )
 ;;         (setq p1 (car bds) p2 (cdr bds)) ) )
-
 ;;     (when (not (eq last-command this-command))
 ;;       (save-excursion
 ;;         (goto-char p1)
@@ -178,7 +176,6 @@
 ;;          ((looking-at "[[:upper:]]") (put this-command 'state "all caps") )
 ;;          (t (put this-command 'state "all lower") ) ) )
 ;;       )
-
 ;;     (cond
 ;;      ((string= "all lower" (get this-command 'state))
 ;;       (upcase-initials-region p1 p2) (put this-command 'state "init caps"))
@@ -240,7 +237,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
-(require 'ess-site)
+;; (require 'ess-site)
 (add-hook 'ess-mode-hook 'turn-on-orgstruct)
 ;; adds hook for smartparens
 ;; 19Feb2014
