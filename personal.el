@@ -223,12 +223,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; initializes ess and adds hook for orgstruct-mode
 ;; 07Jan2014
-;; (require 'ess-site)
+(require 'ess-site)
 (add-hook 'ess-mode-hook 'turn-on-orgstruct)
 ;; adds hook for smartparens
 ;; 19Feb2014
-;; (add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
-;; (add-hook 'ess-post-run-hook 'smartparens-mode)
+(add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
+(add-hook 'ess-post-run-hook 'smartparens-mode)
 ;; Solves M-r keybinding conflict:
 ;; calls for comint-history-isearch-backward-regexp in ess
 ;; and for sp-splice-sexp-killing-around in smartparens
