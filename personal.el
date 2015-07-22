@@ -83,6 +83,26 @@
 ;; 06Jul2015
 (rich-minority-mode 1)
 
+;; Configures smartparens
+;; core/prelude-editor.el, line 85, imposes paredit as sp-base-key-bindings
+;; we want it to become smartparens
+;; 22Jul2015
+;; (require 'smartparens-config)
+;; (setq sp-base-key-bindings 'smartparens)
+;; (sp-use-smartparens-bindings)
+;; Solves M-r keybinding conflict:
+;; calls for comint-history-isearch-backward-regexp in ess
+;; and for sp-splice-sexp-killing-around in smartparens
+;; Here we choose to keep the ess functionality
+;; 21Feb2014
+(add-hook 'smartparens-mode-hook
+          (lambda ()
+            (define-key smartparens-mode-map [?\M-r] nil)))
+;; define keybindings for sp-kill-sexp and for sp-copy-sexp
+(define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+(define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: reconfigure prelude
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -229,14 +249,6 @@
 ;; 19Feb2014
 (add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
 (add-hook 'ess-post-run-hook 'smartparens-mode)
-;; Solves M-r keybinding conflict:
-;; calls for comint-history-isearch-backward-regexp in ess
-;; and for sp-splice-sexp-killing-around in smartparens
-;; Here we choose to keep the ess functionality
-;; 21Feb2014
-(add-hook 'smartparens-mode-hook
-          (lambda ()
-            (define-key smartparens-mode-map [?\M-r] nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: replace-colorthemes
