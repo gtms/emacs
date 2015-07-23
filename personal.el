@@ -81,7 +81,7 @@
 
 ;; Activates rich-minority-mode
 ;; 06Jul2015
-(rich-minority-mode 1)
+;; (rich-minority-mode 1)
 
 ;; Configures smartparens
 ;; core/prelude-editor.el, line 85, imposes paredit as sp-base-key-bindings
