@@ -126,6 +126,13 @@
 ;; browse-kill-ring
 ;; (key-chord-define-global "yy" nil)
 
+;; rebinds C-- and C-+ to negative and positive arguments respectively,
+;; overriding code on prelude-global-keybindings.el (previously bound to
+;; text-scale-increase/decrease)
+;; 03Aug2015
+(global-set-key (kbd "C--") 'negative-argument)
+(global-set-key (kbd "C-+") 'positive-argument)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; section: personal hacks
