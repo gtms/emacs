@@ -255,7 +255,10 @@
 ;; adds hook for smartparens
 ;; 19Feb2014
 (add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
-(add-hook 'ess-post-run-hook 'smartparens-mode)
+;; 07Aug2015
+(add-hook 'ess-mode-hook 'turn-on-smartparens-strict-mode)
+;; (add-hook 'ess-post-run-hook 'smartparens-mode)
+;; (add-hook 'ess-post-run-hook 'turn-on-smartparens-strict-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: replace-colorthemes
