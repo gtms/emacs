@@ -168,6 +168,9 @@
 ;; configures global hungry-delete-mode
 ;; 01Aug2014
 (global-hungry-delete-mode)
+;; 24Aug2015
+(global-set-key (kbd "C-<delete>") 'hungry-delete-forward)
+(global-set-key (kbd "C-<backspace>") 'hungry-delete-backward)
 ;; uncomment this to use default theme
 ;; (disable-theme 'zenburn)
 ;; toggle letter case
