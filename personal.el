@@ -99,8 +99,10 @@
           (lambda ()
             (define-key smartparens-mode-map [?\M-r] nil)))
 ;; define keybindings for sp-kill-sexp and for sp-copy-sexp
-(define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
-(define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
+;; (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+;; (define-key smartparens-mode-map (kbd "C-M-w") 'sp-copy-sexp)
+(define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-backward-kill-sexp)
+(setq sp-hybrid-kill-excessive-whitespace t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
