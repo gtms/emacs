@@ -254,11 +254,15 @@
 (add-hook 'ess-mode-hook 'turn-on-orgstruct)
 ;; adds hook for smartparens
 ;; 19Feb2014
-(add-hook 'ess-mode-hook (lambda () (smartparens-mode 1)))
+;; (add-hook 'ess-mode-load-hook (lambda () (smartparens-mode 1)))
 ;; 07Aug2015
-(add-hook 'ess-mode-hook 'turn-on-smartparens-strict-mode)
+;; (add-hook 'ess-mode-load-hook 'turn-on-smartparens-strict-mode)
 ;; (add-hook 'ess-post-run-hook 'smartparens-mode)
 ;; (add-hook 'ess-post-run-hook 'turn-on-smartparens-strict-mode)
+(add-hook 'ess-mode-hook 'smartparens-mode)
+(add-hook 'ess-mode-hook 'smartparens-strict-mode)
+(add-hook 'ess-R-post-run-hook 'smartparens-mode)
+(add-hook 'ess-R-post-run-hook 'smartparens-strict-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: replace-colorthemes
