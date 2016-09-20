@@ -14,17 +14,20 @@
 ;; subsection:prelude-require
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (prelude-require-packages '(ido-vertical-mode
+                            org-bullets
                             visual-regexp
                             relative-line-numbers
                             ibuffer-vc
                             hungry-delete
                             exec-path-from-shell
-                            hydra
+                            ;; hydra
                             define-word
+                            synonymous
                             zotelo
                             smart-mode-line-powerline-theme
                             solarized-theme
                             gotham-theme
+                            base16-theme
                             powerline
                             ess
                             ess-R-data-view
@@ -67,6 +70,9 @@
 ;; my org-mode stuff
 ;; 25Feb2014
 (add-hook 'org-mode-hook 'org-indent-mode)
+;; 07Mar2016
+;; (require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;; Configures RefteX
 ;; 05Feb2015
@@ -146,8 +152,8 @@
 ;; toggles delete-selection-mode on
 (delete-selection-mode 1)
 ;; toggles display-time mode on
-(setq display-time-day-and-date t)
-(display-time)
+;; (setq display-time-day-and-date t)
+;; (display-time)
 ;; removes all scroll bars
 (scroll-bar-mode -1)
 ;; activates blink-cursor-mode
@@ -229,6 +235,12 @@
 (tramp-set-completion-function "ssh"
                                '((tramp-parse-sconfig "/etc/ssh_config")
                                  (tramp-parse-sconfig "~/.ssh/config")))
+
+;; 06Sep2015
+;; (setq tramp-shell-prompt-pattern "^[^$>\n]*[#$%>]*\\(\[[0-9;]*[a-zA-Z]*\\)*")
+;; (eval-after-load 'tramp '(setenv "PAGER" "/bin/cat"))
+(setq tramp-default-method "ssh")
+;; (setq tramp-verbose 10)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; subsection: dired stuff
