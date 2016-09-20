@@ -14,7 +14,8 @@
 
 (cond
  ((string-equal system-type "gnu/linux")
-  (setq prelude-theme 'solarized-light)
+  (setq prelude-theme 'base16-eighties-dark)
+  ;; (setq prelude-theme 'base16-atelierseaside-dark)
   )
  )
 
