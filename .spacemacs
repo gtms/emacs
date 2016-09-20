@@ -39,6 +39,7 @@ values."
      latex
      ibuffer
      osx
+     shell-scripts
      ;; private layers
      (ess :variables
           ;; ess-enable-smart-equals t
@@ -55,6 +56,7 @@ values."
                                       zop-to-char
                                       key-chord
                                       imenu-anywhere
+                                      zotelo
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -268,7 +270,8 @@ you should place you code here."
   ;; personal configurations
   (setq powerline-default-separator 'nil)
   (delete-selection-mode 1)
-  
+  (setq sentence-end-double-space t)
+
   ;; smartparens
   (sp-use-paredit-bindings)
 
@@ -278,6 +281,9 @@ you should place you code here."
 
   ;; easy-kill
   (global-set-key [remap kill-ring-save] 'easy-kill)
+
+  ;; zotelo
+  (add-hook 'TeX-mode-hook 'zotelo-minor-mode)
 
   ;; discover-my-major
   (define-key 'help-command (kbd "C-m") 'discover-my-major)
@@ -296,6 +302,11 @@ you should place you code here."
   ;; imenu-anywhere
   (global-set-key (kbd "C-c i") 'imenu-anywhere)
 
+  ;; auto-complete
+  (setq-default dotspacemacs-configuration-layers
+                '((auto-completion :variables
+                                   auto-completion-enable-sort-by-usage t)))
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Prelude
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -305,15 +316,15 @@ you should place you code here."
   ;; Font size
   (global-set-key (kbd "C-+") 'text-scale-increase)
   (global-set-key (kbd "C--") 'text-scale-decrease)
-  
+
   ;; Window switching. (C-x o goes to the next window)
   (global-set-key (kbd "C-x O") (lambda ()
                                   (interactive)
                                   (other-window -1))) ;; back one
-  
+
   ;; A quick major mode help with discover-my-major
   (define-key 'help-command (kbd "C-m") 'discover-my-major)
-  
+
   (define-key 'help-command (kbd "C-f") 'find-function)
   (define-key 'help-command (kbd "C-k") 'find-function-on-key)
   (define-key 'help-command (kbd "C-v") 'find-variable)
@@ -330,6 +341,14 @@ you should place you code here."
 
   (global-set-key (kbd "C-=") 'er/expand-region)
 
+  (defun prelude-switch-to-previous-buffer ()
+    "Switch to previously open buffer.
+Repeated invocations toggle between the two most recently open buffers."
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+  (require 'key-chord)
+
   (key-chord-define-global "jj" 'avy-goto-word-1)
   (key-chord-define-global "jl" 'avy-goto-line)
   (key-chord-define-global "jk" 'avy-goto-char)
@@ -337,6 +356,20 @@ you should place you code here."
   (key-chord-define-global "uu" 'undo-tree-visualize)
   ;; (key-chord-define-global "xx" 'execute-extended-command)
   (key-chord-define-global "yy" 'browse-kill-ring)
+
+  (key-chord-mode +1)
+
+  (defun prelude-get-positions-of-line-or-region ()
+    "Return positions (beg . end) of the current line
+or region."
+    (let (beg end)
+      (if (and mark-active (> (point) (mark)))
+          (exchange-point-and-mark))
+      (setq beg (line-beginning-position))
+      (if mark-active
+          (exchange-point-and-mark))
+      (setq end (line-end-position))
+      (cons beg end)))
 
   (defun prelude-duplicate-current-line-or-region (arg)
     "Duplicates the current line or region ARG times.
@@ -354,11 +387,50 @@ be duplicated."
           (insert region)
           (setq end (point))))
       (goto-char (+ origin (* (length region) arg) arg))))
+
   (global-set-key (kbd "C-c d") 'prelude-duplicate-current-line-or-region)
-  
-  ;; (define-key map (kbd "C-c g") 'prelude-google)]
-  
-)
+
+  (defcustom prelude-indent-sensitive-modes
+    '(conf-mode coffee-mode haml-mode python-mode slim-mode yaml-mode)
+    "Modes for which auto-indenting is suppressed."
+    :type 'list
+    :group 'prelude)
+
+  (defun prelude-cleanup-buffer-or-region ()
+    "Cleanup a region if selected, otherwise the whole buffer."
+    (interactive)
+    (call-interactively 'untabify)
+    (unless (member major-mode prelude-indent-sensitive-modes)
+      (call-interactively 'indent-region))
+    (whitespace-cleanup))
+
+  (global-set-key (kbd "C-c n") 'prelude-cleanup-buffer-or-region)
+
+  (defun prelude-search (query-url prompt)
+    "Open the search url constructed with the QUERY-URL.
+PROMPT sets the `read-string prompt."
+    (browse-url
+     (concat query-url
+             (url-hexify-string
+              (if mark-active
+                  (buffer-substring (region-beginning) (region-end))
+                (read-string prompt))))))
+
+  (defmacro prelude-install-search-engine (search-engine-name search-engine-url search-engine-prompt)
+    "Given some information regarding a search engine, install the interactive command to search through them"
+    `(defun ,(intern (format "prelude-%s" search-engine-name)) ()
+       ,(format "Search %s with a query or region if any." search-engine-name)
+       (interactive)
+       (prelude-search ,search-engine-url ,search-engine-prompt)))
+
+  (prelude-install-search-engine "google"     "http://www.google.com/search?q="              "Google: ")
+  (prelude-install-search-engine "youtube"    "http://www.youtube.com/results?search_query=" "Search YouTube: ")
+  (prelude-install-search-engine "github"     "https://github.com/search?q="                 "Search GitHub: ")
+  (prelude-install-search-engine "duckduckgo" "https://duckduckgo.com/?t=lm&q="              "Search DuckDuckGo: ")
+
+  (global-set-key (kbd "C-c g") 'prelude-google)
+
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
