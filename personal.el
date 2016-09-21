@@ -3,7 +3,6 @@
 ;;; Commentary:
 ;; This program contains personal modifications to Emacs Prelude
 ;; To be symlinked into ~/.emacs.d/personal/
-
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
