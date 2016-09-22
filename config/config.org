@@ -261,25 +261,25 @@ file:
     (setq org-bullets-bullet-list '("•")))
 
   ;; beamer export
-  (eval-after-load "org"
-    '(require 'ox-beamer))
+  ;; (eval-after-load "org"
+  ;;   '(require 'ox-beamer))
 
-  (use-package ox-reveal :ensure ox-reveal
-    :config
-    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
-    (setq org-reveal-mathjax t))
+  ;; (use-package ox-reveal :ensure ox-reveal
+  ;;   :config
+  ;;   (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+  ;;   (setq org-reveal-mathjax t))
 
   ;; For code fragments typesetting
   ;; http://orgmode.org/worg/org-tutorials/org-latex-preview.html
-  (setq org-latex-listings 'minted)
-  (require 'ox-latex)
+  ;; (setq org-latex-listings 'minted)
+  ;; (require 'ox-latex)
   ;; code highlight for latex org export
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
   ;; add a nice font to org latex export
-  (add-to-list 'org-latex-packages-alist '("" "libertine"))
+  ;; (add-to-list 'org-latex-packages-alist '("" "libertine"))
 
   ;; preview latex in org mode with imagemagick
-  (setq org-latex-create-formula-image-program 'imagemagick)
+  ;; (setq org-latex-create-formula-image-program 'imagemagick)
 
   ;; Org babel and source blocks
   (setq org-src-fontify-natively t
@@ -290,7 +290,7 @@ file:
         org-export-babel-evaluate nil
         org-confirm-babel-evaluate nil) ; doesn't ask for confirmation
 
-       ;;; display/update images in the buffer after I evaluate
+  ;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 
   ;; This is for remove the annoying background color on the headings, level 1
@@ -562,8 +562,8 @@ problematic?]]
   :config
   (progn
     (add-hook 'ess-mode-hook 'company-mode)
-    (add-hook 'ess-mode-hook 'ess-smart-equals-mode)
-    (add-hook 'inferior-ess-mode-hook 'ess-smart-equals-mode)
+    ;; (add-hook 'ess-mode-hook 'ess-smart-equals-mode)
+    ;; (add-hook 'inferior-ess-mode-hook 'ess-smart-equals-mode)
     (add-hook 'ess-mode-hook 'turn-on-orgstruct)
     (add-hook 'ess-mode-hook 'smartparens-mode)
     (add-hook 'ess-mode-hook 'smartparens-strict-mode)
