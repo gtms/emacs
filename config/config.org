@@ -339,7 +339,7 @@ General options.
   (transient-mark-mode nil)
   (setq org-log-done 'time) ;Log the time a task is completed.
   (setq org-habit-graph-column 50) ;position the habit graph on the agenda to
-                                   ;the right of the default
+                                        ;the right of the default
   (setq org-hide-emphasis-markers nil)
   (setq inhibit-splash-screen t)
   (setq org-indent-mode t) ;indent the headings for clean view
