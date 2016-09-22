@@ -111,8 +111,8 @@ Basic syntax:
 
 * Prelude Hacks
 #+BEGIN_SRC emacs-lisp
-  ;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller
-  ;; the argument is a width in pixels (the default is 8)
+  ;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller the
+  ;; argument is a width in pixels (the default is 8)
   (if (fboundp 'fringe-mode)
       (fringe-mode 8))
   ;; proced was replaced by vkill on prelude: disable vkill instead
