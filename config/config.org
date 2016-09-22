@@ -14,8 +14,8 @@ a bind key or a specific mode).
 
 * Personal information
 #+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Gil Tomás"
-        user-mail-address "gil.tms@gmail.com")
+(setq user-full-name "Gil Tomás"
+      user-mail-address "gil.tms@gmail.com")
 #+END_SRC
 
 * Loading config.org
@@ -24,8 +24,8 @@ Using the method described [[http://www.holgerschurig.de/en/emacs-efficiently-un
 
 *** Package management
 #+BEGIN_SRC emacs-lisp
-  (package-initialize nil)
-  (setq package-enable-at-startup nil)
+(package-initialize nil)
+(setq package-enable-at-startup nil)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -94,36 +94,36 @@ Basic syntax:
   (require 'use-package))
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)
-;(setq use-package-verbose t)
+                                        ;(setq use-package-verbose t)
 #+END_SRC
 
 * Custom settings
 #+BEGIN_SRC emacs-lisp
-  (setq custom-file (expand-file-name "custom.el"
-  prelude-user-init-file))
-  (load custom-file)
+(setq custom-file (expand-file-name "custom.el"
+                                    prelude-user-init-file))
+(load custom-file)
 #+END_SRC
 
 * Global Key Bindings
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x o") 'ace-window)
+(global-set-key (kbd "C-x o") 'ace-window)
 #+END_SRC
 
 * Prelude Hacks
 #+BEGIN_SRC emacs-lisp
-  ;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller the
-  ;; argument is a width in pixels (the default is 8)
-  (if (fboundp 'fringe-mode)
-      (fringe-mode 8))
-  ;; proced was replaced by vkill on prelude: disable vkill instead
-  ;; 29Jul2014
-  (put 'vkill 'disabled t)
-  ;; rebinds C-- and C-+ to negative and positive arguments respectively,
-  ;; overriding code on prelude-global-keybindings.el (previously bound to
-  ;; text-scale-increase/decrease)
-  ;; 03Aug2015
-  (global-set-key (kbd "C--") 'negative-argument)
-  (global-set-key (kbd "C-+") 'positive-argument)
+;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller
+;; the argument is a width in pixels (the default is 8)
+(if (fboundp 'fringe-mode)
+    (fringe-mode 8))
+;; proced was replaced by vkill on prelude: disable vkill instead
+;; 29Jul2014
+(put 'vkill 'disabled t)
+;; rebinds C-- and C-+ to negative and positive arguments respectively,
+;; overriding code on prelude-global-keybindings.el (previously bound to
+;; text-scale-increase/decrease)
+;; 03Aug2015
+(global-set-key (kbd "C--") 'negative-argument)
+(global-set-key (kbd "C-+") 'positive-argument)
 #+END_SRC
 
 * Font
@@ -135,70 +135,70 @@ Download
 | [[https://fontlibrary.org/pt/font/fantasque-sans-mono][Fantasque Sans mono]] |
 | [[http://leonardo-m.livejournal.com/77079.html][Inconsolata g]]       |
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (set-frame-font "Source Code Pro 14")
 ;; (set-frame-font "Monospace 10")
 ;; (set-frame-font "Dejavu Sans 10")
 ;; (set-frame-font "Fantasque Sans Mono 11")
 ;; (set-frame-font "Inconsolata-g 10")
-#+end_src
+#+END_SRC
 
 * Common defaults
 
 Sources for this section include [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen]] and [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]].
 
 #+BEGIN_SRC emacs-lisp
-      ;; These functions are useful. Activate them.
-      (put 'downcase-region 'disabled nil)
-      (put 'upcase-region 'disabled nil)
-      (put 'narrow-to-region 'disabled nil)
-      (put 'dired-find-alternate-file 'disabled nil)
+;; These functions are useful.  Activate them.
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
 
-      ;; Answering just 'y' or 'n' will do
-      (defalias 'yes-or-no-p 'y-or-n-p)
+;; Answering just 'y' or 'n' will do
+(defalias 'yes-or-no-p 'y-or-n-p)
 
-      ;; UTF-8 please
-      (set-language-environment "UTF-8")
-      (setq locale-coding-system 'utf-8) ; pretty
-      (set-terminal-coding-system 'utf-8) ; pretty
-      (set-keyboard-coding-system 'utf-8) ; pretty
-      (set-selection-coding-system 'utf-8) ; please
-      (prefer-coding-system 'utf-8) ; with sugar on top
-      (setq default-buffer-file-coding-system 'utf-8)
-      (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-      ;; from Sacha page
-      (when (display-graphic-p)
-        (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-      (setq-default indent-tabs-mode nil)
+;; UTF-8 please
+(set-language-environment "UTF-8")
+(setq locale-coding-system 'utf-8) ; pretty
+(set-terminal-coding-system 'utf-8) ; pretty
+(set-keyboard-coding-system 'utf-8) ; pretty
+(set-selection-coding-system 'utf-8) ; please
+(prefer-coding-system 'utf-8) ; with sugar on top
+(setq default-buffer-file-coding-system 'utf-8)
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+;; from Sacha page
+(when (display-graphic-p)
+  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+(setq-default indent-tabs-mode nil)
 
-      (setq uniquify-buffer-name-style 'forward)
+(setq uniquify-buffer-name-style 'forward)
 
-      ;; Don't beep at me
-      (setq visible-bell t)
+;; Don't beep at me
+(setq visible-bell t)
 
-    ;; the following is copied from my previous personal.el
-    ;; 21Sep2014
-    ;; toggles delete-selection-mode on
-    (delete-selection-mode 1)
-    ;; toggles display-time mode on
-    (setq display-time-day-and-date t)
-    (display-time)
-    ;; removes all scroll bars
-    (scroll-bar-mode -1)
-    ;; configures emacs so that word moving commands will move cursor into
-    ;; between CamelCaseWords
-    (global-subword-mode 1)
-    ;; sets set-mark-command-repeat-pop to TRUE
-    ;; non-nil means repeating C-SPC after popping mark pops it again
-    (setq set-mark-command-repeat-pop t)
-    ;; defines variable dired-listing-switches
-    (setq dired-listing-switches "-alh")
-    ;; defines variable orgstruct-heading-prefix-regexp
-    (defvar orgstruct-heading-prefix-regexp)
-    (setq orgstruct-heading-prefix-regexp "## ")
-  ;; The right margin is determined by the variable fill-column.  The default
-  ;; value for fill-column is 70; here we set it to 80.  21Sep2016
-  (setq-default fill-column 80)
+;; the following is copied from my previous personal.el
+;; 21Sep2014
+;; toggles delete-selection-mode on
+(delete-selection-mode 1)
+;; toggles display-time mode on
+(setq display-time-day-and-date t)
+(display-time)
+;; removes all scroll bars
+(scroll-bar-mode -1)
+;; configures emacs so that word moving commands will move cursor into
+;; between CamelCaseWords
+(global-subword-mode 1)
+;; sets set-mark-command-repeat-pop to TRUE
+;; non-nil means repeating C-SPC after popping mark pops it again
+(setq set-mark-command-repeat-pop t)
+;; defines variable dired-listing-switches
+(setq dired-listing-switches "-alh")
+;; defines variable orgstruct-heading-prefix-regexp
+(defvar orgstruct-heading-prefix-regexp)
+(setq orgstruct-heading-prefix-regexp "## ")
+;; The right margin is determined by the variable fill-column.  The default
+;; value for fill-column is 70; here we set it to 80.  21Sep2016
+(setq-default fill-column 80)
 #+END_SRC
 
 Here we make page-break characters look pretty, instead of appearing
@@ -212,129 +212,191 @@ Page-Breaks in GNU Emacs" by Eric J. M. Ritz.]]
 
 * Org mode
 ** Org itself
-   #+BEGIN_SRC emacs-lisp
-     (use-package org
-       :ensure t
-       :mode (("\\.org$" . org-mode))
-       :bind(("C-c a" . org-agenda)
-             ("C-c l" . org-store-link)
-             ("C-c c" . org-capture))
-       :config
-       (add-hook 'org-mode-hook 'smartparens-mode)
-       (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
-       (add-hook 'org-mode-hook 'company-mode)
-       (add-hook 'org-mode-hook 'flyspell-mode)
-       (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :ensure t
+  :mode (("\\.org$" . org-mode))
+  :bind(("C-c a" . org-agenda)
+        ("C-c l" . org-store-link)
+        ("C-c c" . org-capture))
+  :config
+  (add-hook 'org-mode-hook 'smartparens-mode)
+  ;; (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'org-mode-hook 'company-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
-       (use-package org-bullets
-         :ensure t
-         :init
-         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-         ;; (setq org-ellipsis " …")
-         (setq org-bullets-bullet-list '("•")))
+  (use-package org-bullets
+    :ensure t
+    :init
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    ;; (setq org-ellipsis " …")
+    (setq org-bullets-bullet-list '("•")))
 
-        ;; beamer export
-       (eval-after-load "org"
-         '(require 'ox-beamer))
+  ;; beamer export
+  (eval-after-load "org"
+    '(require 'ox-beamer))
 
-       (use-package ox-reveal :ensure ox-reveal
-         :config
-         (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
-         (setq org-reveal-mathjax t))
+  (use-package ox-reveal :ensure ox-reveal
+    :config
+    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+    (setq org-reveal-mathjax t))
 
-       ;; For code fragments typesetting
-       ;; http://orgmode.org/worg/org-tutorials/org-latex-preview.html
-       (setq org-latex-listings 'minted)
-       (require 'ox-latex)
-       ;; code highlight for latex org export
-       (add-to-list 'org-latex-packages-alist '("" "minted"))
-       ;; add a nice font to org latex export
-       (add-to-list 'org-latex-packages-alist '("" "libertine"))
+  ;; For code fragments typesetting
+  ;; http://orgmode.org/worg/org-tutorials/org-latex-preview.html
+  (setq org-latex-listings 'minted)
+  (require 'ox-latex)
+  ;; code highlight for latex org export
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  ;; add a nice font to org latex export
+  (add-to-list 'org-latex-packages-alist '("" "libertine"))
 
-       ;; preview latex in org mode with imagemagick
-       (setq org-latex-create-formula-image-program 'imagemagick)
+  ;; preview latex in org mode with imagemagick
+  (setq org-latex-create-formula-image-program 'imagemagick)
 
-       ;; Org babel and source blocks
-       (setq org-src-fontify-natively t
-             org-src-window-setup 'current-window
-             org-src-strip-leading-and-trailing-blank-lines t
-             org-src-preserve-indentation t
-             org-src-tab-acts-natively t
-             org-export-babel-evaluate nil
-             org-confirm-babel-evaluate nil) ; doesn't ask for confirmation
+  ;; Org babel and source blocks
+  (setq org-src-fontify-natively t
+        org-src-window-setup 'current-window
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t
+        org-src-tab-acts-natively t
+        org-export-babel-evaluate nil
+        org-confirm-babel-evaluate nil) ; doesn't ask for confirmation
 
        ;;; display/update images in the buffer after I evaluate
-       (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 
-       ;; This is for remove the annoying background color on the headings, level 1 and level 2, when using the material-theme.
-       (custom-set-faces
-       '(org-level-1 ((t (:background nil :bold t :overline nil))))
-       '(org-level-2 ((t (:background nil :bold t :overline nil)))))
+  ;; This is for remove the annoying background color on the headings, level 1
+  ;; and level 2, when using the material-theme.
+  (custom-set-faces
+   '(org-level-1 ((t (:background nil :bold t :overline nil))))
+   '(org-level-2 ((t (:background nil :bold t :overline nil)))))
 
-       (setq org-modules '(org-habit))
+  (setq org-modules '(org-habit))
 
-       (eval-after-load 'org
-         '(org-load-modules-maybe t)))
-   #+END_SRC
+  (eval-after-load 'org
+    '(org-load-modules-maybe t)))
+#+END_SRC
 
 ** Agenda and Capture files
 
-   Set agenda files.
+Set agenda files.
 
-   remove done tasks from the agenda, from [[http://stackoverflow.com/questions/8281604/remove-done-tasks-from-agenda-view][this question]].
+remove done tasks from the agenda, from [[http://stackoverflow.com/questions/8281604/remove-done-tasks-from-agenda-view][this question]].
 
-   Set gtd.org as my default notes file
+Set gtd.org as my default notes file
 
-   From [[http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/][This blog entry]], C-c o is set to open the tasks.org
+From [[http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/][This blog entry]], C-c o is set to open the tasks.org
 
-   #+BEGIN_SRC emacs-lisp
-     (use-package org-agenda
-       :defer t
-       :config
-       (setq org-agenda-files
-             (delq nil
-                   (mapcar (lambda (x) (and (file-exists-p x) x))
-                           '("~/Dropbox/org/gtd.org"
-                             "~/Dropbox/org/notes.org"
-                             "~/Dropbox/org/culture.org"))))
-        (custom-set-variables
-       '(org-agenda-skip-scheduled-if-done t)
-       '(org-agenda-skip-deadline-if-done t))
+#+BEGIN_SRC emacs-lisp
+(use-package org-agenda
+  :defer t
+  :config
+  (setq org-agenda-files
+        (delq nil
+              (mapcar (lambda (x) (and (file-exists-p x) x))
+                      '("~/Dropbox/org/gtd.org"
+                        "~/Dropbox/org/notes.org"
+                        "~/Dropbox/org/culture.org"))))
+  (custom-set-variables
+   '(org-agenda-skip-scheduled-if-done t)
+   '(org-agenda-skip-deadline-if-done t))
 
-        (setq org-default-notes-file "~/Dropbox/org/gtb.org"))
-   #+END_SRC
+  (setq org-default-notes-file "~/Dropbox/org/gtb.org"))
+#+END_SRC
 
 ** Org babel/source blocks
 
-I like to have source blocks properly syntax highlighted and with the
-editing popup window staying within the same window so all the windows
-don't jump around. Also, having the top and bottom trailing lines in
-the block is a waste of space, so we can remove them.
+I like to have source blocks properly syntax highlighted and with the editing
+popup window staying within the same window so all the windows don't jump
+around. Also, having the top and bottom trailing lines in the block is a waste
+of space, so we can remove them.
 
-I noticed that fontification doesn't work with markdown mode when the
-block is indented after editing it in the org src buffer---the leading
-#s for headers don't get fontified properly because they appear as Org
-comments. Setting ~org-src-preserve-indentation~ makes things
-consistent as it doesn't pad source blocks with leading spaces.
+I noticed that fontification doesn't work with markdown mode when the block is
+indented after editing it in the org src buffer---the leading #s for headers
+don't get fontified properly because they appear as Org comments. Setting
+~org-src-preserve-indentation~ makes things consistent as it doesn't pad source
+blocks with leading spaces.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (setq org-src-fontify-natively t
       org-src-window-setup 'current-window
       org-src-strip-leading-and-trailing-blank-lines t
       org-src-preserve-indentation t
       org-src-tab-acts-natively t)
-#+end_src
+#+END_SRC
+
+** Options
+Speed up commands. See the doc for speed keys by checking out [[elisp:(info%20"(org)%20speed%20keys")][the documentation
+for speed keys in Org mode]].
+
+General options.
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :defer t
+  :config
+  (setq org-special-ctrl-a/e t)
+  (transient-mark-mode nil)
+  (setq org-log-done 'time) ;Log the time a task is completed.
+  (setq org-habit-graph-column 50) ;position the habit graph on the agenda to
+                                   ;the right of the default
+  (setq org-hide-emphasis-markers nil)
+  (setq inhibit-splash-screen t)
+  (setq org-indent-mode t) ;indent the headings for clean view
+  (setq org-hide-leading-stars t)
+  (setq org-hide-leading-stars-before-indent-mode t)
+  (setq org-odd-levels-only t)
+  (diminish 'org-indent-mode)
+  (setq org-startup-indented t)
+  (setq org-tags-column -66) ;where the tags are places
+  (setq org-use-speed-commands t)) ; speed up commands
+#+END_SRC
+
+Todo sequences.
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :defer t
+  :config
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
+  (setq org-todo-keyword-faces
+        '(("TODO" :background "tomato" :foreground "bisque" :weight bold )
+          ("STARTED" :background "ForestGreen" :foreground "bisque" :weight bold )
+          ("WAITING" :background "DarkOrange" :foreground "bisque" :weight bold )
+          ("DONE" :background "RoyalBlue" :foreground "bisque" :weight bold )
+          ("CANCELLED" :background "grey50" :foreground "bisque" :weight bold )))
+
+  (setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
+  (setq org-cycle-separator-lines 0))
+#+END_SRC
+
+From [[http://stackoverflow.com/questions/28351465/emacs-orgmode-do-not-insert-line-between-headers][This question]], an option for org mode not insert a line between headings.
+
+[[http://orgmode.org/manual/Headlines.html][This reference]] is used to remove an annoying feature of not hiding extra lines
+in a subtree.
+
+From the Org Mode Manual, section [[http://orgmode.org/manual/Conflicts.html][15.10.2]]--Packages that lead to conflicts with
+Org mode:
+
+#+BEGIN_SRC emacs-lisp
+  ;; 22Sep2016
+;; Make windmove work in org-mode:
+  (setq org-support-shift-select t)
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+#+END_SRC
 
 * ELPA packages
 ** AucTex
 *** Basic setup
-Enable
-[[https://www.gnu.org/software/auctex/manual/auctex.html][Auctex]]
-when files with .tex are loaded. Tex-master is useful to make Auctex
-aware of multi-files documents. TeX-PDF mode is used to compile using
+Enable [[https://www.gnu.org/software/auctex/manual/auctex.html][Auctex]] when files with .tex are loaded. Tex-master is useful to make
+Auctex aware of multi-files documents.  TeX-PDF mode is used to compile using
 pdflatex.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (use-package tex-site
   :ensure auctex
   :mode ("\\.tex\\'" . latex-mode)
@@ -358,28 +420,27 @@ pdflatex.
               (setq TeX-source-correlate-method 'synctex)
               (setq TeX-source-correlate-start-server t)))
 
-;https://github.com/politza/pdf-tools/issues/187
+  ;; https://github.com/politza/pdf-tools/issues/187
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
-(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  ;; to use pdfview with auctex
+  (add-hook 'LaTeX-mode-hook 'pdf-tools-install)
+  ;; nil beacuse I don't want the pdf to be opened again in the same frame after C-c C-a
+  ;; (setq TeX-view-program-selection nil)
+  ;; (setq TeX-view-program-selection '((output-pdf "pdf-tools")))
+  ;; (setq TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view")))
 
-;; to use pdfview with auctex
-(add-hook 'LaTeX-mode-hook 'pdf-tools-install)
-;; nil beacuse I don't want the pdf to be opened again in the same frame after C-c C-a
-;; (setq TeX-view-program-selection nil)
-;; (setq TeX-view-program-selection '((output-pdf "pdf-tools")))
-;; (setq TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view")))
+  ;; https://github.com/politza/pdf-tools/pull/60
+  (setq pdf-sync-forward-display-action
+        '(display-buffer-reuse-window (reusable-frames . t)))
+  ;; same thing, now I can jump from pdf in another frame into source
+  (setq pdf-sync-backward-display-action
+        '(display-buffer-reuse-window (reusable-frames . t)))
 
-;; https://github.com/politza/pdf-tools/pull/60
-(setq pdf-sync-forward-display-action
-      '(display-buffer-reuse-window (reusable-frames . t)))
-;; same thing, now I can jump from pdf in another frame into source
-(setq pdf-sync-backward-display-action
-      '(display-buffer-reuse-window (reusable-frames . t)))
-
-; language specific hooks in auctex
-(add-hook 'TeX-language-dk-hook
-      (lambda () (ispell-change-dictionary "brasileiro"))))
-#+end_src
+  ;; language specific hooks in auctex
+  (add-hook 'TeX-language-dk-hook
+            (lambda () (ispell-change-dictionary "brasileiro"))))
+#+END_SRC
 
 *** Company auctex
 
@@ -416,28 +477,27 @@ wiki. This [[https://www.reddit.com/r/emacs/comments/3s5bkf/companymode_configur
 problematic?]]
 
 #+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :diminish company-mode
-    :defer t
-    :config
-    (add-hook 'after-init-hook 'global-company-mode)
-    (setq company-idle-delay 0)
-    (setq company-show-numbers t)
-    (setq company-minimum-prefix-length 3)
-    (delete 'company-capf company-backends))
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :defer t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-idle-delay 0)
+  (setq company-show-numbers t)
+  (setq company-minimum-prefix-length 3)
+  (delete 'company-capf company-backends))
 #+END_SRC
 
 ** Hungry Delete
-  #+BEGIN_SRC emacs-lisp
-    (use-package hungry-delete
-                 :diminish hungry-delete
-                 :defer t
-                 :config
-                 (global-hungry-delete-mode)
-                 (global-set-key (kbd "C-<delete>") 'hungry-delete-forward)
-                 (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package hungry-delete
+  :diminish hungry-delete
+  :config
+  (global-hungry-delete-mode)
+  (global-set-key (kbd "C-<delete>") 'hungry-delete-forward)
+  (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward))
+#+END_SRC
 ** Ido Vertical Mode
 #+BEGIN_SRC emacs-lisp
 (use-package ido-vertical-mode
@@ -450,16 +510,16 @@ problematic?]]
 #+END_SRC
 
 ** Magic Latex Buffer
-   #+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (use-package magic-latex-buffer
   :config
   (add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
   (setq magic-latex-enable-block-highlight nil
-      magic-latex-enable-suscript        t
-      magic-latex-enable-pretty-symbols  t
-      magic-latex-enable-block-align     nil
-      magic-latex-enable-inline-image    nil))
-   #+end_src
+        magic-latex-enable-suscript        t
+        magic-latex-enable-pretty-symbols  t
+        magic-latex-enable-block-align     nil
+        magic-latex-enable-inline-image    nil))
+#+END_SRC
 
 ** Pdf tools
 
@@ -482,34 +542,34 @@ problematic?]]
 and document navigation.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package reftex
-    :ensure t
-    :defer t
-    :config
-    (setq reftex-cite-prompt-optional-args t)); Prompt for empty
-                                              ; optional arguments in
-                                              ; cite
+(use-package reftex
+  :ensure t
+  :defer t
+  :config
+  (setq reftex-cite-prompt-optional-args t)); Prompt for empty
+                                        ; optional arguments in
+                                        ; cite
 #+END_SRC
 
 ** Relative Line Numbers
 #+BEGIN_SRC emacs-lisp
-  (use-package relative-line-numbers
-    :defer t)
+(use-package relative-line-numbers
+  :defer t)
 #+END_SRC
 
 ** Smartparens
 #+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :ensure t
-    :defer t
-    :diminish smartparens-mode
-    :config
-    (smartparens-global-mode)
-    (show-smartparens-global-mode t)
-    (sp-local-pair 'org-mode "_" "_" )
-    (sp-local-pair 'org-mode "*" "*" )
-    (sp-local-pair 'latex-mode "$" "$" )
-    (sp-local-pair 'latex-mode "\\left(" "\\right)" :trigger "\\l("))
+(use-package smartparens
+  :ensure t
+  :defer t
+  :diminish smartparens-mode
+  :config
+  (smartparens-global-mode)
+  (show-smartparens-global-mode t)
+  (sp-local-pair 'org-mode "_" "_" )
+  (sp-local-pair 'org-mode "*" "*" )
+  (sp-local-pair 'latex-mode "$" "$" )
+  (sp-local-pair 'latex-mode "\\left(" "\\right)" :trigger "\\l("))
 #+END_SRC
 
 ** Writegood mode
@@ -536,54 +596,54 @@ in the minibuffer
 
 ** Dired Stuff
 #+BEGIN_SRC emacs-lisp
-  ;; dired sorts directories first from
-  ;; http://www.emacswiki.org/emacs/DiredSortDirectoriesFirst 03Oct2012
-  (defun mydired-sort ()
-    "Sort dired listings with directories first."
-    (save-excursion
-      (let (buffer-read-only)
-        (forward-line 2) ;; beyond dir. header
-        (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-      (set-buffer-modified-p nil)))
+;; dired sorts directories first from
+;; http://www.emacswiki.org/emacs/DiredSortDirectoriesFirst 03Oct2012
+(defun mydired-sort ()
+  "Sort dired listings with directories first."
+  (save-excursion
+    (let (buffer-read-only)
+      (forward-line 2) ;; beyond dir. header
+      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+    (set-buffer-modified-p nil)))
 
-  (defadvice dired-readin
-      (after dired-after-updating-hook first () activate)
-    "Sort dired listings with directories first before adding mark."
-    (mydired-sort))
-  (put 'dired-find-alternate-file 'disabled nil)
+(defadvice dired-readin
+    (after dired-after-updating-hook first () activate)
+  "Sort dired listings with directories first before adding mark."
+  (mydired-sort))
+(put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
 
 ** IBuffer
-   #+BEGIN_SRC emacs-lisp
-     ;; see http://www.emacswiki.org/emacs/IbufferMode 30Jul2014 Use human
-     ;; readable Size column instead of original one
-     (define-ibuffer-column size-h
-       (:name "Size" :inline t)
-       (cond
-        ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-        ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
-        ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-        (t (format "%8d" (buffer-size)))))
+#+BEGIN_SRC emacs-lisp
+;; see http://www.emacswiki.org/emacs/IbufferMode 30Jul2014 Use human
+;; readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size" :inline t)
+  (cond
+   ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+   ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
+   ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+   (t (format "%8d" (buffer-size)))))
 
-     ;; Modify the default ibuffer-formats
-     (setq ibuffer-formats
-           '((mark modified read-only " "
-                   (name 18 18 :left :elide)
-                   " "
-                   (size-h 9 -1 :right)
-                   " "
-                   (mode 16 16 :left :elide)
-                   " "
-                   filename-and-process)))
+;; Modify the default ibuffer-formats
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 18 18 :left :elide)
+              " "
+              (size-h 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              filename-and-process)))
 
-     ;; From ibuffer-vc.el
-     (add-hook 'ibuffer-hook
-               (lambda ()
-                 (ibuffer-vc-set-filter-groups-by-vc-root)
-                 (unless (eq ibuffer-sorting-mode 'alphabetic)
-                   (ibuffer-do-sort-by-alphabetic))))
+;; From ibuffer-vc.el
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-vc-set-filter-groups-by-vc-root)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              (ibuffer-do-sort-by-alphabetic))))
 
-     ;; turn off ibuffer-show-empty-filter-groups
-     ;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
-     (setq ibuffer-show-empty-filter-groups nil)
-   #+END_SRC
+;; turn off ibuffer-show-empty-filter-groups
+;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+(setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
