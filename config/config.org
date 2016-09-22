@@ -611,6 +611,19 @@ problematic?]]
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 #+END_SRC
 
+** LaTeX Extra
+#+BEGIN_SRC emacs-lisp
+(use-package latex-extra
+  :defer t
+  :ensure t)
+#+END_SRC
+
+** LaTeX Preview Mode
+#+BEGIN_SRC emacs-lisp
+(use-package latex-preview-pane
+  :ensure t
+  :defer t)
+#+END_SRC
 ** Magic Latex Buffer
 #+BEGIN_SRC emacs-lisp
 (use-package magic-latex-buffer
