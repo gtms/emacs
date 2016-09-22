@@ -598,7 +598,7 @@ problematic?]]
               (ibuffer-vc-set-filter-groups-by-vc-root)
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic))))
-  (setq ibuffer-show-empty-filter-groups nil)
+  (setq ibuffer-show-empty-filter-groups nil))
 #+END_SRC
 ** Ido Vertical Mode
 #+BEGIN_SRC emacs-lisp
