@@ -422,6 +422,13 @@ Org mode:
 #+END_SRC
 
 * ELPA packages
+** Ag
+#+BEGIN_SRC emacs-lisp
+(use-package ag
+  :commands ag
+  :ensure t)
+#+END_SRC
+
 ** AucTex
 *** Basic setup
 Enable [[https://www.gnu.org/software/auctex/manual/auctex.html][Auctex]] when files with .tex are loaded. Tex-master is useful to make
