@@ -534,11 +534,6 @@ in the minibuffer
 (setq resize-mini-windows t) ;; was grow-only
 #+END_SRC
 
-** Scrooling
-#+BEGIN_SRC emacs-lisp
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-#+END_SRC
 ** Dired Stuff
 #+BEGIN_SRC emacs-lisp
   ;; dired sorts directories first from
@@ -557,6 +552,7 @@ in the minibuffer
     (mydired-sort))
   (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
+
 ** IBuffer
    #+BEGIN_SRC emacs-lisp
      ;; see http://www.emacswiki.org/emacs/IbufferMode 30Jul2014 Use human
