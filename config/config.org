@@ -493,6 +493,56 @@ problematic?]]
   (setq company-minimum-prefix-length 3)
   (delete 'company-capf company-backends))
 #+END_SRC
+** ESS (Emacs Speaks Statistics)
+#+BEGIN_SRC emacs-lisp
+(use-package ess-site
+  :defer t
+  :mode (("\\.sp\\'"           . S-mode)
+         ("/R/.*\\.q\\'"       . R-mode)
+         ("\\.[qsS]\\'"        . S-mode)
+         ("\\.ssc\\'"          . S-mode)
+         ("\\.SSC\\'"          . S-mode)
+         ("\\.[rR]\\'"         . R-mode)
+         ("\\.[rR]nw\\'"       . Rnw-mode)
+         ("\\.[sS]nw\\'"       . Snw-mode)
+         ("\\.[rR]profile\\'"  . R-mode)
+         ("NAMESPACE\\'"       . R-mode)
+         ("CITATION\\'"        . R-mode)
+         ("\\.omg\\'"          . omegahat-mode)
+         ("\\.hat\\'"          . omegahat-mode)
+         ("\\.lsp\\'"          . XLS-mode)
+         ("\\.do\\'"           . STA-mode)
+         ("\\.ado\\'"          . STA-mode)
+         ("\\.[Ss][Aa][Ss]\\'" . SAS-mode)
+         ("\\.jl\\'"           . ess-julia-mode)
+         ("\\.[Ss]t\\'"        . S-transcript-mode)
+         ("\\.Sout"            . S-transcript-mode)
+         ("\\.[Rr]out"         . R-transcript-mode)
+         ("\\.Rd\\'"           . Rd-mode)
+         ("\\.[Bb][Uu][Gg]\\'" . ess-bugs-mode)
+         ("\\.[Bb][Oo][Gg]\\'" . ess-bugs-mode)
+         ("\\.[Bb][Mm][Dd]\\'" . ess-bugs-mode)
+         ("\\.[Jj][Aa][Gg]\\'" . ess-jags-mode)
+         ("\\.[Jj][Oo][Gg]\\'" . ess-jags-mode)
+         ("\\.[Jj][Mm][Dd]\\'" . ess-jags-mode))
+  :config
+  (progn
+    (add-hook 'ess-mode-hook 'company-mode)
+    (add-hook 'ess-mode-hook 'ess-smart-equals-mode)
+    (add-hook 'inferior-ess-mode-hook 'ess-smart-equals-mode)
+    (add-hook 'ess-mode-hook 'turn-on-orgstruct)
+    (add-hook 'ess-mode-hook 'smartparens-mode)
+    (add-hook 'ess-mode-hook 'smartparens-strict-mode)
+    (add-hook 'ess-R-post-run-hook 'smartparens-mode)
+    (add-hook 'ess-R-post-run-hook 'smartparens-strict-mode))
+  (with-eval-after-load 'ess-site
+    ;; Follow Hadley Wickham's R style guide
+    (setq ess-first-continued-statement-offset 2
+          ess-continued-statement-offset 0
+          ess-expression-offset 2
+          ess-nuke-trailing-whitespace-p t
+          ess-default-style 'DEFAULT)))
+#+END_SRC
 
 ** Hungry Delete
 #+BEGIN_SRC emacs-lisp
