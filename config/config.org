@@ -587,6 +587,19 @@ problematic?]]
   (global-set-key (kbd "C-<delete>") 'hungry-delete-forward)
   (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward))
 #+END_SRC
+** ibuffer-vc
+#+BEGIN_SRC emacs-lisp
+(use-package ibuffer-vc
+  :diminish ibuffer-vc
+  :defer t
+  :config
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (ibuffer-vc-set-filter-groups-by-vc-root)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic))))
+  (setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
 ** Ido Vertical Mode
 #+BEGIN_SRC emacs-lisp
 (use-package ido-vertical-mode
