@@ -205,10 +205,37 @@ Here we make page-break characters look pretty, instead of appearing
 as =^L= in Emacs. [[http://ericjmritz.name/2015/08/29/using-page-breaks-in-gnu-emacs/][Here's an informative article called "Using
 Page-Breaks in GNU Emacs" by Eric J. M. Ritz.]]
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (use-package page-break-lines
   :ensure t)
-#+end_src
+#+END_SRC
+
+These are configurations relative to ibuffer coming from my previous presonal.el
+file:
+
+#+BEGIN_SRC emacs-lisp
+;; see http://www.emacswiki.org/emacs/IbufferMode
+;; 30Jul2014
+;; Use human readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size" :inline t)
+  (cond
+   ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+   ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
+   ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+   (t (format "%8d" (buffer-size)))))
+
+;; Modify the default ibuffer-formats
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 18 18 :left :elide)
+              " "
+              (size-h 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              filename-and-process)))
+#+END_SRC
 
 * Org mode
 ** Org itself
