@@ -16,7 +16,7 @@
 ;; http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
 
 (defun my-tangle-section-canceled ()
-  "Return t if the current section header was CANCELED, else nil."
+  "Return t if the current section header was CANCELLED, else nil."
   (save-excursion
     (if (re-search-backward "^\\*+\\s-+\\(.*?\\)?\\s-*$" nil t)
         (string-prefix-p "CANCELLED" (match-string 1))
