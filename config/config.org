@@ -136,7 +136,10 @@ Download
 | [[http://leonardo-m.livejournal.com/77079.html][Inconsolata g]]       |
 
 #+BEGIN_SRC emacs-lisp
-(set-frame-font "Source Code Pro 14")
+(if (string-equal system-type "darwin")
+    (set-frame-font "Source Code Pro 14")
+  (set-frame-font "Source Code Pro 13"))
+;; (set-frame-font "Source Code Pro 14")
 ;; (set-frame-font "Monospace 10")
 ;; (set-frame-font "Dejavu Sans 10")
 ;; (set-frame-font "Fantasque Sans Mono 11")
