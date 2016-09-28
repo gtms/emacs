@@ -618,7 +618,8 @@ problematic?]]
                 (ibuffer-do-sort-by-alphabetic))))
   (setq ibuffer-show-empty-filter-groups nil))
 #+END_SRC
-** Ido Vertical Mode
+** CANCELLED Ido Vertical Mode
+CLOSED: [2016-09-28 Wed 13:28]
 #+BEGIN_SRC emacs-lisp
 (use-package ido-vertical-mode
   :ensure t
