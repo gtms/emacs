@@ -690,6 +690,45 @@ and document navigation.
 (use-package relative-line-numbers
   :defer t)
 #+END_SRC
+
+** Swiper/Ivy
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-h v" . counsel-describe-variable)
+         ("C-h f" . counsel-describe-function))
+  :config
+  (use-package flx :ensure t)
+  ;; miz fuzzy with plus (.* for each space)
+  ;; http://oremacs.com/2016/01/06/ivy-flx/
+  (setq ivy-re-builders-alist
+  '((ivy-switch-buffer . ivy--regex-plus)
+  (t . ivy--regex-fuzzy)))
+  (setq ivy-initial-inputs-alist nil))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :ensure t
+  :diminish (ivy-mode)
+  :bind (("C-x b" . ivy-switch-buffer))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-display-style 'fancy)
+(progn
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper)
+         ("C-c u" . swiper-all)))
+#+END_SRC
 ** Smart-mode-line
 #+BEGIN_SRC emacs-lisp
 (use-package smart-mode-line
