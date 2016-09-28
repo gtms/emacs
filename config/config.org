@@ -106,7 +106,7 @@ Basic syntax:
 
 * Global Key Bindings
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x o") 'ace-window)
+;; (global-set-key (kbd "C-x o") 'ace-window)
 #+END_SRC
 
 * Prelude Hacks
@@ -425,6 +425,21 @@ Org mode:
 #+END_SRC
 
 * ELPA packages
+** Ace Window
+
+[[https://github.com/abo-abo/ace-window][ace-window]] is a package that uses the same idea from ace-jump-mode for
+buffer navigation, but applies it to windows. The default keys are
+1-9, but it's faster to access the keys on the home row, so that's
+what I have them set to (with respect to Dvorak, of course).
+
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+  :ensure t
+  :config
+  ;; (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s))
+  (ace-window-display-mode)
+  :bind ("C-x o" . ace-window))
+#+END_SRC
 ** Ag
 #+BEGIN_SRC emacs-lisp
 (use-package ag
