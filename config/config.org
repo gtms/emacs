@@ -655,6 +655,17 @@ CLOSED: [2016-09-28 Wed 13:28]
         magic-latex-enable-inline-image    nil))
 #+END_SRC
 
+*** Peep dired
+Taken from [[http://pragmaticemacs.com/emacs/quickly-preview-images-and-other-files-with-peep-dired/][here]].
+#+BEGIN_SRC emacs-lisp
+;; preview files in dired
+(use-package peep-dired
+  :ensure t
+  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
+  :bind (:map dired-mode-map
+              ("P" . peep-dired)))
+#+END_SRC
+
 ** Pdf tools
 
 -From the larslj's  [[https://github.com/larslj/pdf-tools/tree/windows][windows branch]].-
