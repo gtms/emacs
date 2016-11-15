@@ -600,20 +600,27 @@ problematic?]]
     ;; (add-hook 'ess-mode-hook 'ess-smart-equals-mode)
     ;; (add-hook 'inferior-ess-mode-hook 'ess-smart-equals-mode)
     (add-hook 'ess-mode-hook 'turn-on-orgstruct)
-    (add-hook 'ess-mode-hook 'smartparens-mode)
-    (add-hook 'ess-mode-hook 'smartparens-strict-mode)
+    ;; (add-hook 'ess-mode-hook 'smartparens-mode)
+    ;; (add-hook 'ess-mode-hook 'smartparens-strict-mode)
     (add-hook 'ess-R-post-run-hook 'smartparens-mode)
-    (add-hook 'ess-R-post-run-hook 'smartparens-strict-mode))
+    (add-hook 'ess-R-post-run-hook 'smartparens-strict-mode)
   (with-eval-after-load 'ess-site
+    ;; 15Nov2016
+    ;; https://media.readthedocs.org/pdf/emacs/latest/emacs.pdf (p.24)
+    (setq ess-eval-visibly-p 'nowait)
     ;; Follow Hadley Wickham's R style guide
     (setq ess-first-continued-statement-offset 2
           ess-continued-statement-offset 0
           ess-expression-offset 2
           ess-nuke-trailing-whitespace-p t
           ess-default-style 'DEFAULT)))
+:bind
+(:map comint-mode-map
+      ("C-c M-r" . comint-history-isearch-backward-regexp)))
 #+END_SRC
 
-** Hungry Delete
+** CANCELLED Hungry Delete
+CLOSED: [2016-10-25 Tue 12:06]
 #+BEGIN_SRC emacs-lisp
 (use-package hungry-delete
   :diminish hungry-delete
