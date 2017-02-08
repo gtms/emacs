@@ -705,7 +705,6 @@
    #+BEGIN_SRC emacs-lisp
 ;; preview files in dired
 (use-package peep-dired
-  :ensure t
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
@@ -768,8 +767,7 @@
          ("C-h v" . counsel-describe-variable)
          ("C-h f" . counsel-describe-function))
   :config
-  (use-package flx
-  :ensure t)
+  (use-package flx)
   ;; miz fuzzy with plus (.* for each space)
   ;; http://oremacs.com/2016/01/06/ivy-flx/
   (setq ivy-re-builders-alist
