@@ -90,7 +90,7 @@ Basic syntax:
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-  (setq use-package-always-ensure t)
+(setq use-package-always-ensure t)
 
 (eval-when-compile
   (require 'use-package))
@@ -680,9 +680,9 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
 ** page-break-lines
 #+BEGIN_SRC emacs-lisp
 (use-package page-break-lines
-:defer t
-:config
-(page-break-lines-mode))
+  :defer t
+  :config
+  (page-break-lines-mode))
 #+END_SRC
 ** Pdf tools
 
@@ -727,7 +727,7 @@ Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on
          ("\\.[sSrR]nw" . poly-noweb+r-mode)) ; Sweave files
   :diminish poly-markdown+r-mode
   :init
-(progn
+  (progn
     ;; (setq load-path          ; Append the directory to emacs path
     ;;       (append '("/home/mathieu/.emacs.d/polymode/"
     ;;          "/home/mathieu/.emacs.d/polymode/modes") load-path))
@@ -784,19 +784,19 @@ and document navigation.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-   (use-package ivy
-   :diminish (ivy-mode)
-   :bind (("C-x b" . ivy-switch-buffer))
-   :config
-   (ivy-mode 1)
-   (setq ivy-use-virtual-buffers t)
-   (setq ivy-display-style 'fancy)
-   (progn
-   (global-set-key (kbd "C-c C-r") 'ivy-resume)))
+(use-package ivy
+  :diminish (ivy-mode)
+  :bind (("C-x b" . ivy-switch-buffer))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-display-style 'fancy)
+  (progn
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-   (use-package swiper
+(use-package swiper
   :bind (("C-s" . swiper)
          ("C-c u" . swiper-all)))
 #+END_SRC
@@ -823,7 +823,6 @@ and document navigation.
   (sp-local-pair 'latex-mode "$" "$" )
   (sp-local-pair 'latex-mode "\\left(" "\\right)" :trigger "\\l("))
 #+END_SRC
-
 ** Zotelo
 #+BEGIN_SRC emacs-lisp
 ;;; zotelo (Zotero-Local)
@@ -884,6 +883,42 @@ in the minibuffer
   "Sort dired listings with directories first before adding mark."
   (mydired-sort))
 (put 'dired-find-alternate-file 'disabled nil)
+#+END_SRC
+
+This code snippet taken from [[http://oremacs.com/2016/02/24/dired-rsync/][here]] on 20Feb2017 allows for the asynchronous use
+of rsync within dired.
+
+#+BEGIN_SRC emacs-lisp
+(defun ora-dired-rsync (dest)
+  (interactive
+   (list
+    (expand-file-name
+     (read-file-name
+      "Rsync to:"
+      (dired-dwim-target-directory)))))
+  ;; store all selected files into "files" list
+  (let ((files (dired-get-marked-files
+                nil current-prefix-arg))
+        ;; the rsync command
+        (tmtxt/rsync-command
+         "rsync -arvz --progress"))
+    ;; add all selected file names as arguments
+    ;; to the rsync command
+    (dolist (file files)
+      (setq tmtxt/rsync-command
+            (concat tmtxt/rsync-command
+                    (shell-quote-argument file)
+                    " ")))
+    ;; append the destination
+    (setq tmtxt/rsync-command
+          (concat tmtxt/rsync-command
+                  (shell-quote-argument dest)))
+    ;; run the async shell command
+    (async-shell-command tmtxt/rsync-command "*rsync*")
+    ;; finally, switch to that window
+    (other-window 1)))
+
+(define-key dired-mode-map "Y" 'ora-dired-rsync)
 #+END_SRC
 
 ** IBuffer
