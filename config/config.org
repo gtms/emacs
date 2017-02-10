@@ -857,15 +857,94 @@ From [[https://github.com/grettke/help/blob/master/help.org][this source]]
 #+END_SRC
 
 * Misc
-** Minibuffer
+** Eshell
+This snippet was taken from [[https://github.com/grettke/help/blob/master/help.org#eshell][here]], on 10Feb2017.  According to Grant Rettke's
+notes:
 
-Minibuffer window expands vertically as necessary to hold the text that you put
-in the minibuffer
+Provide a cross-platform command line shell that is a first-class EMACS citizen.
+
+Commands input in eshell are delegated in order to an alias, a built in command,
+an Elisp function with the same name, and finally to a system call.  Semicolons
+separate commands.  ~which~ tells you what implementation will satisfy the call
+that you are going to make.  The flag ~eshell-prefer-lisp-functions~ does what
+it says.  ~$$~ is the result of the last command.  Aliases live in
+~eshell-aliases-file~.  History is maintained and expandable.
+~eshell-source-file~ will run scripts.  Since Eshell is not a terminal emulator,
+you need to configure it for any commands that need to run using a terminal
+emulator by adding it to ~eshell-visual-commands~.
 
 #+BEGIN_SRC emacs-lisp
-(setq resize-mini-windows t) ;; was grow-only
+(setq eshell-prefer-lisp-functions nil
+      eshell-cmpl-cycle-completions nil
+      eshell-save-history-on-exit t
+      eshell-cmpl-dir-ignore "\\~\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
+
+;; 13Feb2017: depends on three packages not available on melpa
+;; (eval-after-load "esh-opt"
+;;   '(progn
+;;      (use-package em-cmpl)
+;;      (use-package em-prompt)
+;;      (use-package em-term)
+;;      (setenv "PAGER" "cat")
+;;      (add-hook 'eshell-mode-hook
+;;                (lambda ()
+;;                  (message "Welcome to Eshell.")
+;;                  (setq pcomplete-cycle-completions nil)))
+;;      (add-to-list 'eshell-visual-commands "ssh")
+;;      (add-to-list 'eshell-visual-commands "tail")
+;;      (add-to-list 'eshell-command-completions-alist
+;;                   '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))))
 #+END_SRC
 
+Configure a ~PS1~ like prompt.
+
+#+BEGIN_SRC emacs-lisp
+(setq eshell-prompt-regexp "^.+@.+:.+> ")
+(setq eshell-prompt-function
+      (lambda ()
+        (concat
+         (user-login-name)
+         "@"
+         (system-name)
+         ":"
+         (eshell/pwd)
+         "> ")))
+#+END_SRC
+
+** IBuffer
+#+BEGIN_SRC emacs-lisp
+;; see http://www.emacswiki.org/emacs/IbufferMode 30Jul2014 Use human
+;; readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size" :inline t)
+  (cond
+   ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+   ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
+   ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+   (t (format "%8d" (buffer-size)))))
+
+;; Modify the default ibuffer-formats
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 18 18 :left :elide)
+              " "
+              (size-h 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              filename-and-process)))
+
+;; From ibuffer-vc.el
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-vc-set-filter-groups-by-vc-root)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              (ibuffer-do-sort-by-alphabetic))))
+
+;; turn off ibuffer-show-empty-filter-groups
+;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+(setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
 ** Dired Stuff
 #+BEGIN_SRC emacs-lisp
 ;; dired sorts directories first from
@@ -921,37 +1000,11 @@ of rsync within dired.
 (define-key dired-mode-map "Y" 'ora-dired-rsync)
 #+END_SRC
 
-** IBuffer
+** Minibuffer
+
+Minibuffer window expands vertically as necessary to hold the text that you put
+in the minibuffer
+
 #+BEGIN_SRC emacs-lisp
-;; see http://www.emacswiki.org/emacs/IbufferMode 30Jul2014 Use human
-;; readable Size column instead of original one
-(define-ibuffer-column size-h
-  (:name "Size" :inline t)
-  (cond
-   ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-   ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
-   ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-   (t (format "%8d" (buffer-size)))))
-
-;; Modify the default ibuffer-formats
-(setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 18 18 :left :elide)
-              " "
-              (size-h 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " "
-              filename-and-process)))
-
-;; From ibuffer-vc.el
-(add-hook 'ibuffer-hook
-          (lambda ()
-            (ibuffer-vc-set-filter-groups-by-vc-root)
-            (unless (eq ibuffer-sorting-mode 'alphabetic)
-              (ibuffer-do-sort-by-alphabetic))))
-
-;; turn off ibuffer-show-empty-filter-groups
-;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
-(setq ibuffer-show-empty-filter-groups nil)
+(setq resize-mini-windows t) ;; was grow-only
 #+END_SRC
