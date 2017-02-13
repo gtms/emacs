@@ -913,8 +913,9 @@ Configure a ~PS1~ like prompt.
 
 ** IBuffer
 #+BEGIN_SRC emacs-lisp
-;; see http://www.emacswiki.org/emacs/IbufferMode 30Jul2014 Use human
-;; readable Size column instead of original one
+;; see http://www.emacswiki.org/emacs/IbufferMode
+;; 30Jul2014
+;; Use human readable Size column instead of original one
 (define-ibuffer-column size-h
   (:name "Size" :inline t)
   (cond
