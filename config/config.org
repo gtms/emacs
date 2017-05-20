@@ -682,7 +682,7 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
 (use-package page-break-lines
   :defer t
   :config
-  (page-break-lines-mode))
+  (global-page-break-lines-mode))
 #+END_SRC
 ** Pdf tools
 
@@ -981,7 +981,7 @@ of rsync within dired.
                 nil current-prefix-arg))
         ;; the rsync command
         (tmtxt/rsync-command
-         "rsync -arvz --progress"))
+         "rsync -arvz --progress "))
     ;; add all selected file names as arguments
     ;; to the rsync command
     (dolist (file files)
