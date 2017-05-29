@@ -592,8 +592,10 @@ problematic?]]
     (add-hook 'ess-mode-hook 'turn-on-orgstruct)
     ;; (add-hook 'ess-mode-hook 'smartparens-mode)
     ;; (add-hook 'ess-mode-hook 'smartparens-strict-mode)
-    (add-hook 'ess-R-post-run-hook 'smartparens-mode)
-    (add-hook 'ess-R-post-run-hook 'smartparens-strict-mode)
+    ;; (add-hook 'ess-R-post-run-hook 'smartparens-mode)
+    ;; (add-hook 'ess-R-post-run-hook 'smartparens-strict-mode)
+    (add-hook 'inferior-ess-mode-hook 'smartparens-mode)
+    (add-hook 'inferior-ess-mode-hook 'smartparens-strict-mode)
     (with-eval-after-load 'ess-site
       ;; 15Nov2016
       ;; https://media.readthedocs.org/pdf/emacs/latest/emacs.pdf (p.24)
