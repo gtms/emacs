@@ -708,10 +708,11 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
   ;; 28Nov2016
   ;; From:
   ;; https://emacs.stackexchange.com/questions/13314/install-pdf-tools-on-emacs-macosx
-  (if (string-equal system-type "darwin")
-      (custom-set-variables
-       '(pdf-tools-handle-upgrades nil)) ; Use brew upgrade pdf-tools instead.
-    (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
+  ;; (if (string-equal system-type "darwin")
+  ;;     (custom-set-variables
+  ;;      '(pdf-tools-handle-upgrades nil)) ; Use brew upgrade pdf-tools instead.
+  ;;   (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
+  ;; (pdf-tools-install))
   (pdf-tools-install))
 #+END_SRC
 
