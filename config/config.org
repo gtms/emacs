@@ -421,8 +421,7 @@ Org mode:
 #+END_SRC
 
 * ELPA packages
-** Ace Window
-
+** ace-window
 [[https://github.com/abo-abo/ace-window][ace-window]] is a package that uses the same idea from ace-jump-mode for
 buffer navigation, but applies it to windows. The default keys are
 1-9, but it's faster to access the keys on the home row, so that's
@@ -436,15 +435,14 @@ what I have them set to (with respect to Dvorak, of course).
   :bind ("C-x o" . ace-window))
 #+END_SRC
 
-** Ag
+** ag
 #+BEGIN_SRC emacs-lisp
 (use-package ag
   :commands ag)
 #+END_SRC
 
-** AucTex
-
-*** Basic setup
+** auctex
+*** basic setup
 Enable [[https://www.gnu.org/software/auctex/manual/auctex.html][Auctex]] when files with .tex are loaded. Tex-master is useful to make
 Auctex aware of multi-files documents.  TeX-PDF mode is used to compile using
 pdflatex.
@@ -480,7 +478,8 @@ pdflatex.
 
   ;; to use pdfview with auctex
   (add-hook 'LaTeX-mode-hook 'pdf-tools-install)
-  ;; nil beacuse I don't want the pdf to be opened again in the same frame after C-c C-a
+  ;; nil beacuse I don't want the pdf to be opened again in the same frame after
+  ;; C-c C-a
   ;; (setq TeX-view-program-selection nil)
   ;; (setq TeX-view-program-selection '((output-pdf "pdf-tools")))
   ;; (setq TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view")))
@@ -494,11 +493,10 @@ pdflatex.
 
   ;; language specific hooks in auctex
   (add-hook 'TeX-language-dk-hook
-            (lambda () (ispell-change-dictionary "brasileiro"))))
+            (lambda () (ispell-change-dictionary "english"))))
 #+END_SRC
 
-*** Company auctex
-
+*** company-auctex
 From [[https://github.com/manugoyal/.emacs.d#latex][here]].
 
 #+BEGIN_SRC emacs-lisp
@@ -508,8 +506,8 @@ From [[https://github.com/manugoyal/.emacs.d#latex][here]].
   (company-auctex-init))
 #+END_SRC
 
-*** Latex preview pane
-
+*** CANCELLED latex-preview-pane
+CLOSED: [2017-07-03 Mon 16:47]
 shell-escape mode because the pacakge svg requires it.
 
 #+BEGIN_SRC emacs-lisp
@@ -524,9 +522,8 @@ shell-escape mode because the pacakge svg requires it.
    '(latex-preview-pane-multifile-mode (quote auctex))))
 #+END_SRC
 
-** Company
-
-Auto complete
+** company
+Auto complete.
 
 The configurations were taken from [[https://github.com/company-mode/company-mode/issues/68][this discussion]].  The delay time from the
 wiki. This [[https://www.reddit.com/r/emacs/comments/3s5bkf/companymode_configuration_make_editing_slow/][reddit thread]] has some cool configurations.  [[https://github.com/manugoyal/.emacs.d#company-mode][Company capf is
@@ -544,15 +541,18 @@ problematic?]]
   (delete 'company-capf company-backends))
 #+END_SRC
 
-** Dired narrow
+** dired-hacks
+Collection of useful dired additions.
+
 #+BEGIN_SRC emacs-lisp
-;;narrow dired to match filter
-(use-package dired-narrow
+(use-package dired-hacks
+  :ensure t
+  :defer t
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
 #+END_SRC
 
-** ESS (Emacs Speaks Statistics)
+*** ess (emacs speaks statistics)
 #+BEGIN_SRC emacs-lisp
 (use-package ess
   :defer t
@@ -611,7 +611,8 @@ problematic?]]
   (:map comint-mode-map
         ("C-c M-r" . comint-history-isearch-backward-regexp)))
 #+END_SRC
-** Hungry Delete
+
+** hungry-delete
 #+BEGIN_SRC emacs-lisp
 (use-package hungry-delete
   :diminish hungry-delete
@@ -635,7 +636,7 @@ problematic?]]
   (setq ibuffer-show-empty-filter-groups nil))
 #+END_SRC
 
-** Ido Vertical Mode
+** ido-vertical-mode
 #+BEGIN_SRC emacs-lisp
 (use-package ido-vertical-mode
   :diminish ido-vertical-mode
@@ -645,31 +646,29 @@ problematic?]]
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 #+END_SRC
 
-** LaTeX Extra
+** latex-extra
+Defines extra commands and keys for LaTeX mode.
+
 #+BEGIN_SRC emacs-lisp
 (use-package latex-extra
   :defer t)
 #+END_SRC
 
-** LaTeX Preview Mode
-#+BEGIN_SRC emacs-lisp
-(use-package latex-preview-pane
-  :defer t)
-#+END_SRC
+** magic-latex-buffer
+Magically enhance LaTeX-mode font-locking for semi-WYSIWYG editing.
 
-** Magic Latex Buffer
 #+BEGIN_SRC emacs-lisp
 (use-package magic-latex-buffer
   :config
   (add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
-  (setq magic-latex-enable-block-highlight nil
-        magic-latex-enable-suscript        t
+  (setq magic-latex-enable-block-highlight t
+        magic-latex-enable-suscript        nil
         magic-latex-enable-pretty-symbols  t
         magic-latex-enable-block-align     nil
         magic-latex-enable-inline-image    nil))
 #+END_SRC
 
-** Markdown Mode
+** markdown-mode
 Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -680,23 +679,27 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 #+END_SRC
+
 ** move-text
 #+BEGIN_SRC emacs-lisp
 (use-package move-text
   :ensure t
+  :defer t
   :config
 (move-text-default-bindings))
 #+END_SRC
+
 ** page-break-lines
 #+BEGIN_SRC emacs-lisp
 (use-package page-break-lines
+  :ensure t
   :defer t
   :config
   (global-page-break-lines-mode))
 #+END_SRC
-** Pdf tools
 
--From the larslj's [[https://github.com/larslj/pdf-tools/tree/windows][windows branch]].-
+** pdf-tools
+From the larslj's [[https://github.com/larslj/pdf-tools/tree/windows][windows branch]].
 
 #+BEGIN_SRC emacs-lisp
 (use-package pdf-tools
@@ -709,15 +712,14 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
   ;; 28Nov2016
   ;; From:
   ;; https://emacs.stackexchange.com/questions/13314/install-pdf-tools-on-emacs-macosx
-  ;; (if (string-equal system-type "darwin")
-  ;;     (custom-set-variables
-  ;;      '(pdf-tools-handle-upgrades nil)) ; Use brew upgrade pdf-tools instead.
-  ;;   (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
-  ;; (pdf-tools-install))
+  (if (string-equal system-type "darwin")
+      (custom-set-variables
+       '(pdf-tools-handle-upgrades nil)) ; Use brew upgrade pdf-tools instead.
+    (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
   (pdf-tools-install))
 #+END_SRC
 
-** Peep dired
+** peep-dired
 Taken from [[http://pragmaticemacs.com/emacs/quickly-preview-images-and-other-files-with-peep-dired/][here]].
 #+BEGIN_SRC emacs-lisp
 ;; preview files in dired
@@ -727,8 +729,9 @@ Taken from [[http://pragmaticemacs.com/emacs/quickly-preview-images-and-other-fi
               ("P" . peep-dired)))
 #+END_SRC
 
-** Polymode
+** polymode
 Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on 09Jan2017.
+
 #+BEGIN_SRC emacs-lisp
 ;; Polymode to load several modes (e.g. Markdown + ESS)
 ;; https://github.com/vitoshka/polymode
@@ -757,8 +760,8 @@ Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on
                ([(C-f8)] . polymode-export)))) ; C-F7 to export
 #+END_SRC
 
-** Reftex
-[[http://www.gnu.org/software/auctex/manual/reftex.html#SEC2][RefTex website]]. Useful for managing cross references, bibliographies, indices,
+** reftex
+[[http://www.gnu.org/software/auctex/manual/reftex.html#SEC2][RefTex website]].  Useful for managing cross references, bibliographies, indices,
 and document navigation.
 
 #+BEGIN_SRC emacs-lisp
@@ -770,15 +773,18 @@ and document navigation.
                                         ; cite
 #+END_SRC
 
-** Relative Line Numbers
+** relative-line-numbers
 #+BEGIN_SRC emacs-lisp
 (use-package relative-line-numbers
+  :ensure t
   :defer t)
 #+END_SRC
 
-** Swiper/Ivy
+** swiper
+***** counsel
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
+  :ensure t
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-h v" . counsel-describe-variable)
@@ -794,8 +800,10 @@ and document navigation.
   (setq ivy-initial-inputs-alist nil))
 #+END_SRC
 
+***** ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
+  :ensure t
   :diminish (ivy-mode)
   :bind (("C-x b" . ivy-switch-buffer))
   :config
@@ -806,12 +814,21 @@ and document navigation.
     (global-set-key (kbd "C-c C-r") 'ivy-resume)))
 #+END_SRC
 
+***** swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :bind (("C-s" . swiper)
          ("C-c u" . swiper-all)))
 #+END_SRC
-** Smart-mode-line
+
+***** hydra
+#+BEGIN_SRC emacs-lisp
+(use-package hydra
+  :ensure t
+  :defer t)
+#+END_SRC
+
+** smart-mode-line
 #+BEGIN_SRC emacs-lisp
 (use-package smart-mode-line
   :init
@@ -821,7 +838,7 @@ and document navigation.
     (sml/apply-theme 'automatic)))
 #+END_SRC
 
-** Smartparens
+** smartparens
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
   :defer t
@@ -834,7 +851,8 @@ and document navigation.
   (sp-local-pair 'latex-mode "$" "$" )
   (sp-local-pair 'latex-mode "\\left(" "\\right)" :trigger "\\l("))
 #+END_SRC
-** Zotelo
+
+** zotelo
 #+BEGIN_SRC emacs-lisp
 ;;; zotelo (Zotero-Local)
 ;; https://github.com/vitoshka/zotelo
@@ -855,9 +873,8 @@ and document navigation.
   )
 #+END_SRC
 
-** Writegood mode
-
-From [[https://github.com/grettke/help/blob/master/help.org][this source]]
+** writegood-mode
+From [[https://github.com/grettke/help/blob/master/help.org][this source]].
 
 #+BEGIN_SRC emacs-lisp :tangle no
 (use-package writegood-mode
@@ -912,14 +929,21 @@ Configure a ~PS1~ like prompt.
 #+BEGIN_SRC emacs-lisp
 (setq eshell-prompt-regexp "^.+@.+:.+> ")
 (setq eshell-prompt-function
-      (lambda ()
-        (concat
-         (user-login-name)
-         "@"
-         (system-name)
-         ":"
-         (eshell/pwd)
-         "> ")))
+(lambda ()
+  (concat
+   (propertize "┌─[" 'face `(:foreground "grey50"))
+   (propertize (user-login-name) 'face `(:foreground "tomato"))
+   (propertize "@" 'face `(:foreground "grey50"))
+   (propertize (system-name) 'face `(:foreground "RoyalBlue"))
+   (propertize "]──[" 'face `(:foreground "grey50"))
+   (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "DarkOrange"))
+   (propertize "]──[" 'face `(:foreground "grey50"))
+   (propertize (concat (eshell/pwd)) 'face `(:foreground "bisque"))
+   (propertize "]\n" 'face `(:foreground "grey50"))
+   (propertize "└─>" 'face `(:foreground "grey50"))
+   (propertize (if (= (user-uid) 0) " # " " $ "))
+)))
+
 #+END_SRC
 
 ** IBuffer
