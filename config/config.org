@@ -275,6 +275,7 @@ file:
         org-src-strip-leading-and-trailing-blank-lines t
         org-src-preserve-indentation t
         org-src-tab-acts-natively t
+        org-goto-auto-isearch nil
         org-export-babel-evaluate nil
         org-confirm-babel-evaluate nil) ; doesn't ask for confirmation
   ;; display/update images in the buffer after I evaluate
