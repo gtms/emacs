@@ -912,6 +912,61 @@ From [[https://github.com/grettke/help/blob/master/help.org][this source]].
 #+END_SRC
 
 * Misc
+** Dired Stuff
+#+BEGIN_SRC emacs-lisp
+;; dired sorts directories first from
+;; http://www.emacswiki.org/emacs/DiredSortDirectoriesFirst 03Oct2012
+(defun mydired-sort ()
+  "Sort dired listings with directories first."
+  (save-excursion
+    (let (buffer-read-only)
+      (forward-line 2) ;; beyond dir. header
+      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+    (set-buffer-modified-p nil)))
+
+(defadvice dired-readin
+    (after dired-after-updating-hook first () activate)
+  "Sort dired listings with directories first before adding mark."
+  (mydired-sort))
+(put 'dired-find-alternate-file 'disabled nil)
+#+END_SRC
+
+This code snippet taken from [[http://oremacs.com/2016/02/24/dired-rsync/][here]] on 20Feb2017 allows for the asynchronous use
+of rsync within dired.
+
+#+BEGIN_SRC emacs-lisp
+(defun ora-dired-rsync (dest)
+  (interactive
+   (list
+    (expand-file-name
+     (read-file-name
+      "Rsync to:"
+      (dired-dwim-target-directory)))))
+  ;; store all selected files into "files" list
+  (let ((files (dired-get-marked-files
+                nil current-prefix-arg))
+        ;; the rsync command
+        (tmtxt/rsync-command
+         "rsync -arvz --progress "))
+    ;; add all selected file names as arguments
+    ;; to the rsync command
+    (dolist (file files)
+      (setq tmtxt/rsync-command
+            (concat tmtxt/rsync-command
+                    (shell-quote-argument file)
+                    " ")))
+    ;; append the destination
+    (setq tmtxt/rsync-command
+          (concat tmtxt/rsync-command
+                  (shell-quote-argument dest)))
+    ;; run the async shell command
+    (async-shell-command tmtxt/rsync-command "*rsync*")
+    ;; finally, switch to that window
+    (other-window 1)))
+
+(define-key dired-mode-map "Y" 'ora-dired-rsync)
+#+END_SRC
+
 ** Eshell
 This snippet was taken from [[https://github.com/grettke/help/blob/master/help.org#eshell][here]], on 10Feb2017.  According to Grant Rettke's
 notes:
@@ -1014,61 +1069,6 @@ Configure a ~PS1~ like prompt.
 ;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
 (setq ibuffer-show-empty-filter-groups nil)
 #+END_SRC
-** Dired Stuff
-#+BEGIN_SRC emacs-lisp
-;; dired sorts directories first from
-;; http://www.emacswiki.org/emacs/DiredSortDirectoriesFirst 03Oct2012
-(defun mydired-sort ()
-  "Sort dired listings with directories first."
-  (save-excursion
-    (let (buffer-read-only)
-      (forward-line 2) ;; beyond dir. header
-      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-    (set-buffer-modified-p nil)))
-
-(defadvice dired-readin
-    (after dired-after-updating-hook first () activate)
-  "Sort dired listings with directories first before adding mark."
-  (mydired-sort))
-(put 'dired-find-alternate-file 'disabled nil)
-#+END_SRC
-
-This code snippet taken from [[http://oremacs.com/2016/02/24/dired-rsync/][here]] on 20Feb2017 allows for the asynchronous use
-of rsync within dired.
-
-#+BEGIN_SRC emacs-lisp
-(defun ora-dired-rsync (dest)
-  (interactive
-   (list
-    (expand-file-name
-     (read-file-name
-      "Rsync to:"
-      (dired-dwim-target-directory)))))
-  ;; store all selected files into "files" list
-  (let ((files (dired-get-marked-files
-                nil current-prefix-arg))
-        ;; the rsync command
-        (tmtxt/rsync-command
-         "rsync -arvz --progress "))
-    ;; add all selected file names as arguments
-    ;; to the rsync command
-    (dolist (file files)
-      (setq tmtxt/rsync-command
-            (concat tmtxt/rsync-command
-                    (shell-quote-argument file)
-                    " ")))
-    ;; append the destination
-    (setq tmtxt/rsync-command
-          (concat tmtxt/rsync-command
-                  (shell-quote-argument dest)))
-    ;; run the async shell command
-    (async-shell-command tmtxt/rsync-command "*rsync*")
-    ;; finally, switch to that window
-    (other-window 1)))
-
-(define-key dired-mode-map "Y" 'ora-dired-rsync)
-#+END_SRC
-
 ** Minibuffer
 
 Minibuffer window expands vertically as necessary to hold the text that you put
