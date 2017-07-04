@@ -951,6 +951,13 @@ emulator by adding it to ~eshell-visual-commands~.
 ;;                   '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))))
 #+END_SRC
 
+Defines eshell aliases.
+
+#+BEGIN_SRC emacs-lisp
+(defalias 'ff 'find-file)
+(defalias 'd 'dired)
+#+END_SRC
+
 Configure a ~PS1~ like prompt.
 
 #+BEGIN_SRC emacs-lisp
@@ -970,7 +977,6 @@ Configure a ~PS1~ like prompt.
    (propertize "└─>" 'face `(:foreground "grey50"))
    (propertize (if (= (user-uid) 0) " # " " $ "))
 )))
-
 #+END_SRC
 
 ** IBuffer
