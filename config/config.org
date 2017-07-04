@@ -1077,3 +1077,16 @@ in the minibuffer
 #+BEGIN_SRC emacs-lisp
 (setq resize-mini-windows t) ;; was grow-only
 #+END_SRC
+
+** Shell
+What's new in 25.1, from Mickey Petersen's [[https://www.masteringemacs.org/article/whats-new-in-emacs-25-1][masteringemacs.org]] blog:
+
+When you invoke 'shell' interactively, the '*shell*' buffer will now
+display in a new window.  However, you can customize this behavior via
+the 'display-buffer-alist' variable.  For example, to get
+the old behavior -- '*shell*' buffer displays in current window -- use
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'display-buffer-alist
+     '("^\\*shell\\*$" . (display-buffer-same-window)))
+#+END_SRC
