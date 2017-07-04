@@ -547,12 +547,39 @@ Collection of useful dired additions.
 #+BEGIN_SRC emacs-lisp
 (use-package dired-hacks
   :ensure t
+  :defer t)
+#+END_SRC
+***** dired-open
+#+BEGIN_SRC emacs-lisp
+(use-package dired-open
+  :ensure t
+  :defer t)
+#+END_SRC
+
+***** dired-rainbow
+#+BEGIN_SRC emacs-lisp
+(use-package dired-rainbow
+  :ensure t
+  :defer t)
+#+END_SRC
+
+***** dired-ranger
+#+BEGIN_SRC emacs-lisp
+(use-package dired-ranger
+  :ensure t
+  :defer t)
+#+END_SRC
+
+***** dired-narrow
+#+BEGIN_SRC emacs-lisp
+(use-package dired-narrow
+  :ensure t
   :defer t
   :bind (:map dired-mode-map
               ("/" . dired-narrow)))
 #+END_SRC
 
-*** ess (emacs speaks statistics)
+** ess (emacs speaks statistics)
 #+BEGIN_SRC emacs-lisp
 (use-package ess
   :defer t
