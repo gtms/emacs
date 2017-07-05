@@ -708,10 +708,8 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
 #+BEGIN_SRC emacs-lisp
 (use-package page-break-lines
   :ensure t
-  :defer t
-  :config
-  (page-break-lines-mode)
-  (global-page-break-lines-mode))
+  :defer t)
+(global-page-break-lines-mode)
 #+END_SRC
 
 ** pdf-tools
