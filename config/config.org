@@ -128,7 +128,6 @@ Basic syntax:
 #+END_SRC
 
 * Font
-
 Download
 
 | [[https://github.com/adobe-fonts/source-code-pro][Source Code Pro]]     |
@@ -148,7 +147,6 @@ Download
 #+END_SRC
 
 * Common defaults
-
 Sources for this section include [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen]] and [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]].
 
 #+BEGIN_SRC emacs-lisp
@@ -206,16 +204,6 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 ;; The right margin is determined by the variable fill-column.  The default
 ;; value for fill-column is 70; here we set it to 80.  21Sep2016
 (setq-default fill-column 80)
-#+END_SRC
-
-Here we make page-break characters look pretty, instead of appearing as =^L=
-in Emacs. [[http://ericjmritz.name/2015/08/29/using-page-breaks-in-gnu-emacs/][This link]] points to an informative article called "Using Page-Breaks in
-GNU Emacs" by Eric J. M. Ritz.
-
-#+BEGIN_SRC emacs-lisp
-(use-package page-break-lines
-  :config
-  (page-break-lines-mode))
 #+END_SRC
 
 These are configurations relative to ibuffer coming from my previous presonal.el
@@ -1070,7 +1058,6 @@ Configure a ~PS1~ like prompt.
 (setq ibuffer-show-empty-filter-groups nil)
 #+END_SRC
 ** Minibuffer
-
 Minibuffer window expands vertically as necessary to hold the text that you put
 in the minibuffer
 
