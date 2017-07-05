@@ -186,8 +186,8 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 ;; redundant with core/prelude-editor.el
 ;; (delete-selection-mode 1)
 ;; toggles display-time mode on
-(setq display-time-day-and-date t)
-(display-time)
+;; (setq display-time-day-and-date t)
+;; (display-time)
 ;; removes all scroll bars
 (scroll-bar-mode -1)
 ;; configures emacs so that word moving commands will move cursor into
@@ -710,6 +710,7 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
   :ensure t
   :defer t
   :config
+  (page-break-lines-mode)
   (global-page-break-lines-mode))
 #+END_SRC
 
@@ -1063,6 +1064,19 @@ in the minibuffer
 
 #+BEGIN_SRC emacs-lisp
 (setq resize-mini-windows t) ;; was grow-only
+#+END_SRC
+
+** Mode Line
+From [[https://www.emacswiki.org/emacs/ModeLineConfiguration][EmacsWiki]].
+Taken on [2017-07-05 Wed]
+
+#+BEGIN_SRC emacs-lisp
+(setq line-number-mode nil)
+(setq column-number-mode nil)
+(setq size-indication-mode nil)
+(setq display-time-day-and-date t)
+(setq display-time-default-load-average nil)
+(display-time)
 #+END_SRC
 
 ** Shell
