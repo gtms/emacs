@@ -259,6 +259,7 @@ file:
     (setq org-bullets-bullet-list '("•")))
   ;; Org babel and source blocks
   (setq org-src-fontify-natively t
+        org-M-RET-may-split-line '((default . nil))
         org-src-window-setup 'current-window
         org-src-strip-leading-and-trailing-blank-lines t
         org-src-preserve-indentation t
@@ -532,11 +533,6 @@ problematic?]]
 ** dired-hacks
 Collection of useful dired additions.
 
-#+BEGIN_SRC emacs-lisp
-(use-package dired-hacks
-  :ensure t
-  :defer t)
-#+END_SRC
 ***** dired-open
 #+BEGIN_SRC emacs-lisp
 (use-package dired-open
