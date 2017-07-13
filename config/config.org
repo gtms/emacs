@@ -697,7 +697,7 @@ Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
   :ensure t
   :defer t
   :config
-(move-text-default-bindings))
+  (move-text-default-bindings))
 #+END_SRC
 
 ** page-break-lines
@@ -1001,20 +1001,20 @@ Configure a ~PS1~ like prompt.
 #+BEGIN_SRC emacs-lisp
 (setq eshell-prompt-regexp "^.+@.+:.+> ")
 (setq eshell-prompt-function
-(lambda ()
-  (concat
-   (propertize "┌─[" 'face `(:foreground "grey50"))
-   (propertize (user-login-name) 'face `(:foreground "tomato"))
-   (propertize "@" 'face `(:foreground "grey50"))
-   (propertize (system-name) 'face `(:foreground "RoyalBlue"))
-   (propertize "]──[" 'face `(:foreground "grey50"))
-   (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "DarkOrange"))
-   (propertize "]──[" 'face `(:foreground "grey50"))
-   (propertize (concat (eshell/pwd)) 'face `(:foreground "bisque"))
-   (propertize "]\n" 'face `(:foreground "grey50"))
-   (propertize "└─>" 'face `(:foreground "grey50"))
-   (propertize (if (= (user-uid) 0) " # " " $ "))
-)))
+      (lambda ()
+        (concat
+         (propertize "┌─[" 'face `(:foreground "grey50"))
+         (propertize (user-login-name) 'face `(:foreground "tomato"))
+         (propertize "@" 'face `(:foreground "grey50"))
+         (propertize (system-name) 'face `(:foreground "RoyalBlue"))
+         (propertize "]──[" 'face `(:foreground "grey50"))
+         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "DarkOrange"))
+         (propertize "]──[" 'face `(:foreground "grey50"))
+         (propertize (concat (eshell/pwd)) 'face `(:foreground "bisque"))
+         (propertize "]\n" 'face `(:foreground "grey50"))
+         (propertize "└─>" 'face `(:foreground "grey50"))
+         (propertize (if (= (user-uid) 0) " # " " $ "))
+         )))
 #+END_SRC
 
 ** IBuffer
@@ -1066,7 +1066,7 @@ Taken on [2017-07-05 Wed]
 
 #+BEGIN_SRC emacs-lisp
 (setq line-number-mode nil)
-(setq column-number-mode nil)
+;; (setq column-number-mode nil)
 (setq size-indication-mode nil)
 (setq display-time-day-and-date t)
 (setq display-time-default-load-average nil)
@@ -1083,5 +1083,65 @@ the old behavior -- '*shell*' buffer displays in current window -- use
 
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'display-buffer-alist
-     '("^\\*shell\\*$" . (display-buffer-same-window)))
+             '("^\\*shell\\*$" . (display-buffer-same-window)))
+#+END_SRC
+
+* Temporary
+*** ido-prelude fix [2017-07-13 Thu]
+
+This snippet of code is a temporary fix to acknowledge the replacement of
+~ido-ubiquitous~ by ~ido-completing-read+~ in ~modules/prelude-ido.el~.
+
+~ido-prelude~ is temporarily switched off until a fix is deployed on the master
+branch and this code will work as a replacement until then.  Most of this code
+is taken from ~modules/prelude-ido.el~.
+***** ido
+#+BEGIN_SRC emacs-lisp
+(use-package ido
+  :ensure t
+  :config
+  (setq ido-enable-prefix nil
+        ido-enable-flex-matching t
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point 'guess
+        ido-max-prospects 10
+        ido-save-directory-list-file (expand-file-name "ido.hist" prelude-savefile-dir)
+        ido-default-file-method 'selected-window
+        ido-auto-merge-work-directories-length -1)
+  (ido-mode +1))
+#+END_SRC
+
+***** flx-ido
+#+BEGIN_SRC emacs-lisp
+(use-package flx-ido
+  :ensure t
+  :config
+  ;; smarter fuzzy matching for ido
+  (flx-ido-mode +1)
+  ;; disable ido faces to see flx highlights
+  (setq ido-use-faces nil))
+#+END_SRC
+
+***** smex
+#+BEGIN_SRC emacs-lisp
+(use-package smex
+  :ensure t
+  :config
+  (setq smex-save-file (expand-file-name ".smex-items" prelude-savefile-dir))
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+#+END_SRC
+
+***** ido-completing-read+
+#+BEGIN_SRC  emacs-lisp
+(use-package ido-completing-read+
+  :ensure t
+  :config
+  (ido-ubiquitous-mode 1)
+  (setq magit-completing-read-function 'magit-ido-completing-read)
+  (setq gnus-completing-read-function 'gnus-ido-completing-read)
+  (setq ess-use-ido t)
+  (require 'icomplete)
+  (icomplete-mode 1))
 #+END_SRC
