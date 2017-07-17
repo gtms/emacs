@@ -1087,7 +1087,8 @@ the old behavior -- '*shell*' buffer displays in current window -- use
 #+END_SRC
 
 * Temporary
-*** ido-prelude fix [2017-07-13 Thu]
+*** DONE ido-prelude fix [2017-07-13 Thu]
+CLOSED: [2017-07-16 Sun 16:38]
 
 This snippet of code is a temporary fix to acknowledge the replacement of
 ~ido-ubiquitous~ by ~ido-completing-read+~ in ~modules/prelude-ido.el~.
@@ -1095,7 +1096,11 @@ This snippet of code is a temporary fix to acknowledge the replacement of
 ~ido-prelude~ is temporarily switched off until a fix is deployed on the master
 branch and this code will work as a replacement until then.  Most of this code
 is taken from ~modules/prelude-ido.el~.
-***** ido
+
+A fix (Fix #1096) was deployed on [2017-07-16 Sun] (Commit
+8b390fbf34d3fd8c77c1a2d9300454dd18ea3d88)
+***** CANCELLED ido
+CLOSED: [2017-07-16 Sun 16:38]
 #+BEGIN_SRC emacs-lisp
 (use-package ido
   :ensure t
@@ -1111,7 +1116,8 @@ is taken from ~modules/prelude-ido.el~.
   (ido-mode +1))
 #+END_SRC
 
-***** flx-ido
+***** CANCELLED flx-ido
+CLOSED: [2017-07-16 Sun 16:38]
 #+BEGIN_SRC emacs-lisp
 (use-package flx-ido
   :ensure t
@@ -1122,7 +1128,8 @@ is taken from ~modules/prelude-ido.el~.
   (setq ido-use-faces nil))
 #+END_SRC
 
-***** smex
+***** CANCELLED smex
+CLOSED: [2017-07-16 Sun 16:38]
 #+BEGIN_SRC emacs-lisp
 (use-package smex
   :ensure t
@@ -1134,6 +1141,7 @@ is taken from ~modules/prelude-ido.el~.
 #+END_SRC
 
 ***** ido-completing-read+
+CLOSED: [2017-07-16 Sun 16:38]
 #+BEGIN_SRC  emacs-lisp
 (use-package ido-completing-read+
   :ensure t
