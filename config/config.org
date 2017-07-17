@@ -1065,8 +1065,8 @@ From [[https://www.emacswiki.org/emacs/ModeLineConfiguration][EmacsWiki]].
 Taken on [2017-07-05 Wed]
 
 #+BEGIN_SRC emacs-lisp
-(setq line-number-mode nil)
-;; (setq column-number-mode nil)
+;; (setq line-number-mode nil)
+(setq column-number-mode nil)
 (setq size-indication-mode nil)
 (setq display-time-day-and-date t)
 (setq display-time-default-load-average nil)
