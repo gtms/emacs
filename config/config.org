@@ -665,6 +665,13 @@ Defines extra commands and keys for LaTeX mode.
   :defer t)
 #+END_SRC
 
+** limum-relative
+#+BEGIN_SRC emacs-lisp
+(use-package linum-relative
+  :ensure t
+  :defer t)
+#+END_SRC
+
 ** magic-latex-buffer
 Magically enhance LaTeX-mode font-locking for semi-WYSIWYG editing.
 
@@ -781,13 +788,6 @@ and document navigation.
   (setq reftex-cite-prompt-optional-args t)); Prompt for empty
                                         ; optional arguments in
                                         ; cite
-#+END_SRC
-
-** relative-line-numbers
-#+BEGIN_SRC emacs-lisp
-(use-package relative-line-numbers
-  :ensure t
-  :defer t)
 #+END_SRC
 
 ** swiper
