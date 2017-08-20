@@ -260,9 +260,36 @@ From Steve Purcell. Github page [[https://github.com/purcell/page-break-lines][h
 ** TODO peep-dired
 Convenience function to use within dired.  Needs to be configured under
 Misc/Dired Stuff.  Needs integration with dired-hacks.
-** TODO polymode
-Allows for loading several major modes throughout the same buffer.  Required to
-edit markdown files with R code.  Interacts with markdown-mode.
+** polymode
+Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on 09Jan2017.
+#+BEGIN_SRC emacs-lisp
+;; Polymode to load several modes (e.g. Markdown + ESS)
+;; https://github.com/vitoshka/polymode
+(use-package polymode
+  :mode (("\\.md"     . poly-markdown-mode)   ; Markdown files
+         ("\\.[rR]md" . poly-markdown+r-mode) ; RMarkdown files
+         ("\\.[sSrR]nw" . poly-noweb+r-mode)) ; Sweave files
+  :init
+  (progn
+    ;; Load necessary modes
+    (require 'poly-R)
+    (require 'poly-markdown)
+    (require 'poly-noweb)
+    (setq
+     ;; Default weaver and default exporter
+     pm-weaver "knitR-ESS"
+     pm-exporter "pandoc")
+    (bind-keys :map polymode-mode-map
+               ;; C-Page Up to move to the previous chunk (code or comment)
+               ;; C-Page Down to move to the next chunk (code or comment)
+               ;; C-S-Page Up to move to the previous chunk of the same type
+               ;; C-S-Page Down to move to the next chunk of the same type
+               ([(C-prior)] . polymode-previous-chunk)
+               ([(C-next)] . polymode-next-chunk)
+               ([(C-S-prior)] . polymode-previous-chunk-same-type)
+               ([(C-S-next)] . polymode-next-chunk-same-type))))
+#+END_SRC
+
 ** smartparens
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
