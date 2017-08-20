@@ -237,8 +237,18 @@ Find an easy solution to implement relative line numbers.
 #+END_SRC
 ** TODO magic-latex-buffer
 Decide whether to keep this package.
-** TODO markdown-mode
-Configure this package.
+** markdown-mode
+Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.[Rr]md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+#+END_SRC
+
 ** page-break-lines
 From Steve Purcell. Github page [[https://github.com/purcell/page-break-lines][here]].
 #+BEGIN_SRC emacs-lisp
