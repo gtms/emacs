@@ -2,34 +2,17 @@
 #+AUTHOR: Gil Tomás
 
 * Notes
-Adapted from the config.org files available [[https://github.com/danielmai/.emacs.d/blob/master/config.org][here]] and [[https://github.com/nasseralkmim/.emacs.d/blob/master/config.org][here]].
+This file is my personal ~Emacs~ configuration to be integrated with
+[[https://github.com/bbatsov/prelude][prelude]].  Copy this file to the ~personal/config~ directory under
+~.emacs.d~.
 
-This configuration uses the [[https://github.com/jwiegley/use-package][use-package]] package from John Wiegley, which is a
-fantastic way to manage package configurations. This [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][post]] explain how it works.
+This file is based on previous iterations of ~config.org~.  This file has been
+refactored on [2017-08-12 Sat].
 
-This [[http://emacs.stackexchange.com/questions/10396/difference-between-init-and-config-in-use-package][Question]] is useful to understand the differences between init and config.
-Basically, bind and init are evaluated immediately after start up which
-contributes to startup time, config is deferred until the pacakge is loaded (by
-a bind key or a specific mode).
-
-* Personal information
+* Load
+*** package management
 #+BEGIN_SRC emacs-lisp
-(setq user-full-name "Gil Tomás"
-      user-mail-address "gil.tms@gmail.com")
-#+END_SRC
-
-* Loading config.org
-
-Using the method described [[http://www.holgerschurig.de/en/emacs-efficiently-untangling-elisp/][here]].
-
-*** Package management
-#+BEGIN_SRC emacs-lisp
-(package-initialize nil)
-(setq package-enable-at-startup nil)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-;;; Set up package
+;; Set up package
 ;; initalize all ELPA packages
 (require 'package)
 (setq package-enable-at-startup nil
@@ -42,49 +25,7 @@ Using the method described [[http://www.holgerschurig.de/en/emacs-efficiently-un
 
 *** use-package
 
-See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package or this [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][link]].
-
-Basic syntax:
-
-#+BEGIN_EXAMPLE
-(use-package package-name
-         [:keyword [option]]...)
-
-:init          Code to run before PACKAGE-NAME has been loaded.
-:config        Code to run after PACKAGE-NAME has been loaded.  Note that if
-                           loading is deferred for any reason, this code does not execute
-                           until the lazy load has occurred.
-:preface       Code to be run before everything except `:disabled'; this can
-                           be used to define functions for use in `:if', or that should be
-                           seen by the byte-compiler.
-:mode          Form to be added to `auto-mode-alist'.
-:interpreter   Form to be added to `interpreter-mode-alist'.
-:commands      Define autoloads for commands that will be defined by the
-                           package.  This is useful if the package is being lazily loaded,
-                           and you wish to conditionally call functions in your `:init'
-                           block that are defined in the package.
-:bind          Bind keys, and define autoloads for the bound commands.
-:bind*         Bind keys, and define autoloads for the bound commands,
-                           *overriding all minor mode bindings*.
-:bind-keymap   Bind a key prefix to an auto-loaded keymap defined in the
-                           package.  This is like `:bind', but for keymaps.
-:bind-keymap*  Like `:bind-keymap', but overrides all minor mode bindings
-:defer         Defer loading of a package -- this is implied when using
-                           `:commands', `:bind', `:bind*', `:mode' or `:interpreter'.
-                           This can be an integer, to force loading after N seconds of
-                           idle time, if the package has not already been loaded.
-:after         Defer loading of a package until after any of the named
-                           features are loaded.
-:demand        Prevent deferred loading in all cases.
-:if EXPR       Initialize and load only if EXPR evaluates to a non-nil value.
-:disabled      The package is ignored completely if this keyword is present.
-:defines       Declare certain variables to silence the byte-compiler.
-:functions     Declare certain functions to silence the byte-compiler.
-:load-path     Add to the `load-path' before attempting to load the package.
-:diminish      Support for diminish.el (if installed).
-:ensure        Loads the package using package.el if necessary.
-:pin           Pin the package to an archive.
-#+END_EXAMPLE
+See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package.
 
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'use-package)
@@ -94,100 +35,51 @@ Basic syntax:
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)                ;; if you use :diminish
+(require 'diminish) ;; if you use :diminish
 (require 'bind-key)
 #+END_SRC
 
-* Custom settings
-#+BEGIN_SRC emacs-lisp
-(setq custom-file (expand-file-name "custom.el"
-                                    prelude-user-init-file))
-(load custom-file)
-#+END_SRC
-
-* Global Key Bindings
-#+BEGIN_SRC emacs-lisp
-;; (global-set-key (kbd "C-x o") 'ace-window)
-#+END_SRC
-
-* Prelude Hacks
+* Prelude hacks
 #+BEGIN_SRC emacs-lisp
 ;; cancels prelude-ui.el instruction to render the fringe (gutter) smaller
 ;; the argument is a width in pixels (the default is 8)
 (if (fboundp 'fringe-mode)
     (fringe-mode 8))
-;; proced was replaced by vkill on prelude: disable vkill instead
-;; 29Jul2014
-(put 'vkill 'disabled t)
 ;; rebinds C-- and C-+ to negative and positive arguments respectively,
 ;; overriding code on prelude-global-keybindings.el (previously bound to
 ;; text-scale-increase/decrease)
 ;; 03Aug2015
 (global-set-key (kbd "C--") 'negative-argument)
 (global-set-key (kbd "C-+") 'positive-argument)
+;; 13Aug2017
+;; retouch prelude-mode keymap so that it does't interfere with org-mode
+;; two sources inspired this snipet:
+;; http://ergoemacs.org/emacs/reclaim_keybindings.html
+;; https://github.com/novoid/dot-emacs/blob/master/config.org#move-text---move-line-updown--m---m-
+(require 'prelude-mode)
+(define-key prelude-mode-map (kbd "C-S-<up>") nil)
+(define-key prelude-mode-map (kbd "C-S-<down>") nil)
+(define-key prelude-mode-map (kbd "M-S-<up>") nil)
+(define-key prelude-mode-map (kbd "M-S-<down>") nil)
+(define-key prelude-mode-map (kbd "M-,") 'move-text-up)
+(define-key prelude-mode-map (kbd "M-.") 'move-text-down)
+;; to avoid conflict with remaped prefix for smartparens
+(define-key prelude-mode-map (kbd "C-c s") nil)
+(define-key prelude-mode-map (kbd "C-c w") 'crux-swap-windows)
+;; 19Aug2017
+;; redefine 'C-c k' as backward-kill-line
+;; backward-kill-line is a function defined in:
+;; https://www.emacswiki.org/emacs/BackwardKillLine
+(defun backward-kill-line (arg)
+  "Kill ARG lines backward."
+  (interactive "p")
+  (kill-line (- 1 arg)))
+(define-key prelude-mode-map (kbd "C-c k") nil)
+(global-set-key (kbd "C-c k") 'backward-kill-line)
 #+END_SRC
 
-* Font
-Download
-
-| [[https://github.com/adobe-fonts/source-code-pro][Source Code Pro]]     |
-| [[https://www.fontsquirrel.com/fonts/download/dejavu-sans][Dejavu Sans]]         |
-| [[https://fontlibrary.org/pt/font/fantasque-sans-mono][Fantasque Sans mono]] |
-| [[http://leonardo-m.livejournal.com/77079.html][Inconsolata g]]       |
-
+* Sensible defaults
 #+BEGIN_SRC emacs-lisp
-(if (string-equal system-type "darwin")
-    (set-frame-font "Source Code Pro 14")
-  (set-frame-font "Source Code Pro 13"))
-;; (set-frame-font "Source Code Pro 14")
-;; (set-frame-font "Monospace 10")
-;; (set-frame-font "Dejavu Sans 10")
-;; (set-frame-font "Fantasque Sans Mono 11")
-;; (set-frame-font "Inconsolata-g 10")
-#+END_SRC
-
-* Common defaults
-Sources for this section include [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnars Sveen]] and [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]].
-
-#+BEGIN_SRC emacs-lisp
-;; already on core/prelude-editor.el
-;; These functions are useful.  Activate them.
-;; (put 'downcase-region 'disabled nil)
-;; (put 'upcase-region 'disabled nil)
-;; (put 'narrow-to-region 'disabled nil)
-;; (put 'dired-find-alternate-file 'disabled nil)
-
-;; Answering just 'y' or 'n' will do
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; UTF-8 please
-(set-language-environment "UTF-8")
-(setq locale-coding-system 'utf-8) ; pretty
-(set-terminal-coding-system 'utf-8) ; pretty
-(set-keyboard-coding-system 'utf-8) ; pretty
-(set-selection-coding-system 'utf-8) ; please
-(prefer-coding-system 'utf-8) ; with sugar on top
-(setq default-buffer-file-coding-system 'utf-8)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-;; from Sacha page
-(when (display-graphic-p)
-  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-(setq-default indent-tabs-mode nil)
-
-;; already on core/prelude-editor.el
-;; (setq uniquify-buffer-name-style 'forward)
-
-;; Don't beep at me
-(setq visible-bell t)
-
-;; the following is copied from my previous personal.el
-;; 21Sep2014
-;; toggles delete-selection-mode on
-;; redundant with core/prelude-editor.el
-;; (delete-selection-mode 1)
-;; toggles display-time mode on
-;; (setq display-time-day-and-date t)
-;; (display-time)
 ;; removes all scroll bars
 (scroll-bar-mode -1)
 ;; configures emacs so that word moving commands will move cursor into
@@ -196,59 +88,24 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 ;; sets set-mark-command-repeat-pop to TRUE
 ;; non-nil means repeating C-SPC after popping mark pops it again
 (setq set-mark-command-repeat-pop t)
-;; defines variable dired-listing-switches
-(setq dired-listing-switches "-alh")
-;; defines variable orgstruct-heading-prefix-regexp
-(defvar orgstruct-heading-prefix-regexp)
-(setq orgstruct-heading-prefix-regexp "## ")
 ;; The right margin is determined by the variable fill-column.  The default
-;; value for fill-column is 70; here we set it to 80.  21Sep2016
+;; value for fill-column is 70; here we set it to 80.
+;; 21Sep2016
 (setq-default fill-column 80)
 #+END_SRC
 
-These are configurations relative to ibuffer coming from my previous presonal.el
-file:
-
+* Font
 #+BEGIN_SRC emacs-lisp
-;; see http://www.emacswiki.org/emacs/IbufferMode
-;; 30Jul2014
-;; Use human readable Size column instead of original one
-(define-ibuffer-column size-h
-  (:name "Size" :inline t)
-  (cond
-   ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-   ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
-   ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-   (t (format "%8d" (buffer-size)))))
-
-;; Modify the default ibuffer-formats
-(setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 18 18 :left :elide)
-              " "
-              (size-h 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " "
-              filename-and-process)))
+(if (string-equal system-type "darwin")
+    (set-frame-font "Source Code Pro 14")
+  (set-frame-font "Source code Pro 13"))
 #+END_SRC
 
 * Org mode
-** Org itself
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :mode (("\\.org$" . org-mode))
-  :bind(("C-c a" . org-agenda)
-        ("C-c l" . org-store-link)
-        ("C-c c" . org-capture))
-  ;; 15Nov2016
-  ;; from https://github.com/myuhe/smartrep.el
-  ;; (smartrep-define-key
-  ;; org-mode-map "C-c" '(("C-n" . (outline-next-visible-heading 1))
-  ;; ("C-p" . (outline-previous-visible-heading 1))))
   :config
-  ;; (add-hook 'org-mode-hook 'smartparens-mode) ; put on hold until minor mode
-  ;; map is sorted out
+  ;; (add-hook 'org-mode-hook 'smartparens-mode)
   (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'org-mode-hook 'company-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
@@ -256,8 +113,9 @@ file:
   (use-package org-bullets
     :init
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    ;; (setq org-ellipsis " …")
     (setq org-bullets-bullet-list '("•")))
+  ;; defines variable orgstruct-heading-prefix-regexp
+  (setq orgstruct-heading-prefix-regexp "## ")
   ;; Org babel and source blocks
   (setq org-src-fontify-natively t
         org-M-RET-may-split-line '((default . nil))
@@ -267,132 +125,50 @@ file:
         org-src-tab-acts-natively t
         org-goto-auto-isearch nil
         org-export-babel-evaluate nil
-        org-confirm-babel-evaluate nil) ; doesn't ask for confirmation
-  ;; display/update images in the buffer after I evaluate
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
-  ;; This is for remove the annoying background color on the headings, level 1
-  ;; and level 2, when using the material-theme.
-  (custom-set-faces
-   '(org-level-1 ((t (:background nil :bold t :overline nil))))
-   '(org-level-2 ((t (:background nil :bold t :overline nil)))))
-  (setq org-modules '(org-habit))
-  (eval-after-load 'org
-    '(org-load-modules-maybe t)))
-  ;; 15Nov2016
-  ;; as per https://github.com/bbatsov/prelude/issues/394
-  ;; 14Aug2017
-  ;; no longer needed
-  ;; (defun my-org-mode-hook ()
-  ;;   (define-key prelude-mode-map (kbd "C-S-<up>") nil)
-  ;;   (define-key prelude-mode-map (kbd "C-S-<down>") nil)
-  ;;   (define-key prelude-mode-map (kbd "M-S-<up>") nil)
-  ;;   (define-key prelude-mode-map (kbd "M-S-<down>") nil)
-  ;;   (define-key prelude-mode-map (kbd "M-<up>") nil)
-  ;;   (define-key prelude-mode-map (kbd "M-<down>") nil)
-  ;;   (define-key prelude-mode-map (kbd "C-S-<return>") nil)
-  ;;   (define-key prelude-mode-map (kbd "S-<return>") nil)
-  ;;   (define-key smartparens-mode-map (kbd "M-<up>") nil)
-  ;;   (define-key smartparens-mode-map (kbd "M-<down>") nil))
-  ;; (add-hook 'org-mode-hook 'my-org-mode-hook))
-#+END_SRC
-
-** Agenda and Capture files
-Set agenda files.
-Remove done tasks from the agenda, from [[http://stackoverflow.com/questions/8281604/remove-done-tasks-from-agenda-view][this question]].
-Set gtd.org as my default notes file.
-From [[http://sachachua.com/blog/2015/02/learn-take-notes-efficiently-org-mode/][this blog entry]], C-c o is set to open the tasks.org
-
-#+BEGIN_SRC emacs-lisp
-(use-package org
-  :defer t
-  :config
-  (setq org-agenda-files
-        (delq nil
-              (mapcar (lambda (x) (and (file-exists-p x) x))
-                      '("~/Dropbox/org/gtd.org"
-                        "~/Dropbox/org/notes.org"
-                        "~/Dropbox/org/culture.org"))))
-  (custom-set-variables
-   '(org-agenda-skip-scheduled-if-done t)
-   '(org-agenda-skip-deadline-if-done t))
-  (setq org-default-notes-file "~/Dropbox/org/gtb.org"))
-#+END_SRC
-
-** Org babel/source blocks
-
-I like to have source blocks properly syntax highlighted and with the editing
-popup window staying within the same window so all the windows don't jump
-around.  Also, having the top and bottom trailing lines in the block is a
-waste of space, so we can remove them.
-
-I noticed that fontification doesn't work with markdown mode when the block
-is indented after editing it in the org src buffer---the leading #s for
-headers don't get fontified properly because they appear as Org comments.
-Setting ~org-src-preserve-indentation~ makes things consistent as it doesn't
-pad source blocks with leading spaces.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-src-fontify-natively t
-      org-src-window-setup 'current-window
-      org-src-strip-leading-and-trailing-blank-lines t
-      org-src-preserve-indentation t
-      org-src-tab-acts-natively t)
-#+END_SRC
-
-** Options
-Speed up commands. See the doc for speed keys by checking out [[elisp:(info%20"(org)%20speed%20keys")][the documentation
-for speed keys in Org mode]].
-
-General options.
-#+BEGIN_SRC emacs-lisp
-(use-package org
-  :defer t
-  :config
+        org-confirm-babel-evaluate nil)
   (use-package smartrep
     :config
     (smartrep-define-key org-mode-map "C-c"
       '(("C-n" . (outline-next-visible-heading 1))
         ("C-p" . (outline-previous-visible-heading 1)))))
   (setq org-special-ctrl-a/e t)
-  (transient-mark-mode nil)
   (setq org-log-done 'time) ;Log the time a task is completed.
-  (setq org-habit-graph-column 50) ;position the habit graph on the agenda to
-                                        ;the right of the default
+  (setq org-habit-graph-column 50) ; position the habit graph on the agenda to
+                                        ; the right of the default
   (setq org-hide-emphasis-markers nil)
   (setq inhibit-splash-screen t)
-  (setq org-indent-mode t) ;indent the headings for clean view
+  (setq org-indent-mode t) ; indent the headings for clean view
   (setq org-hide-leading-stars t)
   (setq org-hide-leading-stars-before-indent-mode t)
   (setq org-odd-levels-only t)
   (diminish 'org-indent-mode)
   (setq org-startup-indented t)
-  (setq org-tags-column -66) ;where the tags are places
-  (setq org-use-speed-commands t)) ; speed up commands
+  (setq org-tags-column -66) ; where the tags are places
+  (setq org-use-speed-commands t) ; speed up commands
+  ;; This is for remove the annoying background color on the headings, level 1
+  ;; and level 2, when using the material-theme.
+  (custom-set-faces
+   '(org-level-1 ((t (:background nil :bold t :overline nil))))
+   '(org-level-2 ((t (:background nil :bold t :overline nil))))))
 #+END_SRC
 
 Todo sequences.
+
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :defer t
   :config
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-
   (setq org-todo-keyword-faces
         '(("TODO" :background "tomato" :foreground "bisque" :weight bold )
           ("STARTED" :background "ForestGreen" :foreground "bisque" :weight bold )
           ("WAITING" :background "DarkOrange" :foreground "bisque" :weight bold )
           ("DONE" :background "RoyalBlue" :foreground "bisque" :weight bold )
           ("CANCELLED" :background "grey50" :foreground "bisque" :weight bold )))
-
   (setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
   (setq org-cycle-separator-lines 0))
 #+END_SRC
-
-From [[http://stackoverflow.com/questions/28351465/emacs-orgmode-do-not-insert-line-between-headers][This question]], an option for org mode not insert a line between headings.
-
-[[http://orgmode.org/manual/Headlines.html][This reference]] is used to remove an annoying feature of not hiding extra lines
-in a subtree.
 
 From the Org Mode Manual, section [[http://orgmode.org/manual/Conflicts.html][15.10.2]]--Packages that lead to conflicts with
 Org mode:
@@ -407,256 +183,49 @@ Org mode:
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 #+END_SRC
 
-* Tramp
-#+BEGIN_SRC emacs-lisp
-(use-package tramp)
-#+END_SRC
-
-* ELPA packages
+* ELPA Packages
 ** ace-window
-[[https://github.com/abo-abo/ace-window][ace-window]] is a package that uses the same idea from ace-jump-mode for
-buffer navigation, but applies it to windows. The default keys are
-1-9, but it's faster to access the keys on the home row, so that's
-what I have them set to (with respect to Dvorak, of course).
-
 #+BEGIN_SRC emacs-lisp
-(use-package ace-window
-  :config
-  ;; (setq aw-keys '(?a ?o ?e ?u ?h ?t ?n ?s))
-  (ace-window-display-mode)
-  :bind ("C-x o" . ace-window))
+(use-package ag
+  :config (key-chord-define-global "ww" 'ace-window))
 #+END_SRC
-
 ** ag
 #+BEGIN_SRC emacs-lisp
 (use-package ag
+  :bind ("C-c a" . ag)
   :commands ag)
 #+END_SRC
-
-** auctex
-*** basic setup
-Enable [[https://www.gnu.org/software/auctex/manual/auctex.html][Auctex]] when files with .tex are loaded. Tex-master is useful to make
-Auctex aware of multi-files documents.  TeX-PDF mode is used to compile using
-pdflatex.
-
-#+BEGIN_SRC emacs-lisp
-(use-package tex-site
-  :ensure auctex
-  :mode ("\\.tex\\'" . latex-mode)
-  :config
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq-default TeX-master nil)
-  (add-hook 'LaTeX-mode-hook
-            (lambda ()
-              (reftex-mode)
-              (latex-extra-mode)
-              (magic-latex-buffer)
-              (LaTeX-math-mode)
-              (rainbow-delimiters-mode)
-              (flyspell-mode)
-              (company-mode)
-              (smartparens-mode)
-              (turn-on-reftex)
-              (setq reftex-plug-into-AUCTeX t)
-              (reftex-isearch-minor-mode)
-              (setq TeX-PDF-mode t)
-              (setq global-font-lock-mode t)
-              (setq TeX-source-correlate-method 'synctex)
-              (setq TeX-source-correlate-start-server t)))
-
-  ;; https://github.com/politza/pdf-tools/issues/187
-  ;; (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-
-  ;; to use pdfview with auctex
-  ;; (add-hook 'LaTeX-mode-hook 'pdf-tools-install)
-  ;; nil beacuse I don't want the pdf to be opened again in the same frame after
-  ;; C-c C-a
-  ;; (setq TeX-view-program-selection nil)
-  ;; (setq TeX-view-program-selection '((output-pdf "pdf-tools")))
-  ;; (setq TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view")))
-
-  ;; https://github.com/politza/pdf-tools/pull/60
-  ;; (setq pdf-sync-forward-display-action
-  ;;       '(display-buffer-reuse-window (reusable-frames . t)))
-  ;; same thing, now I can jump from pdf in another frame into source
-  ;; (setq pdf-sync-backward-display-action
-  ;;       '(display-buffer-reuse-window (reusable-frames . t)))
-
-  ;; language specific hooks in auctex
-  (add-hook 'TeX-language-dk-hook
-            (lambda () (ispell-change-dictionary "english"))))
-#+END_SRC
-
-*** company-auctex
-From [[https://github.com/manugoyal/.emacs.d#latex][here]].
-
-#+BEGIN_SRC emacs-lisp
-(use-package company-auctex
-  :defer t
-  :config
-  (company-auctex-init))
-#+END_SRC
-
-*** CANCELLED latex-preview-pane
-CLOSED: [2017-07-03 Mon 16:47]
-shell-escape mode because the pacakge svg requires it.
-
-#+BEGIN_SRC emacs-lisp
-(use-package latex-preview-pane
-  :disabled t
-  :bind ("M-p" . latex-preview-pane-mode)
-  :config
-  (setq doc-view-ghostscript-program "gswin64c")
-
-  (custom-set-variables
-   '(shell-escape-mode "-shell-escape")
-   '(latex-preview-pane-multifile-mode (quote auctex))))
-#+END_SRC
-
 ** company
-Auto complete.
-
-The configurations were taken from [[https://github.com/company-mode/company-mode/issues/68][this discussion]].  The delay time from the
-wiki. This [[https://www.reddit.com/r/emacs/comments/3s5bkf/companymode_configuration_make_editing_slow/][reddit thread]] has some cool configurations.  [[https://github.com/manugoyal/.emacs.d#company-mode][Company capf is
-problematic?]]
-
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :diminish company-mode
-  :defer t
   :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-idle-delay 0)
   (setq company-show-numbers t)
-  (setq company-minimum-prefix-length 3)
-  (delete 'company-capf company-backends))
+  (setq company-minimum-prefix-length 3))
 #+END_SRC
-
-** dired-hacks
-Collection of useful dired additions.
-
-***** dired-collapse
-#+BEGIN_SRC emacs-lisp
-(use-package dired-collapse
-  :ensure t
-  :defer t)
-  #+END_SRC
-
-***** dired-open
-#+BEGIN_SRC emacs-lisp
-(use-package dired-open
-  :ensure t
-  :defer t)
-#+END_SRC
-
-***** dired-rainbow
-#+BEGIN_SRC emacs-lisp
-(use-package dired-rainbow
-  :ensure t
-  :defer t)
-#+END_SRC
-
-***** dired-ranger
-#+BEGIN_SRC emacs-lisp
-(use-package dired-ranger
-  :ensure t
-  :defer t)
-#+END_SRC
-
-***** dired-narrow
-#+BEGIN_SRC emacs-lisp
-(use-package dired-narrow
-  :ensure t
-  :defer t
-  :bind (:map dired-mode-map
-              ("/" . dired-narrow)))
-#+END_SRC
-
-** ess (emacs speaks statistics)
+** TODO dired-hacks
+Fuco1 collection of useful dired additions.  Needs to be integrated under
+Misc/Dired Stuff.
+** ess (emacs-speaks-statistics)
 #+BEGIN_SRC emacs-lisp
 (use-package ess
-  :mode (("\\.sp\\'"           . S-mode)
-         ("/R/.*\\.q\\'"       . R-mode)
-         ("\\.[qsS]\\'"        . S-mode)
-         ("\\.ssc\\'"          . S-mode)
-         ("\\.SSC\\'"          . S-mode)
-         ("\\.[rR]\\'"         . R-mode)
-         ("\\.[rR]nw\\'"       . Rnw-mode)
-         ("\\.[sS]nw\\'"       . Snw-mode)
-         ("\\.[rR]profile\\'"  . R-mode)
-         ("NAMESPACE\\'"       . R-mode)
-         ("CITATION\\'"        . R-mode)
-         ("\\.omg\\'"          . omegahat-mode)
-         ("\\.hat\\'"          . omegahat-mode)
-         ("\\.lsp\\'"          . XLS-mode)
-         ("\\.do\\'"           . STA-mode)
-         ("\\.ado\\'"          . STA-mode)
-         ("\\.[Ss][Aa][Ss]\\'" . SAS-mode)
-         ("\\.jl\\'"           . ess-julia-mode)
-         ("\\.[Ss]t\\'"        . S-transcript-mode)
-         ("\\.Sout"            . S-transcript-mode)
-         ("\\.[Rr]out"         . R-transcript-mode)
-         ("\\.Rd\\'"           . Rd-mode)
-         ("\\.[Bb][Uu][Gg]\\'" . ess-bugs-mode)
-         ("\\.[Bb][Oo][Gg]\\'" . ess-bugs-mode)
-         ("\\.[Bb][Mm][Dd]\\'" . ess-bugs-mode)
-         ("\\.[Jj][Aa][Gg]\\'" . ess-jags-mode)
-         ("\\.[Jj][Oo][Gg]\\'" . ess-jags-mode)
-         ("\\.[Jj][Mm][Dd]\\'" . ess-jags-mode))
   :config
   (require 'ess-site)
   (require 'smartparens-ess)
-  (progn
-    (add-hook 'ess-mode-hook 'company-mode)
-    ;; (add-hook 'ess-mode-hook 'ess-smart-equals-mode)
-    ;; (add-hook 'inferior-ess-mode-hook 'ess-smart-equals-mode)
-    (add-hook 'ess-mode-hook 'turn-on-orgstruct)
-    ;; (add-hook 'ess-mode-hook 'smartparens-mode)
-    ;; (add-hook 'ess-mode-hook 'smartparens-strict-mode)
-    ;; (add-hook 'ess-R-post-run-hook 'smartparens-mode)
-    ;; (add-hook 'ess-R-post-run-hook 'smartparens-strict-mode)
-    (add-hook 'inferior-ess-mode-hook 'smartparens-mode)
-    (add-hook 'inferior-ess-mode-hook 'smartparens-strict-mode)
-    (with-eval-after-load 'ess-site
-      ;; 15Nov2016
-      ;; https://media.readthedocs.org/pdf/emacs/latest/emacs.pdf (p.24)
-      ;; (setq ess-eval-visibly-p 'nowait)
-      ;; Follow Hadley Wickham's R style guide
-      (setq ess-first-continued-statement-offset 2
-            ess-continued-statement-offset 0
-            ess-expression-offset 2
-            ess-nuke-trailing-whitespace-p t
-            ess-default-style 'DEFAULT)))
-  :bind
-  (:map comint-mode-map
-        ("C-c M-r" . comint-history-isearch-backward-regexp)))
+  (add-hook 'inferior-ess-mode-hook 'smartparens-strict-mode)
+  (setq comint-scroll-to-bottom-on-input t)
+  (setq comint-scroll-to-bottom-on-output t)
+  (setq comint-move-point-for-output t)
+  (setq ess-eval-visibly-p 'nowait))
 #+END_SRC
-
 ** hungry-delete
+From a Artur Malabarba [[http://endlessparentheses.com/hungry-delete-mode.html][post]].
 #+BEGIN_SRC emacs-lisp
 (use-package hungry-delete
-  :diminish hungry-delete
   :config
-  (global-hungry-delete-mode)
-  (global-set-key (kbd "C-<delete>") 'hungry-delete-forward)
-  (global-set-key (kbd "C-<backspace>") 'hungry-delete-backward))
+  (global-hungry-delete-mode))
 #+END_SRC
-
-** ibuffer-vc
-#+BEGIN_SRC emacs-lisp
-(use-package ibuffer-vc
-  :diminish ibuffer-vc
-  :defer t
-  :config
-  (add-hook 'ibuffer-hook
-            (lambda ()
-              (ibuffer-vc-set-filter-groups-by-vc-root)
-              (unless (eq ibuffer-sorting-mode 'alphabetic)
-                (ibuffer-do-sort-by-alphabetic))))
-                (setq ibuffer-show-empty-filter-groups nil))
-#+END_SRC
-
+** TODO linum-relative
+Find an easy solution to implement relative line numbers.
 ** ido-vertical-mode
 #+BEGIN_SRC emacs-lisp
 (use-package ido-vertical-mode
@@ -666,144 +235,88 @@ Collection of useful dired additions.
   (ido-vertical-mode 1)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 #+END_SRC
-
-** latex-extra
-Defines extra commands and keys for LaTeX mode.
-
-#+BEGIN_SRC emacs-lisp
-(use-package latex-extra
-  :defer t)
-#+END_SRC
-
-** limum-relative
-#+BEGIN_SRC emacs-lisp
-(use-package linum-relative
-  :ensure t
-  :defer t)
-#+END_SRC
-
-** magic-latex-buffer
-Magically enhance LaTeX-mode font-locking for semi-WYSIWYG editing.
-
-#+BEGIN_SRC emacs-lisp
-(use-package magic-latex-buffer
-  :config
-  (add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
-  (setq magic-latex-enable-block-highlight t
-        magic-latex-enable-suscript        nil
-        magic-latex-enable-pretty-symbols  t
-        magic-latex-enable-block-align     nil
-        magic-latex-enable-inline-image    nil))
-#+END_SRC
-
-** markdown-mode
-Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
-#+BEGIN_SRC emacs-lisp
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.[Rr]md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-#+END_SRC
-
-** move-text
-#+BEGIN_SRC emacs-lisp
-(use-package move-text
-  :ensure t
-  :defer t
-  :config
-  (move-text-default-bindings))
-#+END_SRC
-
+** TODO magic-latex-buffer
+Decide whether to keep this package.
+** TODO markdown-mode
+Configure this package.
 ** page-break-lines
+From Steve Purcell. Github page [[https://github.com/purcell/page-break-lines][here]].
 #+BEGIN_SRC emacs-lisp
 (use-package page-break-lines
   :ensure t
-  :defer t)
-(global-page-break-lines-mode)
-#+END_SRC
-
-** CANCELLED pdf-tools
-CLOSED: [2017-08-07 Mon 15:25]
-From the larslj's [[https://github.com/larslj/pdf-tools/tree/windows][windows branch]].
-
-#+BEGIN_SRC emacs-lisp
-(use-package pdf-tools
-  :mode ("ont\\.pdf\\'" . pdf-tools-install)
-  :bind ("C-c C-g" . pdf-sync-forward-search)
-  :defer t
   :config
-  (setq mouse-wheel-follow-mouse t)
-  (setq pdf-view-resize-factor 1.10)
-  ;; 28Nov2016
-  ;; From:
-  ;; https://emacs.stackexchange.com/questions/13314/install-pdf-tools-on-emacs-macosx
-  (if (string-equal system-type "darwin")
-      (custom-set-variables
-       '(pdf-tools-handle-upgrades nil)) ; Use brew upgrade pdf-tools instead.
-    (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
-  (pdf-tools-install))
+  (global-page-break-lines-mode))
 #+END_SRC
-
-** peep-dired
-Taken from [[http://pragmaticemacs.com/emacs/quickly-preview-images-and-other-files-with-peep-dired/][here]].
+** TODO peep-dired
+Convenience function to use within dired.  Needs to be configured under
+Misc/Dired Stuff.  Needs integration with dired-hacks.
+** TODO polymode
+Allows for loading several major modes throughout the same buffer.  Required to
+edit markdown files with R code.  Interacts with markdown-mode.
+** smartparens
 #+BEGIN_SRC emacs-lisp
-;; preview files in dired
-(use-package peep-dired
-  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("P" . peep-dired)))
-#+END_SRC
-
-** polymode
-Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on 09Jan2017.
-
-#+BEGIN_SRC emacs-lisp
-;; Polymode to load several modes (e.g. Markdown + ESS)
-;; https://github.com/vitoshka/polymode
-(use-package polymode
-  :mode (("\\.md"     . poly-markdown-mode)   ; Markdown files
-         ("\\.[rR]md" . poly-markdown+r-mode) ; RMarkdown files
-         ("\\.[sSrR]nw" . poly-noweb+r-mode)) ; Sweave files
-  :diminish poly-markdown+r-mode
+(use-package smartparens
+  ;; 17Aug2017
+  ;; https://gist.github.com/oantolin/5751fbaa7b8ab4f9570893f2adfe1862
   :init
-  (progn
-    ;; (setq load-path          ; Append the directory to emacs path
-    ;;       (append '("/home/mathieu/.emacs.d/polymode/"
-    ;;          "/home/mathieu/.emacs.d/polymode/modes") load-path))
-    (require 'poly-R)                   ; Load necessary modes
-    (require 'poly-markdown)
-    (require 'poly-noweb)
-    (setq
-     pm-weaver "knitR-ESS"              ; Default weaver
-     pm-exporter "pandoc")              ; Default exporter
-    (bind-keys :map polymode-mode-map
-               ([(C-prior)] . polymode-previous-chunk) ; C-PageUp to move to the previous chunk (code or comment)
-               ([(C-next)] . polymode-next-chunk)      ; C-PageDown to move to the next chunk (code or comment)
-               ([(C-S-prior)] . polymode-previous-chunk-same-type) ; C-S-PageUp to move to the previous chunk of the same type
-               ([(C-S-next)] . polymode-next-chunk-same-type)      ; C-S-PageDown to move to the next chunk of the same type
-               ([(f8)] . polymode-weave)       ; F7 to weave
-               ([(C-f8)] . polymode-export)))) ; C-F7 to export
-#+END_SRC
-
-** reftex
-[[http://www.gnu.org/software/auctex/manual/reftex.html#SEC2][RefTex website]].  Useful for managing cross references, bibliographies, indices,
-and document navigation.
-
-#+BEGIN_SRC emacs-lisp
-(use-package reftex
-  :defer t
+  (smartparens-global-mode)
+  ;; (smartparens-global-strict-mode)
+  :bind
+  (:map smartparens-mode-map
+        ;; taken from http://gongzhitaao.org/dotemacs/#sec:miscpac
+        ("C-<right>" . nil)
+        ("C-<left>" . nil)
+        ("C-)" . nil)
+        ("C-(" . nil)
+        ("C-}" . nil)
+        ("C-{" . nil)
+        ("M-<down>" . nil)
+        ("M-<up>" . nil)
+        ("M-r" . nil)
+        ("C-S-<backspace>" . nil)
+        ("C-c s f" . sp-forward-sexp)
+        ("C-c s b" . sp-backward-sexp)
+        ("C-c s d" . sp-down-sexp)
+        ("C-c s D" . sp-backward-down-sexp)
+        ("C-c s a" . sp-beginning-of-sexp)
+        ("C-c s e" . sp-end-of-sexp)
+        ("C-c s u" . sp-up-sexp)
+        ("C-c s U" . sp-backward-up-sexp)
+        ("C-c s t" . sp-transpose-sexp)
+        ("C-c s n" . sp-next-sexp)
+        ("C-c s p" . sp-previous-sexp)
+        ("C-c s k" . sp-kill-sexp)
+        ("C-c s w" . sp-copy-sexp)
+        ("C-c s s" . sp-forward-slurp-sexp)
+        ("C-c s r" . sp-forward-barf-sexp)
+        ("C-c s S" . sp-backward-slurp-sexp)
+        ("C-c s R" . sp-backward-barf-sexp)
+        ("C-c s F" . sp-forward-symbol)
+        ("C-c s B" . sp-backward-symbol)
+        ("C-c s [" . sp-select-previous-thing)
+        ("C-c s ]" . sp-select-next-thing)
+        ("C-c s C-i" . sp-splice-sexp)
+        ("C-c s <delete>" . sp-splice-sexp-killing-forward)
+        ("C-c s <backspace>" . sp-splice-sexp-killing-backward)
+        ("C-c s C-<backspace>" . sp-splice-sexp-killing-around)
+        ("C-c s C-w" . sp-wrap)
+        ("C-c s C-u" . sp-unwrap-sexp)
+        ("C-c s C-b" . sp-backward-unwrap-sexp)
+        ("C-c s C-t" . sp-prefix-tag-object)
+        ("C-c s C-p" . sp-prefix-pair-object)
+        ("C-c s C-c" . sp-convolute-sexp)
+        ("C-c s C-a" . sp-absorb-sexp)
+        ("C-c s C-e" . sp-emit-sexp)
+        ("C-c s C-p" . sp-add-to-previous-sexp)
+        ("C-c s C-n" . sp-add-to-next-sexp)
+        ("C-c s C-j" . sp-join-sexp)
+        ("C-c s C-s" . sp-split-sexp)
+        ("C-c s C-r" . sp-raise-sexp))
   :config
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
-  (setq reftex-cite-prompt-optional-args t)); Prompt for empty
-                                        ; optional arguments in
-                                        ; cite
+  (add-hook 'eval-expression-minibuffer-setup-hook #'smartparens-mode))
 #+END_SRC
-
 ** swiper
-***** counsel
+*** counsel
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
@@ -822,7 +335,7 @@ and document navigation.
   (setq ivy-initial-inputs-alist nil))
 #+END_SRC
 
-***** ivy
+*** ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
@@ -836,79 +349,26 @@ and document navigation.
     (global-set-key (kbd "C-c C-r") 'ivy-resume)))
 #+END_SRC
 
-***** swiper
+*** swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :bind (("C-s" . swiper)
          ("C-c u" . swiper-all)))
 #+END_SRC
 
-***** hydra
+*** hydra
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
   :ensure t
   :defer t)
 #+END_SRC
 
-** smart-mode-line
-#+BEGIN_SRC emacs-lisp
-(use-package smart-mode-line
-  :init
-  (progn
-    (setq sml/no-confirmation-load-theme t)
-    (sml/setup)
-    (sml/apply-theme 'automatic)))
-#+END_SRC
-
-** smartparens
-#+BEGIN_SRC emacs-lisp
-(use-package smartparens
-  :defer t
-  :diminish smartparens-mode
-  :config
-  (smartparens-global-mode)
-  (show-smartparens-global-mode t)
-  (sp-local-pair 'org-mode "_" "_" )
-  (sp-local-pair 'org-mode "*" "*" )
-  (sp-local-pair 'latex-mode "$" "$" )
-  (sp-local-pair 'latex-mode "\\left(" "\\right)" :trigger "\\l("))
-#+END_SRC
-
-** zotelo
-#+BEGIN_SRC emacs-lisp
-;;; zotelo (Zotero-Local)
-;; https://github.com/vitoshka/zotelo
-;; https://forums.zotero.org/discussion/19608/zotero-emacs-integration/
-(use-package zotelo
-  :demand t
-  :commands (zotelo-set-collection
-             zotelo-update-database)
-  :config
-  (setq zotelo-use-ido nil)
-  (add-hook 'TeX-mode-hook 'zotelo-minor-mode)
-  (add-hook 'org-mode-hook 'zotelo-minor-mode)
-  ;; C-c z c         zotelo-set-collection (also C-c z s)
-  ;; C-c z u         zotelo-update-database
-  ;; C-c z e         zotelo-export-secondary
-  ;; C-c z r         zotelo-reset
-  ;; C-c z t         zotelo-set-translator
-  )
-#+END_SRC
-
-** writegood-mode
-From [[https://github.com/grettke/help/blob/master/help.org][this source]].
-
-#+BEGIN_SRC emacs-lisp :tangle no
-(use-package writegood-mode
-  :config
-  (require 'writegood-mode)
-  (eval-after-load "writegood-mode"
-    '(diminish 'writegood-mode)))
-#+END_SRC
-
 * Misc
 ** Dired Stuff
 #+BEGIN_SRC emacs-lisp
+;; defines variable dired-listing-switches
+(setq dired-listing-switches "-alh")
+
 ;; dired sorts directories first from
 ;; http://www.emacswiki.org/emacs/DiredSortDirectoriesFirst 03Oct2012
 (defun mydired-sort ()
@@ -983,22 +443,6 @@ emulator by adding it to ~eshell-visual-commands~.
       eshell-cmpl-cycle-completions nil
       eshell-save-history-on-exit t
       eshell-cmpl-dir-ignore "\\~\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
-
-;; 13Feb2017: depends on three packages not available on melpa
-;; (eval-after-load "esh-opt"
-;;   '(progn
-;;      (use-package em-cmpl)
-;;      (use-package em-prompt)
-;;      (use-package em-term)
-;;      (setenv "PAGER" "cat")
-;;      (add-hook 'eshell-mode-hook
-;;                (lambda ()
-;;                  (message "Welcome to Eshell.")
-;;                  (setq pcomplete-cycle-completions nil)))
-;;      (add-to-list 'eshell-visual-commands "ssh")
-;;      (add-to-list 'eshell-visual-commands "tail")
-;;      (add-to-list 'eshell-command-completions-alist
-;;                   '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\)\\'"))))
 #+END_SRC
 
 Defines eshell aliases.
@@ -1030,6 +474,34 @@ Configure a ~PS1~ like prompt.
 #+END_SRC
 
 ** IBuffer
+*** ibuffer-vc
+Package ibuffer-vc
+#+BEGIN_SRC emacs-lisp
+(use-package ibuffer-vc
+  :diminish ibuffer-vc
+  :defer t
+  :config
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (ibuffer-vc-set-filter-groups-by-vc-root)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic))))
+  ;; Modify the default ibuffer-formats
+  (setq ibuffer-formats
+        '((mark modified read-only " "
+                (name 18 18 :left :elide)
+                " "
+                (size-h 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                filename-and-process)))
+  ;; turn off ibuffer-show-empty-filter-groups
+  ;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+  (setq ibuffer-show-empty-filter-groups nil))
+#+END_SRC
+
+*** other modifications
 #+BEGIN_SRC emacs-lisp
 ;; see http://www.emacswiki.org/emacs/IbufferMode
 ;; 30Jul2014
@@ -1042,27 +514,30 @@ Configure a ~PS1~ like prompt.
    ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
    (t (format "%8d" (buffer-size)))))
 
-;; Modify the default ibuffer-formats
-(setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 18 18 :left :elide)
-              " "
-              (size-h 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " "
-              filename-and-process)))
-
-;; From ibuffer-vc.el
-(add-hook 'ibuffer-hook
-          (lambda ()
-            (ibuffer-vc-set-filter-groups-by-vc-root)
-            (unless (eq ibuffer-sorting-mode 'alphabetic)
-              (ibuffer-do-sort-by-alphabetic))))
-
-;; turn off ibuffer-show-empty-filter-groups
-;; From http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
-(setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
+** LaTeX
+*** latex-extra
+Defines extra commands and keys for LaTeX-mode (Artur Malabarba).
+#+BEGIN_SRC emacs-lisp
+(use-package latex-extra
+  :ensure t
+  :defer t)
+#+END_SRC
+*** TODO zotelo
+Is currently not working on Fedora 26; needs to be fixed.
+#+BEGIN_SRC emacs-lisp
+;; https://github.com/vitoshka/zotelo
+;; https://forums.zotero.org/discussion/19608/zotero-emacs-integration/
+(use-package zotelo
+  :config
+  (add-hook 'TeX-mode-hook 'zotelo-minor-mode)
+  (add-hook 'org-mode-hook 'zotelo-minor-mode)
+  ;; C-c z c         zotelo-set-collection (also C-c z s)
+  ;; C-c z u         zotelo-update-database
+  ;; C-c z e         zotelo-export-secondary
+  ;; C-c z r         zotelo-reset
+  ;; C-c z t         zotelo-set-translator
+  )
 #+END_SRC
 ** Minibuffer
 Minibuffer window expands vertically as necessary to hold the text that you put
@@ -1073,6 +548,7 @@ in the minibuffer
 #+END_SRC
 
 ** Mode Line
+*** what to show
 From [[https://www.emacswiki.org/emacs/ModeLineConfiguration][EmacsWiki]].
 Taken on [2017-07-05 Wed]
 
@@ -1083,6 +559,22 @@ Taken on [2017-07-05 Wed]
 (setq display-time-day-and-date t)
 (setq display-time-default-load-average nil)
 (display-time)
+#+END_SRC
+
+*** smart-mode-line
+#+BEGIN_SRC emacs-lisp
+(use-package smart-mode-line
+  :config
+  (sml/setup)
+  (sml/apply-theme 'automatic))
+#+END_SRC
+
+*** rich-minority
+#+BEGIN_SRC emacs-lisp
+(use-package rich-minority
+  :config
+  (rich-minority-mode 1)
+  (setf rm-whitelist " SP"))
 #+END_SRC
 
 ** Shell
@@ -1096,72 +588,4 @@ the old behavior -- '*shell*' buffer displays in current window -- use
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'display-buffer-alist
              '("^\\*shell\\*$" . (display-buffer-same-window)))
-#+END_SRC
-
-* Temporary
-*** DONE ido-prelude fix [2017-07-13 Thu]
-CLOSED: [2017-07-16 Sun 16:38]
-
-This snippet of code is a temporary fix to acknowledge the replacement of
-~ido-ubiquitous~ by ~ido-completing-read+~ in ~modules/prelude-ido.el~.
-
-~ido-prelude~ is temporarily switched off until a fix is deployed on the master
-branch and this code will work as a replacement until then.  Most of this code
-is taken from ~modules/prelude-ido.el~.
-
-A fix (Fix #1096) was deployed on [2017-07-16 Sun] (Commit
-8b390fbf34d3fd8c77c1a2d9300454dd18ea3d88)
-***** CANCELLED ido
-CLOSED: [2017-07-16 Sun 16:38]
-#+BEGIN_SRC emacs-lisp
-(use-package ido
-  :ensure t
-  :config
-  (setq ido-enable-prefix nil
-        ido-enable-flex-matching t
-        ido-create-new-buffer 'always
-        ido-use-filename-at-point 'guess
-        ido-max-prospects 10
-        ido-save-directory-list-file (expand-file-name "ido.hist" prelude-savefile-dir)
-        ido-default-file-method 'selected-window
-        ido-auto-merge-work-directories-length -1)
-  (ido-mode +1))
-#+END_SRC
-
-***** CANCELLED flx-ido
-CLOSED: [2017-07-16 Sun 16:38]
-#+BEGIN_SRC emacs-lisp
-(use-package flx-ido
-  :ensure t
-  :config
-  ;; smarter fuzzy matching for ido
-  (flx-ido-mode +1)
-  ;; disable ido faces to see flx highlights
-  (setq ido-use-faces nil))
-#+END_SRC
-
-***** CANCELLED smex
-CLOSED: [2017-07-16 Sun 16:38]
-#+BEGIN_SRC emacs-lisp
-(use-package smex
-  :ensure t
-  :config
-  (setq smex-save-file (expand-file-name ".smex-items" prelude-savefile-dir))
-  (smex-initialize)
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
-#+END_SRC
-
-***** ido-completing-read+
-CLOSED: [2017-07-16 Sun 16:38]
-#+BEGIN_SRC  emacs-lisp
-(use-package ido-completing-read+
-  :ensure t
-  :config
-  (ido-ubiquitous-mode 1)
-  (setq magit-completing-read-function 'magit-ido-completing-read)
-  (setq gnus-completing-read-function 'gnus-ido-completing-read)
-  (setq ess-use-ido t)
-  (require 'icomplete)
-  (icomplete-mode 1))
 #+END_SRC
