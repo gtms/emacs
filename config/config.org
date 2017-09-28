@@ -243,10 +243,14 @@ Misc/Dired Stuff.
   (require 'ess-site)
   (require 'smartparens-ess)
   (add-hook 'inferior-ess-mode-hook 'smartparens-strict-mode)
-  (setq comint-scroll-to-bottom-on-input t)
-  (setq comint-scroll-to-bottom-on-output t)
-  (setq comint-move-point-for-output t)
-  (setq ess-eval-visibly-p 'nowait))
+  (add-hook 'ess-mode-hook 'smartparens-strict-mode)
+  (setq orgstruct-heading-prefix-regexp "## ")
+  (add-hook 'ess-mode-hook 'turn-on-orgstruct)
+  ;; (setq comint-scroll-to-bottom-on-input t)
+  ;; (setq comint-scroll-to-bottom-on-output t)
+  ;; (setq comint-move-point-for-output t)
+  ;; (setq ess-eval-visibly-p 'nowait)
+  )
 #+END_SRC
 ** hungry-delete
 From a Artur Malabarba [[http://endlessparentheses.com/hungry-delete-mode.html][post]].
