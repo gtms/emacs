@@ -145,8 +145,6 @@ See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package
     :init
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
     (setq org-bullets-bullet-list '("•")))
-  ;; defines variable orgstruct-heading-prefix-regexp
-  (setq orgstruct-heading-prefix-regexp "## ")
   ;; Org babel and source blocks
   (setq org-src-fontify-natively t
         org-M-RET-may-split-line '((default . nil))
