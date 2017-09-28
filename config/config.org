@@ -636,7 +636,9 @@ Taken on [2017-07-05 Wed]
 (use-package smart-mode-line
   :config
   (sml/setup)
-  (sml/apply-theme 'automatic))
+  (sml/apply-theme 'automatic)
+  (setq sml/name-width 30)
+  (setq sml/mode-width 'full))
 #+END_SRC
 
 *** rich-minority
