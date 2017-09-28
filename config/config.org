@@ -75,7 +75,24 @@ See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package
   (interactive "p")
   (kill-line (- 1 arg)))
 (define-key prelude-mode-map (kbd "C-c k") nil)
-(global-set-key (kbd "C-c k") 'backward-kill-line)
+;; 21Aug2017
+;; bind the already existent function 'crux-kill-line-backwards' to 'C-c k'
+;; instead; it adjusts indentation as well
+(define-key prelude-mode-map (kbd "C-c k") 'crux-kill-line-backwards)
+;; 27Aug2017
+;; When remotely editing files on datastore, the warning message 'file changed
+;; on disk; really edit the buffer?' pops up repeatedly in the minibuffer, even
+;; though no editing has yet taken place.  This greatly disturbs the flow of
+;; editing.  After running the command 'diff-buffer-with-file' after one of
+;; these interruptions, a string of characters is shown trailing the end of the
+;; file, with the message 'No newline at end of file'.  This suggests emacs is
+;; somehow attempting to add a newline at the end of file that is not correctly
+;; encoded on disk in datastore.  After greping for the variable
+;; 'require-final-newline' in Prelude, I found that in 'core/prelude-editor.el'
+;; (line 49), the variable is set to 't'.  Here I set it back to the default of
+;; nil.
+;; (setq require-final-newline nil)
+;; UPDATE: this solution seems to not be recommended.
 #+END_SRC
 
 * Sensible defaults
