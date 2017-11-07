@@ -590,32 +590,19 @@ toggle between real end and logical end of the buffer."
 #+END_SRC
 
 ** Eshell
-This snippet was taken from [[https://github.com/grettke/help/blob/master/help.org#eshell][here]], on 10Feb2017.  According to Grant Rettke's
-notes:
+This Mike Petersen's [[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][article]] on Eshell on his Mastering Emacs blog is a must
+read.
 
-Provide a cross-platform command line shell that is a first-class EMACS citizen.
-
-Commands input in eshell are delegated in order to an alias, a built in command,
-an Elisp function with the same name, and finally to a system call.  Semicolons
-separate commands.  ~which~ tells you what implementation will satisfy the call
-that you are going to make.  The flag ~eshell-prefer-lisp-functions~ does what
-it says.  ~$$~ is the result of the last command.  Aliases live in
-~eshell-aliases-file~.  History is maintained and expandable.
-~eshell-source-file~ will run scripts.  Since Eshell is not a terminal emulator,
-you need to configure it for any commands that need to run using a terminal
-emulator by adding it to ~eshell-visual-commands~.
-
-Defines eshell aliases.
+This snippet defines eshell aliases:
 
 #+BEGIN_SRC emacs-lisp
 (defalias 'ff 'find-file)
 (defalias 'd 'dired)
 #+END_SRC
 
-Configure a ~PS1~ like prompt.
+This snippet configures the prompt:
 
 #+BEGIN_SRC emacs-lisp
-;; (setq eshell-prompt-regexp "^.+@.+:.+> ")
 (setq eshell-prompt-function
       (lambda ()
         (concat
