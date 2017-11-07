@@ -605,13 +605,6 @@ it says.  ~$$~ is the result of the last command.  Aliases live in
 you need to configure it for any commands that need to run using a terminal
 emulator by adding it to ~eshell-visual-commands~.
 
-#+BEGIN_SRC emacs-lisp
-(setq eshell-prefer-lisp-functions nil
-      eshell-cmpl-cycle-completions nil
-      eshell-save-history-on-exit t
-      eshell-cmpl-dir-ignore "\\~\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'")
-#+END_SRC
-
 Defines eshell aliases.
 
 #+BEGIN_SRC emacs-lisp
