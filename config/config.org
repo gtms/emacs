@@ -622,7 +622,7 @@ Defines eshell aliases.
 Configure a ~PS1~ like prompt.
 
 #+BEGIN_SRC emacs-lisp
-(setq eshell-prompt-regexp "^.+@.+:.+> ")
+;; (setq eshell-prompt-regexp "^.+@.+:.+> ")
 (setq eshell-prompt-function
       (lambda ()
         (concat
