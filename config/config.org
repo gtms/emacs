@@ -591,7 +591,14 @@ toggle between real end and logical end of the buffer."
 
 ** Eshell
 This Mike Petersen's [[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][article]] on Eshell on his Mastering Emacs blog is a must
-read.
+read.  Also, see this [[http://howardism.org/Technical/Emacs/eshell-present.html][blogpost]] from Howard Abrams outlining some of Eshell
+strengths.
+
+This snippet dispatches programs to 'ansi-term' automatically:
+
+#+BEGIN_SRC emacs-lisp
+;; (add-to-list 'eshell-visual-commands "htop")
+#+END_SRC
 
 This snippet defines eshell aliases:
 
