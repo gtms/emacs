@@ -623,44 +623,75 @@ toggle between real end and logical end of the buffer."
 
 ;; Dired
 (my-special-beginning-of-buffer dired
-                                (while (not (ignore-errors (dired-get-filename)))
-                                  (dired-next-line 1)))
+  (while (not (ignore-errors (dired-get-filename)))
+    (dired-next-line 1)))
 (my-special-end-of-buffer dired
-                          (dired-previous-line 1))
+  (dired-previous-line 1))
 
 ;; Occur
 (my-special-beginning-of-buffer occur
-                                (occur-next 1))
+  (occur-next 1))
 (my-special-end-of-buffer occur
-                          (occur-prev 1))
+  (occur-prev 1))
 
 ;; IBuffer
 (my-special-beginning-of-buffer ibuffer
-                                (ibuffer-forward-line 1))
+  (ibuffer-forward-line 1))
 (my-special-end-of-buffer ibuffer
-                          (ibuffer-backward-line 1))
+  (ibuffer-backward-line 1))
 
 ;; Recentf
 (my-special-beginning-of-buffer recentf-dialog
-                                (when (re-search-forward "^  \\[" nil t)
-                                  (goto-char (match-beginning 0))))
+  (when (re-search-forward "^  \\[" nil t)
+    (goto-char (match-beginning 0))))
 (my-special-end-of-buffer recentf-dialog
-                          (re-search-backward "^  \\[" nil t))
+  (re-search-backward "^  \\[" nil t))
 
 ;; Org-agenda
 (my-special-beginning-of-buffer org-agenda
-                                (org-agenda-next-item 1))
+  (org-agenda-next-item 1))
 (my-special-end-of-buffer org-agenda
-                          (org-agenda-previous-item 1))
+  (org-agenda-previous-item 1))
 
 ;; ag
 (my-special-beginning-of-buffer ag
-                                (compilation-next-error 1))
+  (compilation-next-error 1))
 (my-special-end-of-buffer ag
-                          (compilation-previous-error 1))
+  (compilation-previous-error 1))
+#+END_SRC
+*** dired-filter
+The filtering system is designed after ibuffer: every dired buffer has
+associated "filter stack" where user can push filters (predicates).  These
+filters are by default logically "anded", meaning, only the files satsifying all
+the predicates are shown.
+
+#+BEGIN_SRC emacs-lisp
+(use-package dired-filter
+  :ensure t
+  :defer t)
+#+END_SRC
+*** dired-narrow
+This package provides live filtering of files in dired buffers.  In general,
+after calling the respective narrowing function you type a filter string into
+the minibuffer.  After each change the changes automatically reflect in the
+buffer.  Typing C-g will cancel the narrowing and restore the original view,
+typing RET will exit the live filtering mode and leave the dired buffer in the
+narrowed state. To bring it back to the original view, you can call
+revert-buffer (usually bound to g).
+
+The following snippet was taken from [[http://pragmaticemacs.com/emacs/dynamically-filter-directory-listing-with-dired-narrow/][here]] on [2017-12-08 Fri].
+
+#+BEGIN_SRC emacs-lisp
+(use-package dired-narrow
+  :ensure t
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
 #+END_SRC
 
 ** Eshell
+:PROPERTIES:
+:ATTACH_DIR_INHERIT: t
+:END:
 This Mike Petersen's [[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][article]] on Eshell on his Mastering Emacs blog is a must
 read.  Also, see this [[http://howardism.org/Technical/Emacs/eshell-present.html][blogpost]] from Howard Abrams outlining some of Eshell
 strengths.
