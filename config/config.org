@@ -483,14 +483,12 @@ Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on
   (progn
     (global-set-key (kbd "C-c C-r") 'ivy-resume)))
 #+END_SRC
-
 *** swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :bind (("C-s" . swiper)
-         ("C-c u" . swiper-all)))
+         ("C-c q" . swiper-all)))
 #+END_SRC
-
 *** hydra
 #+BEGIN_SRC emacs-lisp
 (use-package hydra
