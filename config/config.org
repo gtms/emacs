@@ -809,6 +809,59 @@ Is currently not working on Fedora 26; needs to be fixed.
   ;; C-c z t         zotelo-set-translator
   )
 #+END_SRC
+*** emacs-zotero-bib-fetch
+See comments [[https://github.com/vspinu/zotelo/issues/34][here]].
+#+BEGIN_SRC emacs-lisp
+(load-file "~/Dropbox/emacs/load/emacs-zotero-bib-fetch.el")
+(add-hook 'TeX-mode-hook 'ezbf-minor-mode)
+#+END_SRC
+*** TODO latex word count
+[2018-07-31 Tue]
+Fix this function:
+- give it documentation
+- give it options (to be sent our to the perl script)
+- have it write output to new buffer instead of minibuffer
+- have it accept regions as input instead of whole file
+- give it a meaningful keybinding
+
+This is based on a perl script called texcount.pl that must be found under
+~/bin.  Great opportunity to learn some lisp code.
+See comments [[https://superuser.com/questions/125027/word-count-for-latex-within-emacs][here]].
+
+[2018-08-10 Fri]
+Found [[http://app.uio.no/ifi/texcount/faq.html#emacs][these]] instructions to integrate the code in emacs, provided by the author.
+
+#+BEGIN_SRC emacs-lisp
+;;
+;; TeXcount setup for TeXcount version 2.3 and later
+;;
+(defun texcount ()
+  (interactive)
+  (let*
+      ((this-file (buffer-file-name))
+       (enc-str (symbol-name buffer-file-coding-system))
+       (enc-opt
+        (cond
+         ((string-match "utf-8" enc-str) "-utf8")
+         ((string-match "latin" enc-str) "-latin1")
+         ("-encoding=guess")))
+       (word-count
+        (with-output-to-string
+          (with-current-buffer standard-output
+            (call-process "texcount" nil t nil "-0" enc-opt this-file)))))
+    (message word-count)))
+;; (add-hook 'LaTeX-mode-hook (lambda () (define-key LaTeX-mode-map "\C-cw" 'texcount)))
+;; (add-hook 'latex-mode-hook (lambda () (define-key latex-mode-map "\C-cw" 'texcount)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun latex-word-count ()
+  (interactive)
+  (shell-command (concat "~/bin/texcount.pl "
+                                        ; "uncomment then options go here"
+                         (buffer-file-name))))
+;; (define-key latex-mode-map "\C-cw" 'latex-word-count)
+#+END_SRC
 ** Minibuffer
 Minibuffer window expands vertically as necessary to hold the text that you put
 in the minibuffer
