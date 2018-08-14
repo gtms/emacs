@@ -772,14 +772,28 @@ Package ibuffer-vc
 
 #+END_SRC
 ** LaTeX
+Fix issue in prelude-latex.el concerning TeX-open-quote and TeX-close-quote
+#+BEGIN_SRC emacs-lisp
+(setq TeX-close-quote "''")
+(setq TeX-open-quote "``")
+#+END_SRC
+*** RefTex
+As in the manual, section 1.1.3
+#+BEGIN_SRC emacs-lisp
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
+(add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
+#+END_SRC
 *** latex-extra
 Defines extra commands and keys for LaTeX-mode (Artur Malabarba).
 #+BEGIN_SRC emacs-lisp
 (use-package latex-extra
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (add-hook 'LaTeX-mode-hook #'latex-extra-mode))
 #+END_SRC
-*** TODO zotelo
+*** CANCELLED zotelo
+CLOSED: [2018-02-05 Mon 10:40]
 Is currently not working on Fedora 26; needs to be fixed.
 #+BEGIN_SRC emacs-lisp
 ;; https://github.com/vitoshka/zotelo
