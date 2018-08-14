@@ -460,21 +460,21 @@ Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on
          ("C-h v" . counsel-describe-variable)
          ("C-h f" . counsel-describe-function))
   :config
-  (use-package flx)
-  ;; miz fuzzy with plus (.* for each space)
+  (use-package flx
+    :ensure t)
+  ;; mix fuzzy with plus (.* for each space)
   ;; http://oremacs.com/2016/01/06/ivy-flx/
   (setq ivy-re-builders-alist
         '((ivy-switch-buffer . ivy--regex-plus)
           (swiper . ivy--regex-plus)
+          (swiper-all . regexp-quote)
           (t . ivy--regex-fuzzy)))
   (setq ivy-initial-inputs-alist nil))
 #+END_SRC
-
 *** ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
-  :diminish (ivy-mode)
   :bind (("C-x b" . ivy-switch-buffer))
   :config
   (ivy-mode 1)
