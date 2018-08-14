@@ -327,19 +327,14 @@ From a Artur Malabarba [[http://endlessparentheses.com/hungry-delete-mode.html][
   :config
   (global-hungry-delete-mode))
 #+END_SRC
-** TODO linum-relative
-Find an easy solution to implement relative line numbers.
 ** ido-vertical-mode
 #+BEGIN_SRC emacs-lisp
 (use-package ido-vertical-mode
-  :diminish ido-vertical-mode
   :config
   (ido-mode 1)
   (ido-vertical-mode 1)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 #+END_SRC
-** TODO magic-latex-buffer
-Decide whether to keep this package.
 ** markdown-mode
 Taken from [[http://jblevins.org/projects/markdown-mode/][here]], on 09Jan2017.
 #+BEGIN_SRC emacs-lisp
