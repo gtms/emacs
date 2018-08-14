@@ -152,8 +152,15 @@ See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package
 * Org mode
 #+BEGIN_SRC emacs-lisp
 (use-package org
+  ;; 05Jun2018
+  ;; solution to install org-mode on top of bundled version, as suggested on
+  ;; this reddit thread:
+  ;; https://www.reddit.com/r/emacs/comments/5sx7j0/how_do_i_get_usepackage_to_ignore_the_bundled/
+  :ensure
+  org-plus-contrib
+  :pin
+  org
   :config
-  ;; (add-hook 'org-mode-hook 'smartparens-mode)
   (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'org-mode-hook 'company-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
@@ -169,25 +176,27 @@ See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package
         org-src-strip-leading-and-trailing-blank-lines t
         org-src-preserve-indentation t
         org-src-tab-acts-natively t
-        org-goto-auto-isearch nil
         org-export-babel-evaluate nil
-        org-confirm-babel-evaluate nil)
+        org-confirm-babel-evaluate nil
+        org-directory "~/Dropbox/org")
   (use-package smartrep
     :config
     (smartrep-define-key org-mode-map "C-c"
       '(("C-n" . (outline-next-visible-heading 1))
         ("C-p" . (outline-previous-visible-heading 1)))))
   (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t)
+  (setq org-ctrl-k-protect-subtree t)
+  (setq org-odd-levels-only nil)
   (setq org-log-done 'time) ;Log the time a task is completed.
   (setq org-habit-graph-column 50) ; position the habit graph on the agenda to
                                         ; the right of the default
   (setq org-hide-emphasis-markers nil)
-  (setq inhibit-splash-screen t)
   (setq org-indent-mode t) ; indent the headings for clean view
-  (setq org-hide-leading-stars t)
-  (setq org-hide-leading-stars-before-indent-mode t)
-  (setq org-odd-levels-only t)
-  (diminish 'org-indent-mode)
+  ;; (setq org-hide-leading-stars t)
+  ;; (setq org-hide-leading-stars-before-indent-mode t)
+  ;; (setq org-odd-levels-only t)
+  ;; (diminish 'org-indent-mode)
   (setq org-startup-indented t)
   (setq org-tags-column -66) ; where the tags are places
   (setq org-use-speed-commands t) ; speed up commands
@@ -202,19 +211,17 @@ See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package
 Todo sequences.
 
 #+BEGIN_SRC emacs-lisp
-(use-package org
-  :defer t
-  :config
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-  (setq org-todo-keyword-faces
-        '(("TODO" :background "tomato" :foreground "bisque" :weight bold )
-          ("STARTED" :background "ForestGreen" :foreground "bisque" :weight bold )
-          ("WAITING" :background "DarkOrange" :foreground "bisque" :weight bold )
-          ("DONE" :background "RoyalBlue" :foreground "bisque" :weight bold )
-          ("CANCELLED" :background "grey50" :foreground "bisque" :weight bold )))
-  (setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
-  (setq org-cycle-separator-lines 0))
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "STARTED(s)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keyword-faces
+      '(("TODO" :background "tomato" :foreground "bisque" :weight bold )
+        ("STARTED" :background "ForestGreen" :foreground "bisque" :weight bold )
+        ("NEXT" :background "purple1" :foreground "bisque" :weight bold )
+        ("WAITING" :background "DarkOrange" :foreground "bisque" :weight bold )
+        ("DONE" :background "RoyalBlue" :foreground "bisque" :weight bold )
+        ("CANCELLED" :background "grey50" :foreground "bisque" :weight bold )))
+(setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
+(setq org-cycle-separator-lines 0)
 #+END_SRC
 
 From the Org Mode Manual, section [[http://orgmode.org/manual/Conflicts.html][15.10.2]]--Packages that lead to conflicts with
