@@ -520,7 +520,10 @@ Taken from [[https://github.com/basille/.emacs.d/blob/master/init.el][here,]] on
 (put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
 
-*** rsync with dired (bound to Y)
+*** CANCELLED rsync with dired (bound to Y)
+CLOSED: [2018-06-04 Mon 17:00]
+Superseded by the package dired-rsync.
+
 This code snippet taken from [[http://oremacs.com/2016/02/24/dired-rsync/][here]] on 20Feb2017 allows for the asynchronous use
 of rsync within dired.
 
@@ -556,7 +559,12 @@ of rsync within dired.
 
 (define-key dired-mode-map "Y" 'ora-dired-rsync)
 #+END_SRC
-
+*** dired-rsync
+#+BEGIN_SRC emacs-lisp
+(use-package dired-rsync
+  :config
+  (bind-key "Y" 'dired-rsync dired-mode-map))
+#+END_SRC
 *** enhanced beginning- and end-of-buffer
 This code snippet is not just specific to dired, but is of most use there.
 Taken from [[https://fuco1.github.io/2017-05-06-Enhanced-beginning--and-end-of-buffer-in-special-mode-buffers-(dired-etc.).html][here]], on [2017-09-28 Thu].
