@@ -297,9 +297,13 @@ From [[https://github.com/kidd/org-gcal.el][here]].
   (setq company-show-numbers t)
   (setq company-minimum-prefix-length 3))
 #+END_SRC
-** TODO dired-hacks
-Fuco1 collection of useful dired additions.  Needs to be integrated under
-Misc/Dired Stuff.
+** elpy
+#+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :config
+  ;; (setq elpy-rpc-python-command "/usr/local/opt/python/libexec/bin/python")
+  (elpy-enable))
+#+END_SRC
 ** ess (emacs-speaks-statistics)
 #+BEGIN_SRC emacs-lisp
 (use-package ess
