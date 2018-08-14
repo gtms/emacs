@@ -1,32 +1,32 @@
 #+TITLE: Personal Emacs Configuration
 #+AUTHOR: Gil Tomás
+#+STARTUP: overview
 
 * Notes
 This file is my personal ~Emacs~ configuration to be integrated with
-[[https://github.com/bbatsov/prelude][prelude]].  Copy this file to the ~personal/config~ directory under
+[[https://github.com/bbatsov/prelude][prelude]].  Symlink this file to the ~personal/config~ directory under
 ~.emacs.d~.
 
 This file is based on previous iterations of ~config.org~.  This file has been
 refactored on [2017-08-12 Sat].
 
 * Load
-*** package management
+** package management
 #+BEGIN_SRC emacs-lisp
 ;; Set up package
 ;; initalize all ELPA packages
 (require 'package)
 (setq package-enable-at-startup nil
       package-archives
-      '(("melpa" . "http://melpa.org/packages/")
-        ("melpa-stable" . "http://stable.melpa.org/packages/")
+      '(("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
         ("org" . "http://orgmode.org/elpa/")
-        ("gnu" . "https://elpa.gnu.org/packages/")))
+        ("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
 #+END_SRC
 
-*** use-package
-
+** use-package
 See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package.
-
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
