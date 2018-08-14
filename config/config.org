@@ -123,6 +123,23 @@ See the [[http://github.com/jwiegley/use-package/][Github page]] for use-package
   (setq default-buffer-file-coding-system 'utf-8))
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+;; 26Jun2018
+;; Activate display-line-numbers-mode on prog-mode
+;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+;; (add-hook 'text-mode-hook 'display-line-numbers-mode)
+(progn
+  (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
+  (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1))))
+(setq display-line-numbers-type (quote visual))
+;; 03Jul2018
+;; From Mickey Petersen's Mastering Emacs
+;; https://www.masteringemacs.org/article/working-multiple-files-dired
+(require 'find-dired)
+(setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+(setq ivy-initial-inputs-alist nil)
+;; 01Aug2018
+;; Default shell is zsh
+(setq shell-file-name "/bin/zsh")
 #+END_SRC
 
 * Font
