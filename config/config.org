@@ -236,11 +236,52 @@ Org mode:
 (add-hook 'org-shiftdown-final-hook 'windmove-down)
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 #+END_SRC
-
+** org global keybindings
+Inspired from :ED:modules/prelude.org.el and the Org Manual
+#+BEGIN_SRC emacs-lisp
+(global-set-key "\C-cb" 'org-switchb)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cv" 'org-agenda)
+#+END_SRC
+** org-capture
+From the org manual, section 9.1.1
+#+BEGIN_SRC emacs-lisp
+(setq org-default-notes-file (concat org-directory "/i.org"))
+(setq org-refile-targets '(("~/Dropbox/org/gtd.org" :maxlevel . 3)
+                           ("~/Dropbox/org/someday.org" :level . 1)
+                           ("~/Dropbox/org/tickler.org" :maxlevel . 2)))
+#+END_SRC
+** org-agenda
+[2018-08-11 Sat]
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files (list "~/Dropbox/org/gmail.org"
+                             "~/Dropbox/org/gtd.org"
+                             "~/Dropbox/org/tickler.org")
+      org-agenda-window-setup 'current-window
+      org-agenda-restore-windows-after-quit t)
+#+END_SRC
+** org-cal
+[2018-08-13 Mon]
+From [[https://github.com/kidd/org-gcal.el][here]].
+#+BEGIN_SRC emacs-lisp
+(use-package org-gcal
+  :defer t
+  :ensure t
+  :config
+  (setq org-gcal-client-id "808841923257-gjna60iamcqatft7oc5l49icni8ks8d0.apps.googleusercontent.com"
+        org-gcal-client-secret "izQQXZJEy1c-Fms9OMrwctiM"
+        org-gcal-file-alist '("gil.tms@gmail.com" .  "~/Dropbox/org/gmail.org")
+        org-gcal-header-alist '("gil.tms@gmail.com" . "#+CATEGORY: personal\n"))
+  ;; Mike Zamansky C'est la Z
+  ;; http://cestlaz.github.io/posts/using-emacs-26-gcal/
+  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))
+  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync))))
+#+END_SRC
 * ELPA Packages
 ** ace-window
 #+BEGIN_SRC emacs-lisp
-(use-package ag
+(use-package ace-window
   :config (key-chord-define-global "ww" 'ace-window))
 #+END_SRC
 ** ag
