@@ -885,6 +885,15 @@ Taken on [2017-07-05 Wed]
 #+END_SRC
 
 *** smart-mode-line
+smart-mode-line causes term-mode to hang.  Waiting for a fix to re-enable.
+https://github.com/Malabarba/smart-mode-line/issues/226
+https://github.com/bbatsov/prelude/issues/1176
+[2018-07-23 Mon]
+On hindsight, decided to re-enable the mode, but to silence the binding to
+the command crux-visit-term-buffer.  This advice should be removed once the
+issue with smart-model-line is fixed.
+[2018-08-14 Tue]
+Issue has now been fixed (See [[https://github.com/Malabarba/smart-mode-line/issues/226][here]]).
 #+BEGIN_SRC emacs-lisp
 (use-package smart-mode-line
   :config
